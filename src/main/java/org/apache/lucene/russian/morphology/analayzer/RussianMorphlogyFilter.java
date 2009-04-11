@@ -10,14 +10,20 @@ import java.io.IOException;
 public class RussianMorphlogyFilter extends TokenFilter {
     private ArrayEvristics arrayEvristics;
 
-    protected RussianMorphlogyFilter(TokenStream tokenStream, ArrayEvristics arrayEvristics) {
+    public RussianMorphlogyFilter(TokenStream tokenStream, ArrayEvristics arrayEvristics) throws IOException {
         super(tokenStream);
         this.arrayEvristics = arrayEvristics;
     }
 
     public Token next(final Token reusableToken) throws IOException {
-        assert reusableToken != null;
-        return createToken(arrayEvristics.getCanonicalForm(reusableToken.term()), reusableToken, reusableToken);
+        Token nextToken = input.next(reusableToken);
+        if(nextToken == null || nextToken.term().length() == 0) return nextToken;
+        Character testC = nextToken.term().charAt(0);
+        if (Character.UnicodeBlock.of(testC) != Character.UnicodeBlock.CYRILLIC){
+            return  nextToken;
+        }
+        Token current = (Token) nextToken.clone();
+        return createToken(arrayEvristics.getCanonicalForm(nextToken.term()), current, reusableToken);
     }
 
     protected Token createToken(String synonym, Token current, final Token reusableToken) {
