@@ -1,0 +1,29 @@
+[modifiers]
+shift
+ctrl
+alt
+control
+Shift
+Ctrl
+Alt
+Control
+SHIFT
+CTRL
+ALT
+CONTROL
+
+[keys]
+PgUp
+F1
+F2
+@
+Page Down
+ScrLock 
+Scroll Lock
+Caps Lock
+CapsLock
+Num Lock
+NumLock
+Del
+Delete
+

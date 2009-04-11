@@ -1,0 +1,153 @@
+//  …ach token in this file should be  separated by a space. Otherwise it 
+// would not be recognized as an abbreviation. For example:
+// Mr. 
+// would  be treated as one token, while Graphan module divides it into
+// two tokens. So in this file it should be written as follows:
+// Mr . 
+
+ANON . 
+APPROX . 
+ASSN . 
+ASSOC . 
+AVG . 
+CAPT . 
+CC . 
+CH . 
+CIRC . 
+CM . 
+CO . 
+COL . 
+COMDR . 
+CONT . 
+CONTD . 
+COR . 
+CORP . 
+CPL . 
+CU . 
+DD . 
+DEC . 
+DEF . 
+DEP . 
+DIST . 
+DIV . 
+DLR . 
+DPT . /:u
+DR . /:u
+ED . /:u
+EG . 
+ELEV . 
+EQ . 
+ESQ . 
+EST . 
+EXC . 
+EXCH . 
+EXEC . 
+EXP . 
+EXT . 
+FF . 
+FIG . 
+FL . 
+FLD . 
+FR . 
+FT . 
+GA . 
+GAL . 
+GEN . 
+GL . 
+GM . 
+GR . 
+HRS . 
+IB . 
+IBID . 
+ID . 
+ILL . 
+ILLUS . 
+INC . 
+INCL . 
+INCOG . 
+IV . 
+JR . 
+KM . 
+LAT . 
+LB . 
+LG . 
+LGE . 
+LT . 
+LTD . 
+MA . 
+MAJ . 
+MI . 
+MIL . 
+MO . 
+MR . /:u
+MRS . /:u
+MS . /:u
+NO . 
+PCT . 
+PG . 
+PP . 
+PROF . 
+PT . 
+QT . 
+RE . 
+REF . 
+REP . 
+REV . 
+RF . 
+SGT . 
+SP . 
+SQ . 
+ST . 
+SW . 
+TN . 
+U . S . /:u
+U . S . 
+WK . 
+YR . 
+( ? )
+( ! )
+Ala . 
+Ariz . 
+Ark . 
+Calif . 
+Colo . 
+Conn . 
+Del . 
+Fla . 
+Ga . 
+Iowa Kan . 
+Ky . 
+La . 
+Md . 
+Ma . 
+Mass . 
+Me . 
+Mich . 
+Minn . 
+Miss . 
+Mo . 
+Mont . 
+Neb . 
+Nev . 
+N . H . 
+N . J . 
+N . M . 
+N . Y . 
+N . C . 
+N . D . 
+Okla . 
+Ore . 
+Pa . 
+RI 
+R . I . 
+S . C . 
+SD S . D . 
+Tenn . 
+Tex . 
+Texas
+Va . 
+Vt . 
+Wash . 
+W . V . 
+Wis . 
+Wy . 

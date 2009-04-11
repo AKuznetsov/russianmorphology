@@ -1,0 +1,258 @@
+This is a program of moprhological analysis (Russian, German, and English languages).
+
+This program is distributed under the Library GNU Public Licence, which is in the file
+COPYING.  
+
+This program was  written by Andrey Putrin, Alexey Sokirko.  
+The project started in Moscow in Dialing 
+Company (Russian and English language). The German part was created  
+at Berlin-Brandenburg Academy of Sciences and Humanities in  Berlin (the project DWDS). 
+
+The Russian  lexicon is based upon Zaliznyak's Dictionary .
+The German lexicon is based upon Morphy system (http://www-psycho.uni-paderborn.de/lezius/).
+The English  lexicon is based upon Wordnet.
+
+The project uses a regular expression library "PCRE" (Perl Compatible Regular Expressions).
+We test compilation only with version 6.4. Other versions were not tested. 
+One should download this version  from the official site and install it 
+to the default place. If you do not want to install it or you do not have enough
+rights to do it, then you should  create two environment variables: 
+	1.  RML_PCRE_LIB, that  points to PCRE library directory, where
+libpcre.a and libpcrecpp.a should be located, for example:
+	export RML_PCRE_LIB=~/RML/contrib/pcre-6.4/.libs
+    2  RML_PCRE_INCLUDE, that points to PCRE include catalog, 
+where "pcrecpp.h" is located, for example
+    export RML_PCRE_INCLUDE=~/RML/contrib/pcre-6.4
+
+
+The system has been developed under Windows 2000 (MS VS 6.0), but
+has also been compiled and run under Linux(GCC).  It should work with
+minor changes on other systems.
+
+Website of DDC: www.aot.ru, https://sf.net/projects/morph-lexicon/
+
+I compiled all sources with gcc 3.2. Lower versions are not supported.
+
+
+Contents of the this source archive
+
+1.	The main morphological  library (Source/LemmatizerLib).
+2.	Library for grammatical codes (Source/AgrgamtabLib).
+3.	Test morphological program  (Source/TestLem)..
+4.	Library for working with text version of the dictionaries (Source/MorphWizardLib).
+5.	Generator of morphological prediction base  (Source/GenPredIdx).
+6.	Generator of binary  format of the dictionaries (Source/MorphGen).
+
+
+=================================================
+====== 					 Installation       =====
+=================================================
+
+
+Unpacking
+
+* Create  a catalog and  register a system variable RML, which  points 
+to this catalog:
+	mkdir /home/sokirko/RML
+	export  RML=/home/sokirko/RML
+
+* Put "lemmatizer.tar.gz", "???-src-morph.tar.gz"
+to this catalog, "???" can be "rus", "ger" or "eng"
+according to what you have downloaded. Unpack it 
+ 	tar xfz lemmatizer.tar.gz
+	tar xfz ???-src-morph.tar.gz
+
+
+
+Compiling morphology
+
+  0. Do not forget to set  RML_PCRE (see above)
+
+
+  1.  cd $RML
+	
+
+  2.   ./compile_morph.sh  
+      This step should create all libraries and a test program $RML\Bin\TestLem.
+
+
+Building Morphological Dictionary
+
+  1.  cd $RML
+
+  2.   ./generate_morph_bin.sh <lang>
+     where <lang> can be Russian, German according to the dictionary
+    yo have  downloaded.
+
+  The script should terminate with message "Everything is OK". 
+  You can test the morphology 
+	$RML\Bin\TestLem <lang>
+
+
+
+
+
+If something goes wrong, write me to sokirko@yandex.ru.
+
+
+
+
+======================================================
+==========      MRD-file                  ============
+======================================================
+
+	This section describes the format of a mrd-file. Mrd-file is a text 
+file which contains one morphological dictionary for one natural language. 
+MRD is an abbreviation of "morphological dictionary".
+	The usual place for this file is 
+
+	$RML/Dicts/SrcMorph/xxxSrc/morphs.mrd,
+
+where  xxx can be "Eng", "Rus" or  "Ger" depending on the language. 
+    The encoding of the file depends also upon the language:
+	* Russian - Windows 1251
+	* German  - Windows 1252
+	* English - ASCII
+
+
+   Gramtab-files
+
+
+	A mrd-file refers to a gramtab-file, which is 
+language-dependent and which contains all possible full morphological 
+patterns for the words. One line in a gramtab-file looks like as follows:
+	<ancode> <unused_number> <part_of_speech> <grammems>
+	An ancode is an ID, which consists of two letters and which uniquely  
+identifies a morphological pattern. A morphological pattern consists of 
+<part_of_speech> and <grammems>. For example, here is a line from the English
+gramtab:
+
+	te 1 VBE prsa,pl      
+
+	Here "te" is an ancode,  "VBE" is a part of speech, "prsa,pl" are grammems,
+"1" is the obsolete  unused number.
+    In mrd-files we use ancodes to refer to a  morphological pattern.
+
+	Here is the list of all gramtab-files:
+	* Russian - $Rml/Dicts/Morph/rgramtab.tab
+	* German  - $Rml/Dicts/Morph/ggramtab.tab
+	* English - $Rml/Dicts/Morph/egramtab.tab
+
+
+
+   Common information 
+
+
+	All words in a mrd-file are written in uppercase.
+	One mrd-file consists of the following sections:
+		1. Section of flexion and prefix models;
+		2. Section of accentual models; 
+		3. Section of user sessions;
+	    4. Section of prefix sets;
+		5. Section of lemmas.
+	Each section is a set of records, one per line. The number of all records 
+of the section  is written in the very beginning of the section at 
+a separate line. For example, here is a possible variant 
+of the section of user sessions:
+
+1
+alex;17:10, 13 October 2003;17:12, 13 October 2003
+
+"1" means that this section contains only one record, which is written  
+on the next line, thus this section contains only two lines.
+
+
+
+	Section of possible flexion and prefix models
+
+
+	Each record of this section is a list of items. Each item 
+describes how one word form in a paradigm should be built. The whole list
+describes the whole paradigm (a set of word forms with morphological patterns). 
+The format  of one item is the following:
+		%<flexion>*<ancode>
+	or  %<flexion>*<ancode>*<prefix>
+		where  
+			<flexion> is a  flexion (a string, which should be added to right of the word base)
+			<prefix> is a  prefix (a string, which should be added to left of the word base)
+			<ancode> is an ancode.
+	Let us consider an example of an English flexion and prefix model:
+		%F*na%VES*nb
+	Here we have two items:
+		1. <flexion> = F;   <ancode> = na
+		2. <flexion> = VES;   <ancode> = nb
+		In order to decipher ancodes we should go the English gramtab-file. 
+There we can find the following lines:
+			na NOUN narr,sg        
+			nb NOUN narr,pl
+		If base "lea" would be ascribed to this model,  then its paradigm 
+would be the following:
+		leaf 	NOUN narr,sg
+		leaves	NOUN narr,pl
+	It is important, that each word of a morphological dictionary 
+should contain a reference  to a line in this section.
+
+
+	Section of possible accentual models
+
+
+	Each record of this section is a comma-delimited list of numbers, where 
+each number is an index of a stressed  vowel of a word form(counting 
+from the end). The whole list contains a position for each word 
+form in the paradigm.	
+	If an item of an accentual model of word is equal to 255, then it 
+is undefined, and it means that this word  form is unstressed.  
+	Each word in the dictionary should have a reference  to 
+an accentual model, even though this model can consist only of empty items.
+	For one word, the number and the order of items in the  accentual model 
+should be equal to the number and the order of items  in the flexion and 
+prefix model. For example we can ascribe to word "leaf" with the paradigm  
+		leaf 	NOUN narr,sg
+		leaves	NOUN narr,pl
+the following accentual model:
+
+	2,3
+
+	It produces the following accented paradigm: 
+		le'af 	NOUN narr,sg
+		le'aves	NOUN narr,pl
+
+		
+
+	Section of user section
+
+	This is a system section, which contains information about user edit 
+sessions.
+
+
+	Section of prefix sets
+
+	Each record of this section is a comma-delimited list of strings, where 
+each string is a prefix, which can be prefixed to the whole word. If a prefix 
+set is ascribed to a word, it means, that the words with these prefixes
+can also exist  in the language. For example, if "leaf" has 
+the prefix  set "anti,contra", it follows the existence of  words "antileaf",
+"contraleaf".
+	A flexion and prefix model can contain
+also a reference to a prefix, but this prefix is for 
+one separate word form, while a prefix set  is ascribed to the whole word 
+paradigm.
+
+	
+	Section of lemmas
+
+	A record of this section is a space-separated tuple of the following format:
+
+	<base> <flex_model_no> <accent_model_no> <session_no> <type_ancode> <prefix_set_no>
+
+	where 
+
+	<base> is a base (a constant part of a word in its paradigm)
+	<flex_model_no> is an index  of a flexion and prefix model
+	<accent_model_no> is an index of an accentual model
+	<session_no> is an index of the session,  by which the last user edited this word
+	<type_ancode> is ancode, which is ascribed to the whole word 
+						(intended: the common part of grammems in the paradigm)
+					   "-" if it is undefined 
+	<prefix_set_no> is an index of a prefix set, or "-" if it is undefined
+
