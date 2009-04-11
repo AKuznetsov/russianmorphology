@@ -2,9 +2,7 @@ package org.apache.lucene.russian.morphology.analayzer;
 
 import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
 
-import java.io.FileReader;
-import java.io.BufferedReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Arrays;
 
 
@@ -14,6 +12,25 @@ public class ArrayEvristics {
 
     public void readFromFile(String fileName) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        readFromBufferedRreader(reader);
+    }
+
+
+    public ArrayEvristics() throws IOException {
+        readFromResource();
+    }
+
+    public ArrayEvristics(String fileName) throws IOException {
+        readFromFile(fileName);
+    }
+
+    public void readFromResource() throws IOException {
+        InputStream stream = this.getClass().getResourceAsStream("/arrayEvritics.txt");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
+        readFromBufferedRreader(bufferedReader);
+    }
+
+    private void readFromBufferedRreader(BufferedReader reader) throws IOException {
         int size = Integer.valueOf(reader.readLine());
         keys = new long[size];
         values = new long[size];
@@ -29,7 +46,8 @@ public class ArrayEvristics {
         Long suffix = RussianSuffixDecoderEncoder.encode(form.substring(startSymbol));
 
         int index = Arrays.binarySearch(keys,suffix);
-        if(index == -1){
+        if(index < -1){
+            System.out.println(" " + form);
             return form;
         }else{
             String nSuffix = RussianSuffixDecoderEncoder.decode(values[index]);
