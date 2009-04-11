@@ -1,6 +1,8 @@
 package org.apache.lucene.russian.morphology.dictonary;
 
-
+/**
+ * Represent inofrmation of how word form created form it imutible part.
+ */
 public class FlexiaModel {
     private String code;
     private String suffix;

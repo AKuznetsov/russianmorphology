@@ -1,4 +1,6 @@
-package org.apache.lucene.russian.morphology.evristics;
+package org.apache.lucene.russian.morphology.analayzer;
+
+import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
 
 import java.io.FileReader;
 import java.io.BufferedReader;
@@ -24,13 +26,13 @@ public class ArrayEvristics {
 
     public String getCanonicalForm(String form) {
         int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
-        Long suffix = RussianSuffixDecoderEncoder.encodeLong(form.substring(startSymbol));
+        Long suffix = RussianSuffixDecoderEncoder.encode(form.substring(startSymbol));
 
         int index = Arrays.binarySearch(keys,suffix);
         if(index == -1){
             return form;
         }else{
-            String nSuffix = RussianSuffixDecoderEncoder.decodeLong(values[index]);
+            String nSuffix = RussianSuffixDecoderEncoder.decode(values[index]);
             return startSymbol > 0 ? form.substring(0, startSymbol) + nSuffix : nSuffix;
         }
     }

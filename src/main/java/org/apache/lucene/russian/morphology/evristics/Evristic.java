@@ -1,5 +1,7 @@
 package org.apache.lucene.russian.morphology.evristics;
 
+import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
+
 import java.util.*;
 import java.io.*;
 
@@ -8,22 +10,20 @@ public class Evristic {
     private TreeMap<Long, Long> encodedSuffixesPairs = new TreeMap<Long, Long>();
 
     public void addEvristic(SuffixEvristic suffixEvristic) {
-        Long suffix = RussianSuffixDecoderEncoder.encodeLong(suffixEvristic.getFormSuffix());
+        Long suffix = RussianSuffixDecoderEncoder.encode(suffixEvristic.getFormSuffix());
         Long longs = encodedSuffixesPairs.get(suffix);
         if (longs == null) {
-            encodedSuffixesPairs.put(suffix, RussianSuffixDecoderEncoder.encodeLong(suffixEvristic.getNormalSuffix()));
+            encodedSuffixesPairs.put(suffix, RussianSuffixDecoderEncoder.encode(suffixEvristic.getNormalSuffix()));
         }
-
-
     }
 
     public String getNormalForm(String form) {
         int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
-        Long suffix = RussianSuffixDecoderEncoder.encodeLong(form.substring(startSymbol));
+        Long suffix = RussianSuffixDecoderEncoder.encode(form.substring(startSymbol));
 
         Long normalSuffix = encodedSuffixesPairs.get(suffix);
         if (normalSuffix != null) {
-            String nSuffix = RussianSuffixDecoderEncoder.decodeLong(normalSuffix);
+            String nSuffix = RussianSuffixDecoderEncoder.decode(normalSuffix);
             return startSymbol > 0 ? form.substring(0, startSymbol) + nSuffix : nSuffix;
 
         }

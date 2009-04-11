@@ -1,6 +1,9 @@
 package org.apache.lucene.russian.morphology.evristics;
 
-
+/**
+ * Conains information of freqency of suffix evristic
+ *  in dictionary.
+ */
 public class SuffixCounter implements Comparable{
     private SuffixEvristic suffixEvristic;
     private Double amnout = 0.0;

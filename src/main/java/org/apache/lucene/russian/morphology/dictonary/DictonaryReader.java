@@ -1,26 +1,28 @@
 package org.apache.lucene.russian.morphology.dictonary;
 
-import org.apache.lucene.russian.morphology.dictonary.FlexiaModel;
-import com.frielp.morph.automate.WordImpl;
-import org.apache.lucene.russian.morphology.evristics.RussianSuffixDecoderEncoder;
+import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
 
 import java.util.*;
 import java.io.*;
 
 
-public class DirtonaryReader {
+/**
+ * This class contain logic how read
+ * dictonary and produce word with it all forms.
+ */
+public class DictonaryReader {
     private String fileName;
     private String fileEncoding = "windows-1251";
     private List<List<FlexiaModel>> wordsFlexias = new ArrayList<List<FlexiaModel>>();
     private List<List<String>> wordPrefixes = new ArrayList<List<String>>();
     private Set<String> ingnoredForm =  new HashSet<String>();
 
-    public DirtonaryReader(String fileName, Set<String> ingnoredForm) {
+    public DictonaryReader(String fileName, Set<String> ingnoredForm) {
         this.fileName = fileName;
         this.ingnoredForm = ingnoredForm;
     }
 
-    public DirtonaryReader(String fileName, String fileEncoding, Set<String> ingnoredForm) {
+    public DictonaryReader(String fileName, String fileEncoding, Set<String> ingnoredForm) {
         this.fileName = fileName;
         this.fileEncoding = fileEncoding;
         this.ingnoredForm = ingnoredForm;
@@ -96,6 +98,7 @@ public class DirtonaryReader {
 
     private void addFlexia(ArrayList<FlexiaModel> flexiaModelArrayList, String line) {
         String[] fl = line.split("\\*");
+        // we inored all forms thats
       //  if (fl.length == 3)
       //      flexiaModelArrayList.add(new FlexiaModel(fl[1], fl[0].toLowerCase(), fl[2].toLowerCase()));
         if (fl.length == 2) flexiaModelArrayList.add(new FlexiaModel(fl[1], fl[0].toLowerCase(), ""));

@@ -1,6 +1,5 @@
 package org.apache.lucene.russian.morphology.analayzer;
 
-import org.apache.lucene.russian.morphology.evristics.ArrayEvristics;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;

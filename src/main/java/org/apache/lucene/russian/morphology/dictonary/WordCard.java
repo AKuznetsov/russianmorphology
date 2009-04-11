@@ -3,16 +3,18 @@ package org.apache.lucene.russian.morphology.dictonary;
 import java.util.List;
 import java.util.ArrayList;
 
-
+/**
+ * Represent word and all it forms.
+ */
 public class WordCard {
     private String canonicalFrom;
     private List<String> wordsFroms = new ArrayList<String>();
 
-    public WordCard(String canonicalFrom) {
+    protected WordCard(String canonicalFrom) {
         this.canonicalFrom = canonicalFrom;
     }
 
-    public void addFrom(String word){
+    protected void addFrom(String word){
         wordsFroms.add(word);
     }
 

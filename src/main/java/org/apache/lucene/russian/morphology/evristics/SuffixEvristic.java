@@ -1,6 +1,11 @@
 package org.apache.lucene.russian.morphology.evristics;
 
-
+/**
+ * Represent evristic that assume that
+ * canonical from of word is defined by word suffix.
+ * It contains to suffixes from given position of
+ * canonical word form and for form.
+ */
 public class SuffixEvristic {
     private String formSuffix;
     private String normalSuffix;

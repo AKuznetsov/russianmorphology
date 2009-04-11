@@ -2,6 +2,7 @@ package org.apache.lucene.russian.morphology.evristics;
 
 import org.apache.lucene.russian.morphology.dictonary.WordProccessor;
 import org.apache.lucene.russian.morphology.dictonary.WordCard;
+import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
 
 import java.util.Map;
 import java.util.HashMap;
