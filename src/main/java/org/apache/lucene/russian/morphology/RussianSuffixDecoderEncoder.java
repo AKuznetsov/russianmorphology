@@ -16,14 +16,15 @@ public class RussianSuffixDecoderEncoder {
 
 
     static public Long encode(String string) {
-        if (string.length() > 12) throw new RuntimeException("suffix to long");
+        if (string.length() > 12) throw new SuffixToLongException("Suffix length should not be greater then " + 12);
         long result = 0L;
         for (int i = 0; i < string.length(); i++) {
             int c = 0 + string.charAt(i) - RUSSIAN_SMALL_LETTER_OFFSET;
-            if (c < 0) {
+            if (c == 45 - RUSSIAN_SMALL_LETTER_OFFSET) {
                 c = DASH_CODE;
             }
             if (c == EE_CHAR) c = E_CHAR;
+            if (c < 0 || c > 33) throw new WrongCharaterException(); 
             result = result * 35L + c;
         }
         return result;
