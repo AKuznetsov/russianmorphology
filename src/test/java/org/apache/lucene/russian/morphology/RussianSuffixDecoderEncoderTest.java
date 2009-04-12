@@ -15,7 +15,7 @@ public class RussianSuffixDecoderEncoderTest {
 
     @Test
     public void testShouldCorretDecodeEncode() throws IOException {
-       InputStream stream = this.getClass().getResourceAsStream("/decoder-test-data.txt");
+       InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/russian/morphology/analayzer/decoder-test-data.txt");
        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
        String s = bufferedReader.readLine();
         while(s != null){

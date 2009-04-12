@@ -18,12 +18,13 @@ public class RussianMorphlogyFilter extends TokenFilter {
     public Token next(final Token reusableToken) throws IOException {
         Token nextToken = input.next(reusableToken);
         if(nextToken == null || nextToken.term().length() == 0) return nextToken;
-        Character testC = nextToken.term().charAt(0);
+        String word = nextToken.term().toLowerCase();
+        Character testC = word.charAt(0);
         if (Character.UnicodeBlock.of(testC) != Character.UnicodeBlock.CYRILLIC){
             return  nextToken;
         }
         Token current = (Token) nextToken.clone();
-        return createToken(arrayEvristics.getCanonicalForm(nextToken.term()), current, reusableToken);
+        return createToken(arrayEvristics.getCanonicalForm(word), current, reusableToken);
     }
 
     protected Token createToken(String synonym, Token current, final Token reusableToken) {
