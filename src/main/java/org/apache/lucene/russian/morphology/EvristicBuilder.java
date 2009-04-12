@@ -1,8 +1,6 @@
 package org.apache.lucene.russian.morphology;
 
 import org.apache.lucene.russian.morphology.dictonary.DictonaryReader;
-import org.apache.lucene.russian.morphology.dictonary.WordProccessor;
-import org.apache.lucene.russian.morphology.dictonary.WordCard;
 import org.apache.lucene.russian.morphology.dictonary.IgnoredFormReader;
 import org.apache.lucene.russian.morphology.evristics.StatiticsCollectors;
 import org.apache.lucene.russian.morphology.evristics.SuffixCounter;
@@ -34,6 +32,6 @@ public class EvristicBuilder {
             evristic.addEvristic(((SuffixCounter) objects[i]).getSuffixEvristic());
         }
 
-        evristic.writeToFile("src/main/resources/russianSuffixesEvristics.txt");
+        evristic.writeToFile("src/main/resources/org/apache/lucene/russian/morpholgy/russianSuffixesEvristics.txt");
     }
 }

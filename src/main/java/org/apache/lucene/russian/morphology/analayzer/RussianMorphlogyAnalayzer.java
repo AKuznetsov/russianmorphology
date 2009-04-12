@@ -7,10 +7,10 @@ import java.io.Reader;
 import java.io.IOException;
 
 public class RussianMorphlogyAnalayzer  extends Analyzer {
-    private ArrayEvristics arrayEvristics;
+    private SuffixEvristics suffixEvristics;
 
     public RussianMorphlogyAnalayzer() throws IOException {
-        arrayEvristics = new ArrayEvristics();
+        suffixEvristics = new SuffixEvristics();
     }
 
     public TokenStream tokenStream(String fieldName, Reader reader) {

@@ -6,7 +6,7 @@ import java.io.*;
 import java.util.Arrays;
 
 
-public class ArrayEvristics {
+public class SuffixEvristics {
     private long[] keys;
     private long[] values;
 
@@ -16,11 +16,11 @@ public class ArrayEvristics {
     }
 
 
-    public ArrayEvristics() throws IOException {
+    public SuffixEvristics() throws IOException {
         readFromResource();
     }
 
-    public ArrayEvristics(String fileName) throws IOException {
+    public SuffixEvristics(String fileName) throws IOException {
         readFromFile(fileName);
     }
 
