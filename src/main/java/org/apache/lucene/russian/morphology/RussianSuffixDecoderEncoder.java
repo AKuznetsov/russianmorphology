@@ -4,15 +4,15 @@ package org.apache.lucene.russian.morphology;
  * This helper class allow encode suffix of russian word
  * to long value and decode from it.
  * Assumed that suffix contains only small russian letters and dash.
- * Also assumed that letter å and ¸ coinsed.
+ * Also assumed that letter ï¿½ and ï¿½ coinsed.
  */
 public class RussianSuffixDecoderEncoder {
     public static final int RUSSIAN_SMALL_LETTER_OFFSET = 1071;
     public static final int SUFFIX_LENGTH = 7;
-    private static final int EE_CHAR = 34;
-    private static final int E_CHAR = 6;
-    private static final int DASH_CHAR = 45;
-    private static final int DASH_CODE = 33;
+    public static final int EE_CHAR = 34;
+    public static final int E_CHAR = 6;
+    public static final int DASH_CHAR = 45;
+    public static final int DASH_CODE = 33;
 
 
     static public Long encode(String string) {
@@ -42,5 +42,14 @@ public class RussianSuffixDecoderEncoder {
         if (c == DASH_CODE + RUSSIAN_SMALL_LETTER_OFFSET) c = DASH_CHAR;
         result = (char) c + result;
         return result;
+    }
+
+    static public boolean checkCharacter(char c){
+         int code = 0 + c;
+         if(code == 45) return true;
+         code -= RUSSIAN_SMALL_LETTER_OFFSET;
+         if(code == 34) return true;
+         if(code > 0 && code < 33) return true;
+         return false;
     }
 }

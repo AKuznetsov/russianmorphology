@@ -4,6 +4,7 @@ import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
 
 import java.io.*;
 import java.util.Arrays;
+import java.util.HashSet;
 
 
 public class SuffixEvristics {
@@ -43,7 +44,11 @@ public class SuffixEvristics {
 
     public String getCanonicalForm(String form) {
         int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
-        Long suffix = RussianSuffixDecoderEncoder.encode(form.substring(startSymbol));
+        String suffixS = form.substring(startSymbol);
+
+        if(!chechSuffix(suffixS)) return form;
+
+        Long suffix = RussianSuffixDecoderEncoder.encode(suffixS);
 
         int index = Arrays.binarySearch(keys,suffix);
         if(index < -1){
@@ -54,4 +59,14 @@ public class SuffixEvristics {
             return startSymbol > 0 ? form.substring(0, startSymbol) + nSuffix : nSuffix;
         }
     }
+
+
+    private boolean chechSuffix(String suffix){
+        for(int i = 0; i < suffix.length(); i++){
+            if (!RussianSuffixDecoderEncoder.checkCharacter(suffix.charAt(i))) return false;
+        }
+        return true;
+    }
+
+
 }
