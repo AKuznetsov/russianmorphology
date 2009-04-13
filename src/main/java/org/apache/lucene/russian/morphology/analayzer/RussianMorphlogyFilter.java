@@ -10,7 +10,7 @@ import java.io.IOException;
 public class RussianMorphlogyFilter extends TokenFilter {
     private SuffixEvristics suffixEvristics;
 
-    public RussianMorphlogyFilter(TokenStream tokenStream, SuffixEvristics suffixEvristics) throws IOException {
+    public RussianMorphlogyFilter(TokenStream tokenStream, SuffixEvristics suffixEvristics) {
         super(tokenStream);
         this.suffixEvristics = suffixEvristics;
     }
@@ -18,7 +18,7 @@ public class RussianMorphlogyFilter extends TokenFilter {
     public Token next(final Token reusableToken) throws IOException {
         Token nextToken = input.next(reusableToken);
         if(nextToken == null || nextToken.term().length() == 0) return nextToken;
-        String word = nextToken.term().toLowerCase();
+        String word = nextToken.term();
         Character testC = word.charAt(0);
         if (Character.UnicodeBlock.of(testC) != Character.UnicodeBlock.CYRILLIC){
             return  nextToken;
