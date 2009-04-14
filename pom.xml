@@ -3,14 +3,14 @@
     <groupId>org.apache.lucene</groupId>
     <artifactId>russian-morpholgy</artifactId>
     <packaging>jar</packaging>
-    <version>0.5</version>
+    <version>0.6-SNAPSHOT</version>
     <name>russian-morpholgy</name>
     <url>http://maven.apache.org</url>
 
 
     <scm>
-        <connection>scm:svn:http://russianmorphology.googlecode.com/svn/tags/russian-morpholgy-0.5</connection>
-        <developerConnection>scm:svn:https://russianmorphology.googlecode.com/svn/tags/russian-morpholgy-0.5</developerConnection>
+        <connection>scm:svn:http://russianmorphology.googlecode.com/svn</connection>
+        <developerConnection>scm:svn:https://russianmorphology.googlecode.com/svn</developerConnection>
     </scm>
 
 
