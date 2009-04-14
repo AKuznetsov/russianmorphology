@@ -22,7 +22,7 @@ import java.io.*;
 import java.util.Arrays;
 
 
-public class SuffixEvristics {
+public class SuffixHeuristic {
     private long[] keys;
     private long[] values;
 
@@ -32,11 +32,11 @@ public class SuffixEvristics {
     }
 
 
-    public SuffixEvristics() throws IOException {
+    public SuffixHeuristic() throws IOException {
         readFromResource();
     }
 
-    public SuffixEvristics(String fileName) throws IOException {
+    public SuffixHeuristic(String fileName) throws IOException {
         readFromFile(fileName);
     }
 

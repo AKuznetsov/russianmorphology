@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.lucene.russian.morphology.evristics;
+package org.apache.lucene.russian.morphology.heuristic;
 
 import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
 
@@ -25,14 +25,14 @@ import java.io.IOException;
 import java.util.TreeMap;
 
 
-public class Evristic {
+public class Heuristic {
     private TreeMap<Long, Long> encodedSuffixesPairs = new TreeMap<Long, Long>();
 
-    public void addEvristic(SuffixEvristic suffixEvristic) {
-        Long suffix = RussianSuffixDecoderEncoder.encode(suffixEvristic.getFormSuffix());
+    public void addEvristic(SuffixHeuristic suffixHeuristic) {
+        Long suffix = RussianSuffixDecoderEncoder.encode(suffixHeuristic.getFormSuffix());
         Long longs = encodedSuffixesPairs.get(suffix);
         if (longs == null) {
-            encodedSuffixesPairs.put(suffix, RussianSuffixDecoderEncoder.encode(suffixEvristic.getNormalSuffix()));
+            encodedSuffixesPairs.put(suffix, RussianSuffixDecoderEncoder.encode(suffixHeuristic.getNormalSuffix()));
         }
     }
 

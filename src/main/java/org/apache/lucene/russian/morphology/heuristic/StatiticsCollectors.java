@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.lucene.russian.morphology.evristics;
+package org.apache.lucene.russian.morphology.heuristic;
 
 import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
 import org.apache.lucene.russian.morphology.dictonary.WordCard;
@@ -25,28 +25,28 @@ import java.util.Map;
 
 
 public class StatiticsCollectors implements WordProccessor {
-    Map<SuffixEvristic, SuffixCounter> statititics = new HashMap<SuffixEvristic, SuffixCounter>();
+    Map<SuffixHeuristic, SuffixCounter> statititics = new HashMap<SuffixHeuristic, SuffixCounter>();
 
     private Integer ignoredCount = 0;
 
     public void proccess(WordCard wordCard) {
         for (String form : wordCard.getWordsFroms()) {
-            SuffixEvristic suffixEvristic = createEvristic(wordCard.getCanonicalFrom(), form);
-            if (suffixEvristic == null) continue;
-            SuffixCounter suffixCounter = statititics.get(suffixEvristic);
+            SuffixHeuristic suffixHeuristic = createEvristic(wordCard.getCanonicalFrom(), form);
+            if (suffixHeuristic == null) continue;
+            SuffixCounter suffixCounter = statititics.get(suffixHeuristic);
             if (suffixCounter == null) {
-                suffixCounter = new SuffixCounter(suffixEvristic);
-                statititics.put(suffixEvristic, suffixCounter);
+                suffixCounter = new SuffixCounter(suffixHeuristic);
+                statititics.put(suffixHeuristic, suffixCounter);
             }
             suffixCounter.incrementAmount();
         }
     }
 
-    public Map<SuffixEvristic, SuffixCounter> getStatititics() {
+    public Map<SuffixHeuristic, SuffixCounter> getStatititics() {
         return statititics;
     }
 
-    private SuffixEvristic createEvristic(String word, String form) {
+    private SuffixHeuristic createEvristic(String word, String form) {
         int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
         String formSuffix = form.substring(startSymbol);
         if (word.length() < startSymbol) {
@@ -58,7 +58,7 @@ public class StatiticsCollectors implements WordProccessor {
             System.out.println(word + " " + form);
             return null;
         }
-        return new SuffixEvristic(formSuffix, wordSuffix);
+        return new SuffixHeuristic(formSuffix, wordSuffix);
     }
 
 

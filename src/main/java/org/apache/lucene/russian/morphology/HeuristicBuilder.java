@@ -18,9 +18,9 @@ package org.apache.lucene.russian.morphology;
 
 import org.apache.lucene.russian.morphology.dictonary.DictonaryReader;
 import org.apache.lucene.russian.morphology.dictonary.IgnoredFormReader;
-import org.apache.lucene.russian.morphology.evristics.Evristic;
-import org.apache.lucene.russian.morphology.evristics.StatiticsCollectors;
-import org.apache.lucene.russian.morphology.evristics.SuffixCounter;
+import org.apache.lucene.russian.morphology.heuristic.Heuristic;
+import org.apache.lucene.russian.morphology.heuristic.StatiticsCollectors;
+import org.apache.lucene.russian.morphology.heuristic.SuffixCounter;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -28,7 +28,7 @@ import java.util.Collection;
 import java.util.Set;
 
 
-public class EvristicBuilder {
+public class HeuristicBuilder {
     public static void main(String[] args) throws IOException {
         IgnoredFormReader formReader = new IgnoredFormReader("data/igoredFrom.txt");
         Set<String> form = formReader.getIngnoredFroms();
@@ -44,11 +44,11 @@ public class EvristicBuilder {
             System.out.println(objects[i]);
         }
 
-        final Evristic evristic = new Evristic();
+        final Heuristic heuristic = new Heuristic();
         for (int i = 0; i < objects.length; i++) {
-            evristic.addEvristic(((SuffixCounter) objects[i]).getSuffixEvristic());
+            heuristic.addEvristic(((SuffixCounter) objects[i]).getSuffixEvristic());
         }
 
-        evristic.writeToFile("src/main/resources/org/apache/lucene/russian/morpholgy/russianSuffixesEvristics.txt");
+        heuristic.writeToFile("src/main/resources/org/apache/lucene/russian/morpholgy/russianSuffixesEvristics.txt");
     }
 }

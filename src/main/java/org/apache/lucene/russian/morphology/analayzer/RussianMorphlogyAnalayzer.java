@@ -26,16 +26,16 @@ import java.io.IOException;
 import java.io.Reader;
 
 public class RussianMorphlogyAnalayzer extends Analyzer {
-    private SuffixEvristics suffixEvristics;
+    private SuffixHeuristic suffixHeuristic;
 
     public RussianMorphlogyAnalayzer() throws IOException {
-        suffixEvristics = new SuffixEvristics();
+        suffixHeuristic = new SuffixHeuristic();
     }
 
     public TokenStream tokenStream(String fieldName, Reader reader) {
         TokenStream result = new StandardTokenizer(reader);
         result = new StandardFilter(result);
         result = new LowerCaseFilter(result);
-        return new RussianMorphlogyFilter(result, suffixEvristics);
+        return new RussianMorphlogyFilter(result, suffixHeuristic);
     }
 }

@@ -30,13 +30,13 @@ public class SuffixEvristicsTest {
 
     @Test
     public void testShouldDefineCorretCononicalWordForm() throws IOException {
-        SuffixEvristics suffixEvristics = new SuffixEvristics();
+        SuffixHeuristic suffixHeuristic = new SuffixHeuristic();
         InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/russian/morphology/analayzer/suffix-evristics-test-data.txt");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         String s = bufferedReader.readLine();
         while (s != null) {
             String[] qa = s.trim().split(" ");
-            assertThat(suffixEvristics.getCanonicalForm(qa[0]), equalTo(qa[1]));
+            assertThat(suffixHeuristic.getCanonicalForm(qa[0]), equalTo(qa[1]));
             s = bufferedReader.readLine();
         }
     }

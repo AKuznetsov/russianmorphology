@@ -14,30 +14,30 @@
  * limitations under the License.
  */
 
-package org.apache.lucene.russian.morphology.evristics;
+package org.apache.lucene.russian.morphology.heuristic;
 
 /**
  * Conains information of freqency of suffix evristic
  * in dictionary.
  */
 public class SuffixCounter implements Comparable {
-    private SuffixEvristic suffixEvristic;
+    private SuffixHeuristic suffixHeuristic;
     private Double amnout = 0.0;
 
-    public SuffixCounter(SuffixEvristic suffixEvristic) {
-        this.suffixEvristic = suffixEvristic;
+    public SuffixCounter(SuffixHeuristic suffixHeuristic) {
+        this.suffixHeuristic = suffixHeuristic;
     }
 
     public void incrementAmount() {
         amnout++;
     }
 
-    public SuffixEvristic getSuffixEvristic() {
-        return suffixEvristic;
+    public SuffixHeuristic getSuffixEvristic() {
+        return suffixHeuristic;
     }
 
-    public void setSuffixEvristic(SuffixEvristic suffixEvristic) {
-        this.suffixEvristic = suffixEvristic;
+    public void setSuffixEvristic(SuffixHeuristic suffixHeuristic) {
+        this.suffixHeuristic = suffixHeuristic;
     }
 
     public Double getAmnout() {
@@ -55,6 +55,6 @@ public class SuffixCounter implements Comparable {
 
     @Override
     public String toString() {
-        return "" + amnout + " " + suffixEvristic.toString();
+        return "" + amnout + " " + suffixHeuristic.toString();
     }
 }

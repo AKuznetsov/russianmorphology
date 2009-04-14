@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.lucene.russian.morphology.evristics;
+package org.apache.lucene.russian.morphology.heuristic;
 
 /**
  * Represent evristic that assume that
@@ -22,11 +22,11 @@ package org.apache.lucene.russian.morphology.evristics;
  * It contains to suffixes from given position of
  * canonical word form and for form.
  */
-public class SuffixEvristic {
+public class SuffixHeuristic {
     private String formSuffix;
     private String normalSuffix;
 
-    public SuffixEvristic(String formSuffix, String normalSuffix) {
+    public SuffixHeuristic(String formSuffix, String normalSuffix) {
         this.formSuffix = formSuffix;
         this.normalSuffix = normalSuffix;
     }
@@ -52,7 +52,7 @@ public class SuffixEvristic {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SuffixEvristic that = (SuffixEvristic) o;
+        SuffixHeuristic that = (SuffixHeuristic) o;
 
         if (!formSuffix.equals(that.formSuffix)) return false;
         if (!normalSuffix.equals(that.normalSuffix)) return false;
@@ -69,7 +69,7 @@ public class SuffixEvristic {
 
     @Override
     public String toString() {
-        return "SuffixEvristic{" +
+        return "SuffixHeuristic{" +
                 "formSuffix='" + formSuffix + '\'' +
                 ", normalSuffix='" + normalSuffix + '\'' +
                 '}';

@@ -24,11 +24,11 @@ import java.io.IOException;
 
 
 public class RussianMorphlogyFilter extends TokenFilter {
-    private SuffixEvristics suffixEvristics;
+    private SuffixHeuristic suffixHeuristic;
 
-    public RussianMorphlogyFilter(TokenStream tokenStream, SuffixEvristics suffixEvristics) {
+    public RussianMorphlogyFilter(TokenStream tokenStream, SuffixHeuristic suffixHeuristic) {
         super(tokenStream);
-        this.suffixEvristics = suffixEvristics;
+        this.suffixHeuristic = suffixHeuristic;
     }
 
     public Token next(final Token reusableToken) throws IOException {
@@ -40,7 +40,7 @@ public class RussianMorphlogyFilter extends TokenFilter {
             return nextToken;
         }
         Token current = (Token) nextToken.clone();
-        return createToken(suffixEvristics.getCanonicalForm(word), current, reusableToken);
+        return createToken(suffixHeuristic.getCanonicalForm(word), current, reusableToken);
     }
 
     protected Token createToken(String synonym, Token current, final Token reusableToken) {
