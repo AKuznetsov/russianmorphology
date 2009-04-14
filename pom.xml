@@ -4,9 +4,27 @@
     <groupId>org.apache.lucene</groupId>
     <artifactId>russian-morpholgy</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.5-SNAPSHOT</version>
     <name>russian-morpholgy</name>
     <url>http://maven.apache.org</url>
+
+    <distributionManagement>
+        <repository>
+            <id>russian-morpholgy</id>
+            <url>
+                ../repo/releases
+            </url>
+        </repository>
+        <snapshotRepository>
+            <id>russian-morpholgy-snapshots</id>
+            <url>
+                ../repo/snapshots
+            </url>
+            <uniqueVersion>true</uniqueVersion>
+        </snapshotRepository>
+    </distributionManagement>
+
+
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -29,8 +47,68 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <repositories>
+        <repository>
+            <id>maven2-repository.dev.java.net</id>
+            <name>Java.net Repository for Maven</name>
+            <url>http://download.java.net/maven/2/</url>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>mc-release</id>
+            <name>maven-license-plugin repository of releases</name>
+            <url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
+
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </pluginRepository>
+    </pluginRepositories>
+
+    <reporting>
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>cobertura-maven-plugin</artifactId>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-pmd-plugin</artifactId>
+                <configuration>
+                    <linkXref>true</linkXref>
+                    <sourceEncoding>utf-8</sourceEncoding>
+                    <minimumTokens>100</minimumTokens>
+                    <targetJdk>1.5</targetJdk>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>org.jvnet.wagon-svn</groupId>
+                <artifactId>wagon-svn</artifactId>
+                <version>1.8</version>
+            </extension>
+        </extensions>
+
+        <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -38,6 +116,34 @@
                     <source>1.5</source>
                     <target>1.5</target>
                 </configuration>
+            </plugin>
+            <plugin>
+                <!--
+                 usage: http://code.google.com/p/maven-license-plugin/wiki/HowTo
+                -->
+                <artifactId>maven-license-plugin</artifactId>
+                <groupId>com.mathieucarbou.mojo</groupId>
+
+                <configuration>
+                    <basedir>${project.parent.basedir}</basedir>
+                    <header>etc/header.txt</header>
+                    <excludes>
+                        <exclude>**/*.txt</exclude>
+                    </excludes>
+                    <includes>
+                        <include>**/src/**</include>
+                        <include>**/pom.xml</include>
+                    </includes>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>

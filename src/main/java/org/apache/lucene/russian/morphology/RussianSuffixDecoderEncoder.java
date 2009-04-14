@@ -1,3 +1,19 @@
+/**
+ * Copyright 2009 Alexander Kuznetsov 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.apache.lucene.russian.morphology;
 
 /**
@@ -24,7 +40,7 @@ public class RussianSuffixDecoderEncoder {
                 c = DASH_CODE;
             }
             if (c == EE_CHAR) c = E_CHAR;
-            if (c < 0 || c > 33) throw new WrongCharaterException(); 
+            if (c < 0 || c > 33) throw new WrongCharaterException();
             result = result * 35L + c;
         }
         return result;
@@ -44,12 +60,12 @@ public class RussianSuffixDecoderEncoder {
         return result;
     }
 
-    static public boolean checkCharacter(char c){
-         int code = 0 + c;
-         if(code == 45) return true;
-         code -= RUSSIAN_SMALL_LETTER_OFFSET;
-         if(code == 34) return true;
-         if(code > 0 && code < 33) return true;
-         return false;
+    static public boolean checkCharacter(char c) {
+        int code = 0 + c;
+        if (code == 45) return true;
+        code -= RUSSIAN_SMALL_LETTER_OFFSET;
+        if (code == 34) return true;
+        if (code > 0 && code < 33) return true;
+        return false;
     }
 }

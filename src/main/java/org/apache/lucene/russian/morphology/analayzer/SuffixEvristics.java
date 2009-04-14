@@ -1,10 +1,25 @@
+/**
+ * Copyright 2009 Alexander Kuznetsov 
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package org.apache.lucene.russian.morphology.analayzer;
 
 import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
 
 import java.io.*;
 import java.util.Arrays;
-import java.util.HashSet;
 
 
 public class SuffixEvristics {
@@ -46,23 +61,23 @@ public class SuffixEvristics {
         int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
         String suffixS = form.substring(startSymbol);
 
-        if(!chechSuffix(suffixS)) return form;
+        if (!chechSuffix(suffixS)) return form;
 
         Long suffix = RussianSuffixDecoderEncoder.encode(suffixS);
 
-        int index = Arrays.binarySearch(keys,suffix);
-        if(index < -1){
+        int index = Arrays.binarySearch(keys, suffix);
+        if (index < -1) {
             System.out.println(" " + form);
             return form;
-        }else{
+        } else {
             String nSuffix = RussianSuffixDecoderEncoder.decode(values[index]);
             return startSymbol > 0 ? form.substring(0, startSymbol) + nSuffix : nSuffix;
         }
     }
 
 
-    private boolean chechSuffix(String suffix){
-        for(int i = 0; i < suffix.length(); i++){
+    private boolean chechSuffix(String suffix) {
+        for (int i = 0; i < suffix.length(); i++) {
             if (!RussianSuffixDecoderEncoder.checkCharacter(suffix.charAt(i))) return false;
         }
         return true;
