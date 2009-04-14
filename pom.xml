@@ -8,6 +8,13 @@
     <name>russian-morpholgy</name>
     <url>http://maven.apache.org</url>
 
+
+    <scm>
+        <connection>scm:svn:http://russianmorphology.googlecode.com/svn</connection>
+        <developerConnection>scm:svn:https://russianmorphology.googlecode.com/svn</developerConnection>
+    </scm>
+
+
     <distributionManagement>
         <repository>
             <id>russian-morpholgy</id>
