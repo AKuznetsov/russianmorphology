@@ -17,6 +17,7 @@
 package org.apache.lucene.russian.morphology;
 
 import org.apache.lucene.russian.morphology.dictonary.DictonaryReader;
+import org.apache.lucene.russian.morphology.dictonary.FrequentyReader;
 import org.apache.lucene.russian.morphology.dictonary.IgnoredFormReader;
 import org.apache.lucene.russian.morphology.heuristic.Heuristic;
 import org.apache.lucene.russian.morphology.heuristic.StatiticsCollectors;
@@ -33,8 +34,11 @@ public class HeuristicBuilder {
         IgnoredFormReader formReader = new IgnoredFormReader("data/igoredFrom.txt");
         Set<String> form = formReader.getIngnoredFroms();
 
+        FrequentyReader frequentyReader = new FrequentyReader("data/lemma.num");
+
         DictonaryReader dictonaryReader = new DictonaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", form);
-        StatiticsCollectors statiticsCollectors = new StatiticsCollectors();
+
+        StatiticsCollectors statiticsCollectors = new StatiticsCollectors(frequentyReader.read());
         dictonaryReader.proccess(statiticsCollectors);
         Collection<SuffixCounter> counterCollection = statiticsCollectors.getStatititics().values();
         Object[] objects = counterCollection.toArray();
@@ -46,9 +50,9 @@ public class HeuristicBuilder {
 
         final Heuristic heuristic = new Heuristic();
         for (int i = 0; i < objects.length; i++) {
-            heuristic.addEvristic(((SuffixCounter) objects[i]).getSuffixEvristic());
+            heuristic.addHeuristic(((SuffixCounter) objects[i]).getSuffixHeuristic());
         }
 
-        heuristic.writeToFile("src/main/resources/org/apache/lucene/russian/morpholgy/russianSuffixesEvristics.txt");
+        heuristic.writeToFile("russianSuffixesHeuristic.txt");
     }
 }

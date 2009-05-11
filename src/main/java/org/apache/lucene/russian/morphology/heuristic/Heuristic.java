@@ -28,7 +28,7 @@ import java.util.TreeMap;
 public class Heuristic {
     private TreeMap<Long, Long> encodedSuffixesPairs = new TreeMap<Long, Long>();
 
-    public void addEvristic(SuffixHeuristic suffixHeuristic) {
+    public void addHeuristic(SuffixHeuristic suffixHeuristic) {
         Long suffix = RussianSuffixDecoderEncoder.encode(suffixHeuristic.getFormSuffix());
         Long longs = encodedSuffixesPairs.get(suffix);
         if (longs == null) {

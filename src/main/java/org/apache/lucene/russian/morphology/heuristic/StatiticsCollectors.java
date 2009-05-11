@@ -26,6 +26,11 @@ import java.util.Map;
 
 public class StatiticsCollectors implements WordProccessor {
     Map<SuffixHeuristic, SuffixCounter> statititics = new HashMap<SuffixHeuristic, SuffixCounter>();
+    private Map<String, Double> wordsFreq;
+
+    public StatiticsCollectors(Map<String, Double> wordsFreq) {
+        this.wordsFreq = wordsFreq;
+    }
 
     private Integer ignoredCount = 0;
 
@@ -38,7 +43,13 @@ public class StatiticsCollectors implements WordProccessor {
                 suffixCounter = new SuffixCounter(suffixHeuristic);
                 statititics.put(suffixHeuristic, suffixCounter);
             }
-            suffixCounter.incrementAmount();
+            Double freq = wordsFreq.get(wordCard.getCanonicalFrom());
+            if (freq != null) {
+                suffixCounter.incrementAmount(1 + Math.log(freq));
+            } else {
+                suffixCounter.incrementAmount();
+            }
+
         }
     }
 

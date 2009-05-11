@@ -41,7 +41,7 @@ public class SuffixHeuristic {
     }
 
     public void readFromResource() throws IOException {
-        InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/russian/morphology/russianSuffixesEvristics.txt");
+        InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/russian/morphology/russianSuffixesHeuristic.txt");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
         readFromBufferedRreader(bufferedReader);
     }

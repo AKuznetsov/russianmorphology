@@ -32,7 +32,11 @@ public class SuffixCounter implements Comparable {
         amnout++;
     }
 
-    public SuffixHeuristic getSuffixEvristic() {
+    public void incrementAmount(Double wordFreq) {
+        amnout += wordFreq;
+    }
+
+    public SuffixHeuristic getSuffixHeuristic() {
         return suffixHeuristic;
     }
 
