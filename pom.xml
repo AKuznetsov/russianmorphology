@@ -3,7 +3,7 @@
     <groupId>org.apache.lucene</groupId>
     <artifactId>russian-morpholgy</artifactId>
     <packaging>jar</packaging>
-    <version>0.6</version>
+    <version>0.7-SNAPSHOT</version>
     <name>russian-morpholgy</name>
     <url>http://maven.apache.org</url>
 
