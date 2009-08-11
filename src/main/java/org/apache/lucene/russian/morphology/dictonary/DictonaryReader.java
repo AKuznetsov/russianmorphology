@@ -63,17 +63,18 @@ public class DictonaryReader {
         int count = Integer.valueOf(s);
         for (int i = 0; i < count; i++) {
             s = reader.readLine();
-            if (i % 10000 == 0) System.out.println("Proccess " + i + " word of " + count);
+            if (i % 10000 == 0) System.out.println("Proccess " + i + " wordBase of " + count);
 
             String[] wd = s.split(" ");
-            String word = wd[0].toLowerCase();
-            if (word.startsWith("-")) continue;
-            word = "#".equals(word) ? "" : word;
+            String wordBase = wd[0].toLowerCase();
+            if (wordBase.startsWith("-")) continue;
+            wordBase = "#".equals(wordBase) ? "" : wordBase;
             List<FlexiaModel> models = wordsFlexias.get(Integer.valueOf(wd[1]));
-            if (models.size() > 0 && !ingnoredForm.contains(models.get(0).getCode())) {
-                WordCard card = new WordCard(cleanString(models.get(0).create(word)));
+            FlexiaModel flexiaModel = models.get(0);
+            if (models.size() > 0 && !ingnoredForm.contains(flexiaModel.getCode())) {
+                WordCard card = new WordCard(cleanString(flexiaModel.create(wordBase)), cleanString(wordBase), flexiaModel.getSuffix());
                 for (FlexiaModel fm : models) {
-                    card.addFrom(cleanString(fm.create(word)));
+                    card.addFlexia(fm);
                 }
                 wordProccessor.proccess(card);
             }
@@ -118,9 +119,10 @@ public class DictonaryReader {
     private void addFlexia(ArrayList<FlexiaModel> flexiaModelArrayList, String line) {
         String[] fl = line.split("\\*");
         // we inored all forms thats
-        //  if (fl.length == 3)
-        //      flexiaModelArrayList.add(new FlexiaModel(fl[1], fl[0].toLowerCase(), fl[2].toLowerCase()));
-        if (fl.length == 2) flexiaModelArrayList.add(new FlexiaModel(fl[1], fl[0].toLowerCase(), ""));
+        if (fl.length == 3) {
+            flexiaModelArrayList.add(new FlexiaModel(fl[1], cleanString(fl[0].toLowerCase()), cleanString(fl[2].toLowerCase())));
+        }
+        if (fl.length == 2) flexiaModelArrayList.add(new FlexiaModel(fl[1], cleanString(fl[0].toLowerCase()), ""));
     }
 
 }

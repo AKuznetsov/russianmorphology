@@ -24,7 +24,7 @@ package org.apache.lucene.russian.morphology;
  */
 public class RussianSuffixDecoderEncoder {
     public static final int RUSSIAN_SMALL_LETTER_OFFSET = 1071;
-    public static final int SUFFIX_LENGTH = 7;
+    public static final int SUFFIX_LENGTH = 6;
     public static final int EE_CHAR = 34;
     public static final int E_CHAR = 6;
     public static final int DASH_CHAR = 45;

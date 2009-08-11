@@ -29,11 +29,11 @@ public class Heuristic {
     private TreeMap<Long, Long> encodedSuffixesPairs = new TreeMap<Long, Long>();
 
     public void addHeuristic(SuffixHeuristic suffixHeuristic) {
-        Long suffix = RussianSuffixDecoderEncoder.encode(suffixHeuristic.getFormSuffix());
-        Long longs = encodedSuffixesPairs.get(suffix);
-        if (longs == null) {
-            encodedSuffixesPairs.put(suffix, RussianSuffixDecoderEncoder.encode(suffixHeuristic.getNormalSuffix()));
-        }
+//        Long suffix = RussianSuffixDecoderEncoder.encode(suffixHeuristic.getFormSuffix());
+//        Long longs = encodedSuffixesPairs.get(suffix);
+//        if (longs == null) {
+//            encodedSuffixesPairs.put(suffix, RussianSuffixDecoderEncoder.encode(suffixHeuristic.getNormalSuffix()));
+//        }
     }
 
     public String getNormalForm(String form) {
@@ -47,6 +47,10 @@ public class Heuristic {
 
         }
         return form;
+    }
+
+    public Integer getAmount() {
+        return encodedSuffixesPairs.size();
     }
 
     public void readFromFile(String file) throws IOException {

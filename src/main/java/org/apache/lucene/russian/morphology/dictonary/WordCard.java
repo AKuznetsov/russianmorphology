@@ -24,21 +24,33 @@ import java.util.List;
  */
 public class WordCard {
     private String canonicalFrom;
-    private List<String> wordsFroms = new ArrayList<String>();
+    private String base;
+    private String canonicalSuffix;
+    private List<FlexiaModel> wordsFroms = new ArrayList<FlexiaModel>();
 
-    protected WordCard(String canonicalFrom) {
+    public WordCard(String canonicalFrom, String base, String canonicalSuffix) {
         this.canonicalFrom = canonicalFrom;
+        this.canonicalSuffix = canonicalSuffix;
+        this.base = base;
     }
 
-    protected void addFrom(String word) {
-        wordsFroms.add(word);
+    public void addFlexia(FlexiaModel flexiaModel) {
+        wordsFroms.add(flexiaModel);
     }
 
     public String getCanonicalFrom() {
         return canonicalFrom;
     }
 
-    public List<String> getWordsFroms() {
+    public String getCanonicalSuffix() {
+        return canonicalSuffix;
+    }
+
+    public String getBase() {
+        return base;
+    }
+
+    public List<FlexiaModel> getWordsFroms() {
         return wordsFroms;
     }
 }

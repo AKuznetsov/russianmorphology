@@ -24,27 +24,31 @@ package org.apache.lucene.russian.morphology.heuristic;
  */
 public class SuffixHeuristic {
     private String formSuffix;
-    private String normalSuffix;
+    private Integer actualSuffixLength;
+    private String normalFromSuffix;
+    private String morphInfoCode;
 
-    public SuffixHeuristic(String formSuffix, String normalSuffix) {
+    public SuffixHeuristic(String formSuffix, Integer actualSuffixLength, String normalFromSuffix, String morphInfoCode) {
         this.formSuffix = formSuffix;
-        this.normalSuffix = normalSuffix;
+        this.actualSuffixLength = actualSuffixLength;
+        this.normalFromSuffix = normalFromSuffix;
+        this.morphInfoCode = morphInfoCode;
     }
 
     public String getFormSuffix() {
         return formSuffix;
     }
 
-    public void setFormSuffix(String formSuffix) {
-        this.formSuffix = formSuffix;
+    public Integer getActualSuffixLength() {
+        return actualSuffixLength;
     }
 
-    public String getNormalSuffix() {
-        return normalSuffix;
+    public String getNormalFromSuffix() {
+        return normalFromSuffix;
     }
 
-    public void setNormalSuffix(String normalSuffix) {
-        this.normalSuffix = normalSuffix;
+    public String getMorphInfoCode() {
+        return morphInfoCode;
     }
 
     @Override
@@ -54,24 +58,28 @@ public class SuffixHeuristic {
 
         SuffixHeuristic that = (SuffixHeuristic) o;
 
-        if (!formSuffix.equals(that.formSuffix)) return false;
-        if (!normalSuffix.equals(that.normalSuffix)) return false;
+        if (actualSuffixLength != null ? !actualSuffixLength.equals(that.actualSuffixLength) : that.actualSuffixLength != null)
+            return false;
+        if (formSuffix != null ? !formSuffix.equals(that.formSuffix) : that.formSuffix != null) return false;
+        if (morphInfoCode != null ? !morphInfoCode.equals(that.morphInfoCode) : that.morphInfoCode != null)
+            return false;
+        if (normalFromSuffix != null ? !normalFromSuffix.equals(that.normalFromSuffix) : that.normalFromSuffix != null)
+            return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = formSuffix.hashCode();
-        result = 31 * result + normalSuffix.hashCode();
+        int result = formSuffix != null ? formSuffix.hashCode() : 0;
+        result = 31 * result + (actualSuffixLength != null ? actualSuffixLength.hashCode() : 0);
+        result = 31 * result + (normalFromSuffix != null ? normalFromSuffix.hashCode() : 0);
+        result = 31 * result + (morphInfoCode != null ? morphInfoCode.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return "SuffixHeuristic{" +
-                "formSuffix='" + formSuffix + '\'' +
-                ", normalSuffix='" + normalSuffix + '\'' +
-                '}';
+        return formSuffix + " " + actualSuffixLength + " " + normalFromSuffix + " " + morphInfoCode;
     }
 }
