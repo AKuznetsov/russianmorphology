@@ -21,11 +21,11 @@ package org.apache.lucene.russian.morphology.heuristic;
  * in dictionary.
  */
 public class SuffixCounter implements Comparable {
-    private SuffixHeuristic suffixHeuristic;
+    private SimpleSuffixHeuristic simpleSuffixHeuristic;
     private Double amnout = 0.0;
 
-    public SuffixCounter(SuffixHeuristic suffixHeuristic) {
-        this.suffixHeuristic = suffixHeuristic;
+    public SuffixCounter(SimpleSuffixHeuristic simpleSuffixHeuristic) {
+        this.simpleSuffixHeuristic = simpleSuffixHeuristic;
     }
 
     public void incrementAmount() {
@@ -36,12 +36,12 @@ public class SuffixCounter implements Comparable {
         amnout += wordFreq;
     }
 
-    public SuffixHeuristic getSuffixHeuristic() {
-        return suffixHeuristic;
+    public SimpleSuffixHeuristic getSuffixHeuristic() {
+        return simpleSuffixHeuristic;
     }
 
-    public void setSuffixEvristic(SuffixHeuristic suffixHeuristic) {
-        this.suffixHeuristic = suffixHeuristic;
+    public void setSuffixEvristic(SimpleSuffixHeuristic simpleSuffixHeuristic) {
+        this.simpleSuffixHeuristic = simpleSuffixHeuristic;
     }
 
     public Double getAmnout() {
@@ -59,6 +59,6 @@ public class SuffixCounter implements Comparable {
 
     @Override
     public String toString() {
-        return "" + amnout + " " + suffixHeuristic.toString();
+        return "" + amnout + " " + simpleSuffixHeuristic.toString();
     }
 }

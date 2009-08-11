@@ -27,7 +27,7 @@ import java.util.Map;
 
 
 public class StatiticsCollectors implements WordProccessor {
-    Map<SuffixHeuristic, SuffixCounter> statititics = new HashMap<SuffixHeuristic, SuffixCounter>();
+    Map<SimpleSuffixHeuristic, SuffixCounter> statititics = new HashMap<SimpleSuffixHeuristic, SuffixCounter>();
     private Map<String, Double> wordsFreq;
     private GrammaReader grammaInfo;
 
@@ -40,12 +40,12 @@ public class StatiticsCollectors implements WordProccessor {
 
     public void proccess(WordCard wordCard) {
         for (FlexiaModel fm : wordCard.getWordsFroms()) {
-            SuffixHeuristic suffixHeuristic = createEvristic(wordCard.getCanonicalFrom(), wordCard.getCanonicalSuffix(), fm);
-            if (suffixHeuristic == null) continue;
-            SuffixCounter suffixCounter = statititics.get(suffixHeuristic);
+            SimpleSuffixHeuristic simpleSuffixHeuristic = createEvristic(wordCard.getBase(), wordCard.getCanonicalSuffix(), fm);
+            if (simpleSuffixHeuristic == null) continue;
+            SuffixCounter suffixCounter = statititics.get(simpleSuffixHeuristic);
             if (suffixCounter == null) {
-                suffixCounter = new SuffixCounter(suffixHeuristic);
-                statititics.put(suffixHeuristic, suffixCounter);
+                suffixCounter = new SuffixCounter(simpleSuffixHeuristic);
+                statititics.put(simpleSuffixHeuristic, suffixCounter);
             }
             Double freq = wordsFreq.get(wordCard.getCanonicalFrom());
             if (freq != null) {
@@ -57,27 +57,17 @@ public class StatiticsCollectors implements WordProccessor {
         }
     }
 
-    public Map<SuffixHeuristic, SuffixCounter> getStatititics() {
+    public Map<SimpleSuffixHeuristic, SuffixCounter> getStatititics() {
         return statititics;
     }
 
-    private SuffixHeuristic createEvristic(String wordBase, String canonicalSuffix, FlexiaModel fm) {
+    private SimpleSuffixHeuristic createEvristic(String wordBase, String canonicalSuffix, FlexiaModel fm) {
         String form = fm.create(wordBase);
-        int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
+        int startSymbol = form.length() > RussianSuffixDecoderEncoder.suffixLength ? form.length() - RussianSuffixDecoderEncoder.suffixLength : 0;
         String formSuffix = form.substring(startSymbol);
         String actualSuffix = fm.getSuffix();
         Integer actualSuffixLengh = actualSuffix.length();
-//        if (word.length() < startSymbol) {
-//            ignoredCount++;
-//            return null;
-//        }
-//        String wordSuffix = word.length() > startSymbol ? word.substring(startSymbol) : "";
-//        if (wordSuffix.length() > 12) {
-//            System.out.println(word + " " + form);
-//            return null;
-//        }
-//        return new SuffixHeuristic(formSuffix, wordSuffix);
-        return new SuffixHeuristic(formSuffix, actualSuffixLengh, canonicalSuffix, fm.getCode());
+        return new SimpleSuffixHeuristic(formSuffix, actualSuffixLengh, canonicalSuffix, fm.getCode());
     }
 
 

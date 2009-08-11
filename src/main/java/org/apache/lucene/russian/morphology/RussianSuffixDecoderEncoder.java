@@ -24,12 +24,16 @@ package org.apache.lucene.russian.morphology;
  */
 public class RussianSuffixDecoderEncoder {
     public static final int RUSSIAN_SMALL_LETTER_OFFSET = 1071;
-    public static final int SUFFIX_LENGTH = 6;
+    static public int suffixLength = 6;
     public static final int EE_CHAR = 34;
     public static final int E_CHAR = 6;
     public static final int DASH_CHAR = 45;
     public static final int DASH_CODE = 33;
 
+
+    public RussianSuffixDecoderEncoder(int suffixLength) {
+        RussianSuffixDecoderEncoder.suffixLength = suffixLength;
+    }
 
     static public Long encode(String string) {
         if (string.length() > 12) throw new SuffixToLongException("Suffix length should not be greater then " + 12);

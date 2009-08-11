@@ -28,16 +28,16 @@ import java.util.TreeMap;
 public class Heuristic {
     private TreeMap<Long, Long> encodedSuffixesPairs = new TreeMap<Long, Long>();
 
-    public void addHeuristic(SuffixHeuristic suffixHeuristic) {
-//        Long suffix = RussianSuffixDecoderEncoder.encode(suffixHeuristic.getFormSuffix());
+    public void addHeuristic(SimpleSuffixHeuristic simpleSuffixHeuristic) {
+//        Long suffix = RussianSuffixDecoderEncoder.encode(simpleSuffixHeuristic.getFormSuffix());
 //        Long longs = encodedSuffixesPairs.get(suffix);
 //        if (longs == null) {
-//            encodedSuffixesPairs.put(suffix, RussianSuffixDecoderEncoder.encode(suffixHeuristic.getNormalSuffix()));
+//            encodedSuffixesPairs.put(suffix, RussianSuffixDecoderEncoder.encode(simpleSuffixHeuristic.getNormalSuffix()));
 //        }
     }
 
     public String getNormalForm(String form) {
-        int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
+        int startSymbol = form.length() > RussianSuffixDecoderEncoder.suffixLength ? form.length() - RussianSuffixDecoderEncoder.suffixLength : 0;
         Long suffix = RussianSuffixDecoderEncoder.encode(form.substring(startSymbol));
 
         Long normalSuffix = encodedSuffixesPairs.get(suffix);

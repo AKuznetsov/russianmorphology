@@ -58,7 +58,7 @@ public class SuffixHeuristic {
     }
 
     public String getCanonicalForm(String form) {
-        int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
+        int startSymbol = form.length() > RussianSuffixDecoderEncoder.suffixLength ? form.length() - RussianSuffixDecoderEncoder.suffixLength : 0;
         String suffixS = form.substring(startSymbol);
 
         if (!chechSuffix(suffixS)) return form;

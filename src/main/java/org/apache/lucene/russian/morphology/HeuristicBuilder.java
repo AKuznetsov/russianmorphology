@@ -16,20 +16,15 @@
 
 package org.apache.lucene.russian.morphology;
 
-import org.apache.lucene.russian.morphology.dictonary.DictonaryReader;
-import org.apache.lucene.russian.morphology.dictonary.FrequentyReader;
-import org.apache.lucene.russian.morphology.dictonary.GrammaReader;
-import org.apache.lucene.russian.morphology.dictonary.IgnoredFormReader;
+import org.apache.lucene.russian.morphology.dictonary.*;
 import org.apache.lucene.russian.morphology.heuristic.HeuristicBySuffixLegth;
 import org.apache.lucene.russian.morphology.heuristic.StatiticsCollectors;
 import org.apache.lucene.russian.morphology.heuristic.SuffixCounter;
-import org.apache.lucene.russian.morphology.heuristic.SuffixHeuristic;
+import org.apache.lucene.russian.morphology.heuristic.SimpleSuffixHeuristic;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 public class HeuristicBuilder {
@@ -57,47 +52,28 @@ public class HeuristicBuilder {
             heuristic.addHeuristic(((SuffixCounter) objects[i]).getSuffixHeuristic());
         }
 
-        TreeMap<Integer, Integer> map = new TreeMap<Integer, Integer>();
+        final Map<Long,Set<SimpleSuffixHeuristic>> map = heuristic.getUnkowns();
 
-        int ct = 0;
-        for (Set<SuffixHeuristic> s : heuristic.getHeuristics().values()) {
-            Integer d = map.get(s.size());
-            map.put(s.size(), 1 + (d == null ? 0 : d));
-            if (s.size() == 1) {
-                ct++;
-                continue;
-            }
-            SuffixHeuristic heuristic1 = s.iterator().next();
-            Integer sufixSize = heuristic1.getActualSuffixLength();
-            String normalSuffix = heuristic1.getNormalFromSuffix();
-            if (heuristic1.getFormSuffix().length() < 6) {
-                ct++;
-                continue;
-            }
-            Boolean flag = true;
-            if (sufixSize > 3) continue;
-            for (SuffixHeuristic sh : s) {
-                flag = flag && (sufixSize.equals(sh.getActualSuffixLength()))
-                        && (normalSuffix.equals(sh.getNormalFromSuffix()));
-            }
-            if (flag) {
-                System.out.println(s);
-                ct++;
-            }
-            //HashSet<String> integers = new HashSet<String>();
-//            for(SuffixHeuristic sh:s){
-//                integers.add(sh.getMorphInfoCode());
-//            }
-//            if(s.size() == integers.size()){
-//                ct++;
-//            }else{
-//               if(s.size() == 2) System.out.println(s);
-//            }
-        }
-        System.out.println(objects.length);
-        System.out.println(heuristic.getHeuristics().size());
-        System.out.println(ct);
-        System.out.println(map);
-        //heuristic.writeToFile("russianSuffixesHeuristic.txt");
+        //final RussianSuffixDecoderEncoder decoderEncoder = new RussianSuffixDecoderEncoder(6);
+        final AtomicLong c = new AtomicLong(0L);
+        final AtomicLong all  = new AtomicLong(0L);
+        dictonaryReader.proccess(
+                new WordProccessor(){
+                    public void proccess(WordCard wordCard) throws IOException {
+                        for (FlexiaModel fm : wordCard.getWordsFroms()) {
+                            String form = fm.create(wordCard.getBase());
+                            int startSymbol = form.length() > RussianSuffixDecoderEncoder.suffixLength ? form.length() - RussianSuffixDecoderEncoder.suffixLength : 0;
+                            String formSuffix = form.substring(startSymbol);
+                            Long aLong = RussianSuffixDecoderEncoder.encode(formSuffix);
+                            all.incrementAndGet();
+                            if(map.containsKey(aLong)) c.incrementAndGet();
+                        }
+                    }
+                }
+        );
+
+
+        System.out.println("Ankown words " + all.longValue());
+        System.out.println("Ankown words " + c.longValue());
     }
 }

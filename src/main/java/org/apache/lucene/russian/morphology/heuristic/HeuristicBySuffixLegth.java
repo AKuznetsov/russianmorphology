@@ -9,19 +9,77 @@ import java.util.Set;
 
 
 public class HeuristicBySuffixLegth {
-    private Map<Long, Set<SuffixHeuristic>> heuristics = new HashMap<Long, Set<SuffixHeuristic>>();
+    private Map<Long, Set<SimpleSuffixHeuristic>> heuristics = new HashMap<Long, Set<SimpleSuffixHeuristic>>();
 
-    public void addHeuristic(SuffixHeuristic suffixHeuristic) {
-        Long suffix = RussianSuffixDecoderEncoder.encode(suffixHeuristic.getFormSuffix());
-        Set<SuffixHeuristic> suffixHeuristics = heuristics.get(suffix);
-        if (suffixHeuristics == null) {
-            suffixHeuristics = new HashSet<SuffixHeuristic>();
-            heuristics.put(suffix, suffixHeuristics);
+    public void addHeuristic(SimpleSuffixHeuristic simpleSuffixHeuristic) {
+        Long suffix = RussianSuffixDecoderEncoder.encode(simpleSuffixHeuristic.getFormSuffix());
+        Set<SimpleSuffixHeuristic> simpleSuffixHeuristics = heuristics.get(suffix);
+        if (simpleSuffixHeuristics == null) {
+            simpleSuffixHeuristics = new HashSet<SimpleSuffixHeuristic>();
+            heuristics.put(suffix, simpleSuffixHeuristics);
         }
-        suffixHeuristics.add(suffixHeuristic);
+        simpleSuffixHeuristics.add(simpleSuffixHeuristic);
     }
 
-    public Map<Long, Set<SuffixHeuristic>> getHeuristics() {
+    public Map<Long, Set<SimpleSuffixHeuristic>> getHeuristics() {
         return heuristics;
     }
+
+    public Map<Long,SimpleSuffixHeuristic> getSingleSuffixes(){
+        HashMap<Long, SimpleSuffixHeuristic> result = new HashMap<Long, SimpleSuffixHeuristic>();
+        for(Long st:heuristics.keySet()){
+            if(heuristics.get(st).size() == 1){
+                result.put(st,heuristics.get(st).iterator().next());
+            }
+        }
+        return result;
+    }
+
+
+    public Map<Long,Set<SimpleSuffixHeuristic>> getWordWithMorphology(){
+        HashMap<Long, Set<SimpleSuffixHeuristic>> result = new HashMap<Long, Set<SimpleSuffixHeuristic>>();
+        for(Long st:heuristics.keySet()){
+            if(heuristics.get(st).size() == 1) continue;
+            if(checkSetOnSuffix(heuristics.get(st))) {
+                result.put(st,heuristics.get(st));
+            }
+        }
+        return result;
+    }
+
+    public Map<Long,Set<SimpleSuffixHeuristic>> getOnonyms(){
+        HashMap<Long, Set<SimpleSuffixHeuristic>> result = new HashMap<Long, Set<SimpleSuffixHeuristic>>();
+        for(Long st:heuristics.keySet()){
+            if(heuristics.get(st).size() == 1) continue;
+            if(checkSetOnSuffix(heuristics.get(st))) continue;
+            if(heuristics.get(st).iterator().next().getFormSuffix().length() < 6){
+                result.put(st,heuristics.get(st));
+            }
+        }
+        return result;
+    }
+
+    public Map<Long,Set<SimpleSuffixHeuristic>> getUnkowns(){
+        HashMap<Long, Set<SimpleSuffixHeuristic>> result = new HashMap<Long, Set<SimpleSuffixHeuristic>>();
+        for(Long st:heuristics.keySet()){
+            if(heuristics.get(st).size() == 1) continue;
+            if(checkSetOnSuffix(heuristics.get(st))) continue;
+            if(heuristics.get(st).iterator().next().getFormSuffix().length() >= 6){
+                result.put(st,heuristics.get(st));
+            }
+        }
+        return result;
+    }
+
+    private Boolean checkSetOnSuffix(Set<SimpleSuffixHeuristic> sshs) {
+        SimpleSuffixHeuristic heuristic = sshs.iterator().next();
+        String normalSuffix = heuristic.getFormSuffix();
+        Integer suffixLenght = heuristic.getActualSuffixLength();
+        Boolean result = true;
+        for(SimpleSuffixHeuristic ssh:sshs){
+            result = result && ssh.getActualSuffixLength().equals(suffixLenght) && ssh.getNormalSuffix().endsWith(normalSuffix);
+        }
+        return result;
+    }
+
 }

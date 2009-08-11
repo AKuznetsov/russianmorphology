@@ -6,12 +6,14 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.List;
+import java.util.ArrayList;
 
 //todo spleet this class on two.
 public class GrammaReader {
     private String fileName;
     private String fileEncoding = "windows-1251";
-    private Map<Integer, String> grammaInfo = new HashMap<Integer, String>();
+    private List<String> grammaInfo = new ArrayList<String>();
     private Map<String, Integer> inversIndex = new HashMap<String, Integer>();
 
     public GrammaReader(String fileName) throws IOException {
@@ -34,21 +36,17 @@ public class GrammaReader {
                 String[] strings = line.split(" ", 2);
                 Integer i = grammaInfo.size();
                 inversIndex.put(strings[0], i);
-                grammaInfo.put(i, strings[1]);
+                grammaInfo.add(i, strings[1]);
             }
             line = bufferedReader.readLine();
         }
     }
 
-    public Map<Integer, String> getGrammaInfo() {
+    public List<String> getGrammaInfo() {
         return grammaInfo;
     }
 
-    public void setGrammaInfo(Map<Integer, String> grammaInfo) {
-        this.grammaInfo = grammaInfo;
-    }
-
-    public Map<String, Integer> getInversIndex() {
+    public Map<String, Integer> getGrammInversIndex() {
         return inversIndex;
     }
 

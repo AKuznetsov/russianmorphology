@@ -8,6 +8,6 @@ import java.io.IOException;
 public class Test {
     public static void main(String[] args) throws IOException {
         GrammaReader grammaReader = new GrammaReader("dictonary/Dicts/Morph/rgramtab.tab");
-        System.out.println(grammaReader.getInversIndex().size());
+        //System.out.println(grammaReader.getInversIndex().size());
     }
 }
