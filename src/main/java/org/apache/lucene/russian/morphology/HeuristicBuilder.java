@@ -18,12 +18,15 @@ package org.apache.lucene.russian.morphology;
 
 import org.apache.lucene.russian.morphology.dictonary.*;
 import org.apache.lucene.russian.morphology.heuristic.HeuristicBySuffixLegth;
+import org.apache.lucene.russian.morphology.heuristic.SimpleSuffixHeuristic;
 import org.apache.lucene.russian.morphology.heuristic.StatiticsCollectors;
 import org.apache.lucene.russian.morphology.heuristic.SuffixCounter;
-import org.apache.lucene.russian.morphology.heuristic.SimpleSuffixHeuristic;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
 
@@ -52,13 +55,25 @@ public class HeuristicBuilder {
             heuristic.addHeuristic(((SuffixCounter) objects[i]).getSuffixHeuristic());
         }
 
-        final Map<Long,Set<SimpleSuffixHeuristic>> map = heuristic.getUnkowns();
+        System.out.println("Single suffix " + heuristic.getSingleSuffixes().size());
+        System.out.println("diffiren morgh " + heuristic.getWordWithMorphology().size());
+        System.out.println("Ononims " + heuristic.getOnonyms().size());
+        final Map<Long, Set<SimpleSuffixHeuristic>> map = heuristic.getUnkowns();
+        System.out.println("Unknow suffix " + map.size());
+        int cont = 0;
+        for (Set<SimpleSuffixHeuristic> st : map.values()) {
 
+            if (cont > 20) break;
+            if (st.size() < 3) {
+                System.out.println(st);
+                cont++;
+            }
+        }
         //final RussianSuffixDecoderEncoder decoderEncoder = new RussianSuffixDecoderEncoder(6);
         final AtomicLong c = new AtomicLong(0L);
-        final AtomicLong all  = new AtomicLong(0L);
+        final AtomicLong all = new AtomicLong(0L);
         dictonaryReader.proccess(
-                new WordProccessor(){
+                new WordProccessor() {
                     public void proccess(WordCard wordCard) throws IOException {
                         for (FlexiaModel fm : wordCard.getWordsFroms()) {
                             String form = fm.create(wordCard.getBase());
@@ -66,7 +81,7 @@ public class HeuristicBuilder {
                             String formSuffix = form.substring(startSymbol);
                             Long aLong = RussianSuffixDecoderEncoder.encode(formSuffix);
                             all.incrementAndGet();
-                            if(map.containsKey(aLong)) c.incrementAndGet();
+                            if (map.containsKey(aLong)) c.incrementAndGet();
                         }
                     }
                 }
