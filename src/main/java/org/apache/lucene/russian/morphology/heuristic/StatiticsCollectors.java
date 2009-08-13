@@ -39,8 +39,9 @@ public class StatiticsCollectors implements WordProccessor {
     private Integer ignoredCount = 0;
 
     public void proccess(WordCard wordCard) {
+        String normalStringMorph = wordCard.getWordsFroms().get(0).getCode();
         for (FlexiaModel fm : wordCard.getWordsFroms()) {
-            SimpleSuffixHeuristic simpleSuffixHeuristic = createEvristic(wordCard.getBase(), wordCard.getCanonicalSuffix(), fm);
+            SimpleSuffixHeuristic simpleSuffixHeuristic = createEvristic(wordCard.getBase(), wordCard.getCanonicalSuffix(), fm, normalStringMorph);
             if (simpleSuffixHeuristic == null) continue;
             SuffixCounter suffixCounter = statititics.get(simpleSuffixHeuristic);
             if (suffixCounter == null) {
@@ -61,13 +62,13 @@ public class StatiticsCollectors implements WordProccessor {
         return statititics;
     }
 
-    private SimpleSuffixHeuristic createEvristic(String wordBase, String canonicalSuffix, FlexiaModel fm) {
+    private SimpleSuffixHeuristic createEvristic(String wordBase, String canonicalSuffix, FlexiaModel fm, String normalSuffixForm) {
         String form = fm.create(wordBase);
         int startSymbol = form.length() > RussianSuffixDecoderEncoder.suffixLength ? form.length() - RussianSuffixDecoderEncoder.suffixLength : 0;
         String formSuffix = form.substring(startSymbol);
         String actualSuffix = fm.getSuffix();
         Integer actualSuffixLengh = actualSuffix.length();
-        return new SimpleSuffixHeuristic(formSuffix, actualSuffixLengh, canonicalSuffix, fm.getCode());
+        return new SimpleSuffixHeuristic(formSuffix, actualSuffixLengh, canonicalSuffix, fm.getCode(), normalSuffixForm);
     }
 
 

@@ -27,12 +27,14 @@ public class SimpleSuffixHeuristic {
     private Integer actualSuffixLength;
     private String normalSuffix;
     private String morphInfoCode;
+    private String normalFormMorphInfo;
 
-    public SimpleSuffixHeuristic(String formSuffix, Integer actualSuffixLength, String normalSuffix, String morphInfoCode) {
+    public SimpleSuffixHeuristic(String formSuffix, Integer actualSuffixLength, String normalSuffix, String morphInfoCode, String normalFormMorphInfo) {
         this.formSuffix = formSuffix;
         this.actualSuffixLength = actualSuffixLength;
         this.normalSuffix = normalSuffix;
         this.morphInfoCode = morphInfoCode;
+        this.normalFormMorphInfo = normalFormMorphInfo;
     }
 
     public String getFormSuffix() {
@@ -51,6 +53,14 @@ public class SimpleSuffixHeuristic {
         return morphInfoCode;
     }
 
+    public String getNormalFormMorphInfo() {
+        return normalFormMorphInfo;
+    }
+
+    public void setNormalFormMorphInfo(String normalFormMorphInfo) {
+        this.normalFormMorphInfo = normalFormMorphInfo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,7 +73,8 @@ public class SimpleSuffixHeuristic {
         if (formSuffix != null ? !formSuffix.equals(that.formSuffix) : that.formSuffix != null) return false;
         if (morphInfoCode != null ? !morphInfoCode.equals(that.morphInfoCode) : that.morphInfoCode != null)
             return false;
-        if (normalSuffix != null ? !normalSuffix.equals(that.normalSuffix) : that.normalSuffix != null)
+        if (normalSuffix != null ? !normalSuffix.equals(that.normalSuffix) : that.normalSuffix != null) return false;
+        if (normalFormMorphInfo != null ? !normalFormMorphInfo.equals(that.normalFormMorphInfo) : that.normalFormMorphInfo != null)
             return false;
 
         return true;
@@ -75,11 +86,12 @@ public class SimpleSuffixHeuristic {
         result = 31 * result + (actualSuffixLength != null ? actualSuffixLength.hashCode() : 0);
         result = 31 * result + (normalSuffix != null ? normalSuffix.hashCode() : 0);
         result = 31 * result + (morphInfoCode != null ? morphInfoCode.hashCode() : 0);
+        result = 31 * result + (normalFormMorphInfo != null ? normalFormMorphInfo.hashCode() : 0);
         return result;
     }
 
     @Override
     public String toString() {
-        return formSuffix + " " + actualSuffixLength + " " + normalSuffix + " " + morphInfoCode;
+        return formSuffix + " " + actualSuffixLength + " " + normalSuffix + " " + morphInfoCode + " nf " + normalFormMorphInfo;
     }
 }

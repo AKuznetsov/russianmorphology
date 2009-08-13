@@ -75,9 +75,13 @@ public class HeuristicBySuffixLegth {
         SimpleSuffixHeuristic heuristic = sshs.iterator().next();
         String normalSuffix = heuristic.getNormalSuffix();
         Integer suffixLenght = heuristic.getActualSuffixLength();
+        String normalFormMorphInfo = heuristic.getNormalFormMorphInfo();
         Boolean result = true;
         for (SimpleSuffixHeuristic ssh : sshs) {
-            result = result && ssh.getActualSuffixLength().equals(suffixLenght) && ssh.getNormalSuffix().endsWith(normalSuffix);
+            result = result &&
+                    ssh.getActualSuffixLength().equals(suffixLenght) &&
+                    ssh.getNormalSuffix().equals(normalSuffix) &&
+                    ssh.getNormalFormMorphInfo().equals(normalFormMorphInfo);
         }
         return result;
     }

@@ -63,7 +63,7 @@ public class HeuristicBuilder {
         int cont = 0;
         for (Set<SimpleSuffixHeuristic> st : map.values()) {
 
-            if (cont > 20) break;
+            if (cont > 50) break;
             if (st.size() < 3) {
                 System.out.println(st);
                 cont++;
