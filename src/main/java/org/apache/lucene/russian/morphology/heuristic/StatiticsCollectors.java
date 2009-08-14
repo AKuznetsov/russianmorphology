@@ -18,7 +18,6 @@ package org.apache.lucene.russian.morphology.heuristic;
 
 import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
 import org.apache.lucene.russian.morphology.dictonary.FlexiaModel;
-import org.apache.lucene.russian.morphology.dictonary.GrammaReader;
 import org.apache.lucene.russian.morphology.dictonary.WordCard;
 import org.apache.lucene.russian.morphology.dictonary.WordProccessor;
 
@@ -29,11 +28,10 @@ import java.util.Map;
 public class StatiticsCollectors implements WordProccessor {
     Map<SimpleSuffixHeuristic, SuffixCounter> statititics = new HashMap<SimpleSuffixHeuristic, SuffixCounter>();
     private Map<String, Double> wordsFreq;
-    private GrammaReader grammaInfo;
 
-    public StatiticsCollectors(Map<String, Double> wordsFreq, GrammaReader grammaInfo) {
+
+    public StatiticsCollectors(Map<String, Double> wordsFreq) {
         this.wordsFreq = wordsFreq;
-        this.grammaInfo = grammaInfo;
     }
 
     private Integer ignoredCount = 0;
@@ -66,9 +64,19 @@ public class StatiticsCollectors implements WordProccessor {
         String form = fm.create(wordBase);
         int startSymbol = form.length() > RussianSuffixDecoderEncoder.suffixLength ? form.length() - RussianSuffixDecoderEncoder.suffixLength : 0;
         String formSuffix = form.substring(startSymbol);
-        String actualSuffix = fm.getSuffix();
-        Integer actualSuffixLengh = actualSuffix.length();
-        return new SimpleSuffixHeuristic(formSuffix, actualSuffixLengh, canonicalSuffix, fm.getCode(), normalSuffixForm);
+        String normalForm = wordBase + canonicalSuffix;
+        Integer length = getCommonLength(form, normalForm);
+        Integer actualSuffixLengh = form.length() - length;
+        String actualNormalSuffix = normalForm.substring(length);
+        return new SimpleSuffixHeuristic(formSuffix, actualSuffixLengh, actualNormalSuffix, fm.getCode(), normalSuffixForm);
+    }
+
+    public static Integer getCommonLength(String s1, String s2) {
+        Integer length = Math.min(s1.length(), s2.length());
+        for (int i = 0; i < length; i++) {
+            if (s1.charAt(i) != s2.charAt(i)) return i;
+        }
+        return length;
     }
 
 
