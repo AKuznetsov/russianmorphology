@@ -120,7 +120,8 @@ public class DictonaryReader {
         String[] fl = line.split("\\*");
         // we inored all forms thats
         if (fl.length == 3) {
-            flexiaModelArrayList.add(new FlexiaModel(fl[1], cleanString(fl[0].toLowerCase()), cleanString(fl[2].toLowerCase())));
+            System.out.println(line);
+            // flexiaModelArrayList.add(new FlexiaModel(fl[1], cleanString(fl[0].toLowerCase()), cleanString(fl[2].toLowerCase())));
         }
         if (fl.length == 2) flexiaModelArrayList.add(new FlexiaModel(fl[1], cleanString(fl[0].toLowerCase()), ""));
     }

@@ -6,14 +6,15 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 
-public class Splitter {
+public class Morph {
     int[][] separators;
 
-    public Splitter(String fileName) throws IOException {
+
+    public Morph(String fileName) throws IOException {
         readFromFile(fileName);
     }
 
-    public Splitter(int[][] separators) {
+    public Morph(int[][] separators) {
         this.separators = separators;
     }
 

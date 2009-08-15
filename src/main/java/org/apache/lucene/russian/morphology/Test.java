@@ -15,7 +15,13 @@
  */
 package org.apache.lucene.russian.morphology;
 
+import org.apache.lucene.russian.morphology.informations.Heuristic;
+import org.apache.lucene.russian.morphology.informations.Morph;
+
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 
 /**
  * Created by IntelliJ IDEA.
@@ -26,8 +32,13 @@ import java.io.IOException;
  */
 public class Test {
 
-    public static void main(String[] args) throws IOException {
-        //Splitter splitter = new Splitter("sep.txt");
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        //
+        Morph splitter = new Morph("sep.txt");
+        ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("suffixes"));
+        ArrayList<Heuristic> hr = (ArrayList<Heuristic>) inputStream.readObject();
+        System.gc();
+        System.out.println("Ready");
         System.in.read();
     }
 }

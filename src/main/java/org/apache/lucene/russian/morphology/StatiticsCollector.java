@@ -18,17 +18,27 @@ package org.apache.lucene.russian.morphology;
 
 
 import org.apache.lucene.russian.morphology.dictonary.FlexiaModel;
+import org.apache.lucene.russian.morphology.dictonary.GrammaReader;
 import org.apache.lucene.russian.morphology.dictonary.WordCard;
 import org.apache.lucene.russian.morphology.dictonary.WordProccessor;
-import org.apache.lucene.russian.morphology.informations.Splitter;
+import org.apache.lucene.russian.morphology.informations.Heuristic;
+import org.apache.lucene.russian.morphology.informations.Morph;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.*;
 
 
 public class StatiticsCollector implements WordProccessor {
     private TreeMap<String, Set<Heuristic>> inversIndex = new TreeMap<String, Set<Heuristic>>();
     private Set<Heuristic> noramlSuffix = new HashSet<Heuristic>();
+    private Set<Set<Heuristic>> ds = new HashSet<Set<Heuristic>>();
+    private GrammaReader grammaReader;
+
+    public StatiticsCollector(GrammaReader grammaReader) {
+        this.grammaReader = grammaReader;
+    }
 
     public void proccess(WordCard wordCard) throws IOException {
         String normalStringMorph = wordCard.getWordsFroms().get(0).getCode();
@@ -60,6 +70,7 @@ public class StatiticsCollector implements WordProccessor {
                 dist.put(key.length(), 1 + (d == null ? 0 : d));
                 prevSet = currentSet;
                 count++;
+                ds.add(currentSet);
                 for (Heuristic h : currentSet) {
                     noramlSuffix.add(h);
                 }
@@ -69,14 +80,11 @@ public class StatiticsCollector implements WordProccessor {
         System.out.println("All ivers words " + inversIndex.size());
         System.out.println(dist);
         System.out.println("Diffirent suffix counts " + noramlSuffix.size());
-
-        int maxLegth = Integer.MIN_VALUE;
-        for (Heuristic n : noramlSuffix) {
-            if (n.actualNormalSuffix.length() > maxLegth) maxLegth = n.actualNormalSuffix.length();
-        }
+        System.out.println("diffirent rule count " + ds.size());
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("suffixes"));
         ArrayList<Heuristic> list = new ArrayList<Heuristic>(noramlSuffix);
-        //new FileWriter()
-        System.out.println("Max lenght " + maxLegth);
+        objectOutputStream.writeObject(list);
+        objectOutputStream.close();
 
         int[][] ints = new int[count][];
         count = 0;
@@ -89,8 +97,8 @@ public class StatiticsCollector implements WordProccessor {
                 prevSet = currentSet;
             }
         }
-        Splitter splitter = new Splitter(ints);
-        splitter.writeToFile("sep.txt");
+        Morph morph = new Morph(ints);
+        morph.writeToFile("sep.txt");
 
     }
 
@@ -109,7 +117,11 @@ public class StatiticsCollector implements WordProccessor {
         Integer length = getCommonLength(form, normalForm);
         Integer actualSuffixLengh = form.length() - length;
         String actualNormalSuffix = normalForm.substring(length);
-        return new Heuristic(actualSuffixLengh, actualNormalSuffix, fm.getCode(), normalSuffixForm);
+        Integer integer = grammaReader.getGrammInversIndex().get(fm.getCode().substring(0, 2));
+        //System.out.println(fm.getCode() + " " + integer);
+        Integer nf = grammaReader.getGrammInversIndex().get(normalSuffixForm.substring(0, 2));
+        //System.out.println(normalSuffixForm + " " + nf);
+        return new Heuristic((byte) actualSuffixLengh.intValue(), actualNormalSuffix, (short) integer.intValue(), (short) nf.intValue());
     }
 
     public static Integer getCommonLength(String s1, String s2) {
@@ -118,48 +130,5 @@ public class StatiticsCollector implements WordProccessor {
             if (s1.charAt(i) != s2.charAt(i)) return i;
         }
         return length;
-    }
-
-
-    private class Heuristic {
-        Integer actualSuffixLengh;
-        String actualNormalSuffix;
-        String formMorphInfo;
-        String normalSuffixForm;
-
-        private Heuristic(Integer actualSuffixLengh, String actualNormalSuffix, String formMorphInfo, String normalSuffixForm) {
-            this.actualSuffixLengh = actualSuffixLengh;
-            this.actualNormalSuffix = actualNormalSuffix;
-            this.formMorphInfo = formMorphInfo;
-            this.normalSuffixForm = normalSuffixForm;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-
-            Heuristic heuristic = (Heuristic) o;
-
-            if (actualNormalSuffix != null ? !actualNormalSuffix.equals(heuristic.actualNormalSuffix) : heuristic.actualNormalSuffix != null)
-                return false;
-            if (actualSuffixLengh != null ? !actualSuffixLengh.equals(heuristic.actualSuffixLengh) : heuristic.actualSuffixLengh != null)
-                return false;
-            if (formMorphInfo != null ? !formMorphInfo.equals(heuristic.formMorphInfo) : heuristic.formMorphInfo != null)
-                return false;
-            if (normalSuffixForm != null ? !normalSuffixForm.equals(heuristic.normalSuffixForm) : heuristic.normalSuffixForm != null)
-                return false;
-
-            return true;
-        }
-
-        @Override
-        public int hashCode() {
-            int result = actualSuffixLengh != null ? actualSuffixLengh.hashCode() : 0;
-            result = 31 * result + (actualNormalSuffix != null ? actualNormalSuffix.hashCode() : 0);
-            result = 31 * result + (formMorphInfo != null ? formMorphInfo.hashCode() : 0);
-            result = 31 * result + (normalSuffixForm != null ? normalSuffixForm.hashCode() : 0);
-            return result;
-        }
     }
 }
