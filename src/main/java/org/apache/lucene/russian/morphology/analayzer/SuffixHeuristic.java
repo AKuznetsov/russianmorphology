@@ -58,19 +58,19 @@ public class SuffixHeuristic {
     }
 
     public String getCanonicalForm(String form) {
-        int startSymbol = form.length() > RussianSuffixDecoderEncoder.suffixLength ? form.length() - RussianSuffixDecoderEncoder.suffixLength : 0;
+        int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
         String suffixS = form.substring(startSymbol);
 
         if (!chechSuffix(suffixS)) return form;
 
-        Long suffix = RussianSuffixDecoderEncoder.encode(suffixS);
+        Integer suffix = RussianSuffixDecoderEncoder.encode(suffixS);
 
         int index = Arrays.binarySearch(keys, suffix);
         if (index < -1) {
             System.out.println(" " + form);
             return form;
         } else {
-            String nSuffix = RussianSuffixDecoderEncoder.decode(values[index]);
+            String nSuffix = RussianSuffixDecoderEncoder.decode((int) values[index]);
             return startSymbol > 0 ? form.substring(0, startSymbol) + nSuffix : nSuffix;
         }
     }

@@ -16,18 +16,13 @@
 
 package org.apache.lucene.russian.morphology;
 
-import org.apache.lucene.russian.morphology.dictonary.*;
-import org.apache.lucene.russian.morphology.heuristic.HeuristicBySuffixLegth;
-import org.apache.lucene.russian.morphology.heuristic.SimpleSuffixHeuristic;
-import org.apache.lucene.russian.morphology.heuristic.StatiticsCollectors;
-import org.apache.lucene.russian.morphology.heuristic.SuffixCounter;
+import org.apache.lucene.russian.morphology.dictonary.DictonaryReader;
+import org.apache.lucene.russian.morphology.dictonary.FrequentyReader;
+import org.apache.lucene.russian.morphology.dictonary.GrammaReader;
+import org.apache.lucene.russian.morphology.dictonary.IgnoredFormReader;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.atomic.AtomicLong;
 
 
 public class HeuristicBuilder {
@@ -39,9 +34,9 @@ public class HeuristicBuilder {
         GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morph/rgramtab.tab");
         DictonaryReader dictonaryReader = new DictonaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", form);
 
-        NewModel newModel = new NewModel();
-        dictonaryReader.proccess(newModel);
-        newModel.printInfo();
+        StatiticsCollector statiticsCollector = new StatiticsCollector();
+        dictonaryReader.proccess(statiticsCollector);
+        statiticsCollector.printInfo();
 
 
 //        StatiticsCollectors statiticsCollectors = new StatiticsCollectors(frequentyReader.read());
@@ -84,7 +79,7 @@ public class HeuristicBuilder {
 //                            if(form.startsWith("прик") && form.endsWith("ья")) System.out.println(form);
 //
 //
-//                            int startSymbol = form.length() > RussianSuffixDecoderEncoder.suffixLength ? form.length() - RussianSuffixDecoderEncoder.suffixLength : 0;
+//                            int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
 //                            String formSuffix = form.substring(startSymbol);
 //                            Long aLong = RussianSuffixDecoderEncoder.encode(formSuffix);
 //                            all.incrementAndGet();

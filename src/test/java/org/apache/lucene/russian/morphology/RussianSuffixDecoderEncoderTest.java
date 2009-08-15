@@ -35,8 +35,21 @@ public class RussianSuffixDecoderEncoderTest {
         String s = bufferedReader.readLine();
         while (s != null) {
             String[] qa = s.trim().split(" ");
-            Long ecodedSuffix = RussianSuffixDecoderEncoder.encode(qa[0]);
+            Integer ecodedSuffix = RussianSuffixDecoderEncoder.encode(qa[0]);
             assertThat(RussianSuffixDecoderEncoder.decode(ecodedSuffix), equalTo(qa[1]));
+            s = bufferedReader.readLine();
+        }
+    }
+
+    @Test
+    public void testShouldCorretDecodeEncodeStringToArray() throws IOException {
+        InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/russian/morphology/decoder-test-data-for-array.txt");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        String s = bufferedReader.readLine();
+        while (s != null) {
+            String[] qa = s.trim().split(" ");
+            int[] ecodedSuffix = RussianSuffixDecoderEncoder.encodeToArray(qa[0]);
+            assertThat(RussianSuffixDecoderEncoder.decodeArray(ecodedSuffix), equalTo(qa[1]));
             s = bufferedReader.readLine();
         }
     }

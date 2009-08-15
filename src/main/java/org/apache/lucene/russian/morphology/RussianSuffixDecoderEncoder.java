@@ -16,6 +16,8 @@
 
 package org.apache.lucene.russian.morphology;
 
+import java.util.ArrayList;
+
 /**
  * This helper class allow encode suffix of russian word
  * to long value and decode from it.
@@ -24,39 +26,67 @@ package org.apache.lucene.russian.morphology;
  */
 public class RussianSuffixDecoderEncoder {
     public static final int RUSSIAN_SMALL_LETTER_OFFSET = 1071;
-    static public int suffixLength = 6;
+    static public int SUFFIX_LENGTH = 6;
     public static final int EE_CHAR = 34;
     public static final int E_CHAR = 6;
     public static final int DASH_CHAR = 45;
     public static final int DASH_CODE = 33;
 
-
-    public RussianSuffixDecoderEncoder(int suffixLength) {
-        RussianSuffixDecoderEncoder.suffixLength = suffixLength;
-    }
-
-    static public Long encode(String string) {
-        if (string.length() > 12) throw new SuffixToLongException("Suffix length should not be greater then " + 12);
-        long result = 0L;
+    static public Integer encode(String string) {
+        if (string.length() > 6) throw new SuffixToLongException("Suffix length should not be greater then " + 12);
+        int result = 0;
         for (int i = 0; i < string.length(); i++) {
             int c = 0 + string.charAt(i) - RUSSIAN_SMALL_LETTER_OFFSET;
             if (c == 45 - RUSSIAN_SMALL_LETTER_OFFSET) {
                 c = DASH_CODE;
             }
             if (c == EE_CHAR) c = E_CHAR;
-            if (c < 0 || c > 33) throw new WrongCharaterException();
-            result = result * 35L + c;
+            if (c < 0 || c > 33)
+                throw new WrongCharaterException("Symblo " + string.charAt(i) + " is not small cirillic letter");
+            result = result * 34 + c;
+        }
+        for (int i = string.length(); i < 6; i++) {
+            result *= 34;
         }
         return result;
     }
 
-    static public String decode(Long suffixN) {
+    static public int[] encodeToArray(String s) {
+        ArrayList<Integer> integers = new ArrayList<Integer>();
+        while (s.length() > 6) {
+            integers.add(encode(s.substring(0, 6)));
+            s = s.substring(6);
+        }
+        integers.add(encode(s));
+        int[] ints = new int[integers.size()];
+        int pos = 0;
+        for (Integer i : integers) {
+            ints[pos] = i;
+            pos++;
+        }
+        return ints;
+    }
+
+    static public String decodeArray(int[] array) {
         String result = "";
-        while (suffixN > 35) {
-            long c = suffixN % 35 + RUSSIAN_SMALL_LETTER_OFFSET;
+        for (int i : array) {
+            result += decode(i);
+        }
+        return result;
+    }
+
+
+    static public String decode(Integer suffixN) {
+        String result = "";
+        while (suffixN > 33) {
+            int c = suffixN % 34 + RUSSIAN_SMALL_LETTER_OFFSET;
+            if (c == RUSSIAN_SMALL_LETTER_OFFSET) {
+                suffixN /= 34;
+                continue;
+            }
             if (c == DASH_CODE + RUSSIAN_SMALL_LETTER_OFFSET) c = DASH_CHAR;
             result = (char) c + result;
-            suffixN /= 35;
+            suffixN /= 34;
         }
         long c = suffixN + RUSSIAN_SMALL_LETTER_OFFSET;
         if (c == DASH_CODE + RUSSIAN_SMALL_LETTER_OFFSET) c = DASH_CHAR;
@@ -68,7 +98,6 @@ public class RussianSuffixDecoderEncoder {
         int code = 0 + c;
         if (code == 45) return true;
         code -= RUSSIAN_SMALL_LETTER_OFFSET;
-        if (code == 34) return true;
         if (code > 0 && code < 33) return true;
         return false;
     }
