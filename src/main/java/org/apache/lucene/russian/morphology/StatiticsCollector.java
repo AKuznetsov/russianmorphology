@@ -23,18 +23,18 @@ import org.apache.lucene.russian.morphology.dictonary.WordCard;
 import org.apache.lucene.russian.morphology.dictonary.WordProccessor;
 import org.apache.lucene.russian.morphology.informations.Heuristic;
 import org.apache.lucene.russian.morphology.informations.Morph;
+import org.apache.lucene.russian.morphology.informations.RuleInfo;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectOutputStream;
 import java.util.*;
 
 
 public class StatiticsCollector implements WordProccessor {
     private TreeMap<String, Set<Heuristic>> inversIndex = new TreeMap<String, Set<Heuristic>>();
-    private Set<Heuristic> noramlSuffix = new HashSet<Heuristic>();
-    private Set<Set<Heuristic>> ds = new HashSet<Set<Heuristic>>();
+    private Map<Set<Heuristic>, Integer> ruleInverIndex = new HashMap<Set<Heuristic>, Integer>();
+    private List<Set<Heuristic>> rules = new ArrayList<Set<Heuristic>>();
     private GrammaReader grammaReader;
+
 
     public StatiticsCollector(GrammaReader grammaReader) {
         this.grammaReader = grammaReader;
@@ -44,7 +44,7 @@ public class StatiticsCollector implements WordProccessor {
         String normalStringMorph = wordCard.getWordsFroms().get(0).getCode();
         String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
         if (word.contains("-")) return;
-        //if(wordCard.getBase()+)
+
         for (FlexiaModel fm : wordCard.getWordsFroms()) {
             Heuristic heuristic = createEvristic(wordCard.getBase(), wordCard.getCanonicalSuffix(), fm, normalStringMorph);
             String form = revertWord(fm.create(wordCard.getBase()));
@@ -58,7 +58,7 @@ public class StatiticsCollector implements WordProccessor {
     }
 
 
-    public void printInfo() throws IOException {
+    public void saveHeuristic() throws IOException {
 
         Map<Integer, Integer> dist = new TreeMap<Integer, Integer>();
         Set<Heuristic> prevSet = null;
@@ -70,36 +70,43 @@ public class StatiticsCollector implements WordProccessor {
                 dist.put(key.length(), 1 + (d == null ? 0 : d));
                 prevSet = currentSet;
                 count++;
-                ds.add(currentSet);
-                for (Heuristic h : currentSet) {
-                    noramlSuffix.add(h);
+                if (!ruleInverIndex.containsKey(currentSet)) {
+                    ruleInverIndex.put(currentSet, rules.size());
+                    rules.add(currentSet);
                 }
             }
         }
         System.out.println("Word with diffirent rules " + count);
         System.out.println("All ivers words " + inversIndex.size());
         System.out.println(dist);
-        System.out.println("Diffirent suffix counts " + noramlSuffix.size());
-        System.out.println("diffirent rule count " + ds.size());
-        ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream("suffixes"));
-        ArrayList<Heuristic> list = new ArrayList<Heuristic>(noramlSuffix);
-        objectOutputStream.writeObject(list);
-        objectOutputStream.close();
+        System.out.println("diffirent rule count " + ruleInverIndex.size());
+        Heuristic[][] heuristics = new Heuristic[ruleInverIndex.size()][];
+        int index = 0;
+        for (Set<Heuristic> hs : rules) {
+            heuristics[index] = new Heuristic[hs.size()];
+            int indexj = 0;
+            for (Heuristic h : hs) {
+                heuristics[index][indexj] = h;
+                indexj++;
+            }
+            index++;
+        }
 
         int[][] ints = new int[count][];
+        short[] rulesId = new short[count];
         count = 0;
         prevSet = null;
         for (String key : inversIndex.keySet()) {
             Set<Heuristic> currentSet = inversIndex.get(key);
             if (!currentSet.equals(prevSet)) {
                 ints[count] = RussianSuffixDecoderEncoder.encodeToArray(key);
+                rulesId[count] = (short) ruleInverIndex.get(currentSet).intValue();
                 count++;
                 prevSet = currentSet;
             }
         }
-        Morph morph = new Morph(ints);
+        Morph morph = new Morph(ints, rulesId, heuristics, grammaReader.getGrammaInfoAsArray());
         morph.writeToFile("sep.txt");
-
     }
 
     private String revertWord(String s) {
@@ -118,9 +125,7 @@ public class StatiticsCollector implements WordProccessor {
         Integer actualSuffixLengh = form.length() - length;
         String actualNormalSuffix = normalForm.substring(length);
         Integer integer = grammaReader.getGrammInversIndex().get(fm.getCode().substring(0, 2));
-        //System.out.println(fm.getCode() + " " + integer);
         Integer nf = grammaReader.getGrammInversIndex().get(normalSuffixForm.substring(0, 2));
-        //System.out.println(normalSuffixForm + " " + nf);
         return new Heuristic((byte) actualSuffixLengh.intValue(), actualNormalSuffix, (short) integer.intValue(), (short) nf.intValue());
     }
 
@@ -130,5 +135,9 @@ public class StatiticsCollector implements WordProccessor {
             if (s1.charAt(i) != s2.charAt(i)) return i;
         }
         return length;
+    }
+
+    public RuleInfo getRuleInfo() {
+        return null;
     }
 }

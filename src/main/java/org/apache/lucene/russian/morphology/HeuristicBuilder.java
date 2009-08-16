@@ -36,7 +36,7 @@ public class HeuristicBuilder {
 
         StatiticsCollector statiticsCollector = new StatiticsCollector(grammaInfo);
         dictonaryReader.proccess(statiticsCollector);
-        statiticsCollector.printInfo();
+        statiticsCollector.saveHeuristic();
 
 
 //        StatiticsCollectors statiticsCollectors = new StatiticsCollectors(frequentyReader.read());

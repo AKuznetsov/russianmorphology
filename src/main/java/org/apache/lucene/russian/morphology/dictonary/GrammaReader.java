@@ -62,6 +62,10 @@ public class GrammaReader {
         return grammaInfo;
     }
 
+    public String[] getGrammaInfoAsArray() {
+        return grammaInfo.toArray(new String[grammaInfo.size()]);
+    }
+
     public Map<String, Integer> getGrammInversIndex() {
         return inversIndex;
     }
