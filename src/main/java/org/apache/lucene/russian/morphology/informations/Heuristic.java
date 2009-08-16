@@ -24,6 +24,26 @@ public class Heuristic implements Serializable {
         this.normalFormMorphInfo = normalFormMorphInfo;
     }
 
+    public String transofrmWord(String w) {
+        return w.substring(0, w.length() - actualSuffixLengh) + actualNormalSuffix;
+    }
+
+    public byte getActualSuffixLengh() {
+        return actualSuffixLengh;
+    }
+
+    public String getActualNormalSuffix() {
+        return actualNormalSuffix;
+    }
+
+    public short getFormMorphInfo() {
+        return formMorphInfo;
+    }
+
+    public short getNormalFormMorphInfo() {
+        return normalFormMorphInfo;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

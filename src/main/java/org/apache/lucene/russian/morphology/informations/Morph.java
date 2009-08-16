@@ -1,9 +1,13 @@
 package org.apache.lucene.russian.morphology.informations;
 
+import org.apache.lucene.russian.morphology.RussianSuffixDecoderEncoder;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Morph {
@@ -22,6 +26,50 @@ public class Morph {
         this.rulesId = rulesId;
         this.rules = rules;
         this.grammaInfo = grammaInfo;
+    }
+
+    public List<String> getMorhInfo(String s) {
+        ArrayList<String> result = new ArrayList<String>();
+        int[] ints = RussianSuffixDecoderEncoder.encodeToArray(revertWord(s));
+        int ruleId = findRuleId(ints);
+        for (Heuristic h : rules[rulesId[ruleId]]) {
+            System.out.println(h);
+            result.add(h.transofrmWord(s));
+        }
+        return result;
+    }
+
+    private int findRuleId(int[] ints) {
+        int low = 0;
+        int high = separators.length - 1;
+        int mid = 0;
+        while (low <= high) {
+            mid = (low + high) >>> 1;
+            int[] midVal = separators[mid];
+
+            int comResult = compareToInts(ints, midVal);
+            if (comResult > 0)
+                low = mid + 1;
+            else if (comResult < 0)
+                high = mid - 1;
+            else
+                break;
+        }
+        if (compareToInts(ints, separators[mid]) >= 0) {
+            return mid;
+        } else {
+            return mid + 1;
+        }
+
+    }
+
+    private int compareToInts(int[] i1, int[] i2) {
+        int minLength = Math.min(i1.length, i2.length);
+        for (int i = 0; i < minLength; i++) {
+            int i3 = i1[i] < i2[i] ? -1 : (i1[i] == i2[i] ? 0 : 1);
+            if (i3 != 0) return i3;
+        }
+        return i2.length - i1.length;
     }
 
     public void writeToFile(String fileName) throws IOException {
@@ -86,5 +134,13 @@ public class Morph {
             grammaInfo[i] = bufferedReader.readLine();
         }
         bufferedReader.close();
+    }
+
+    private String revertWord(String s) {
+        String result = "";
+        for (int i = 1; i <= s.length(); i++) {
+            result += s.charAt(s.length() - i);
+        }
+        return result;
     }
 }

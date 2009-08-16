@@ -17,7 +17,10 @@ package org.apache.lucene.russian.morphology;
 
 import org.apache.lucene.russian.morphology.informations.Morph;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 /**
  * Created by IntelliJ IDEA.
@@ -31,6 +34,12 @@ public class Test {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         //
         Morph splitter = new Morph("sep.txt");
+        InputStream stream = Test.class.getResourceAsStream("/org/apache/lucene/russian/morphology/analayzer/russian-text.txt");
+        BufferedReader stream1 = new BufferedReader(new InputStreamReader(stream));
+        String s = stream1.readLine().trim().toLowerCase();
+        for (String w : s.split(" ")) {
+            System.out.println(splitter.getMorhInfo(w));
+        }
         System.gc();
         System.out.println("Ready");
         System.in.read();

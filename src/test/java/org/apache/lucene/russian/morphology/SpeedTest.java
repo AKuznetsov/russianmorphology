@@ -15,15 +15,31 @@
  */
 package org.apache.lucene.russian.morphology;
 
+import org.apache.lucene.russian.morphology.informations.Morph;
 import org.junit.Test;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
 public class SpeedTest {
 
     @Test
     public void getTestOfSpeed() throws IOException {
+        Morph splitter = new Morph("sep.txt");
+        InputStream stream = Test.class.getResourceAsStream("/org/apache/lucene/russian/morphology/analayzer/russian-text.txt");
+        BufferedReader stream1 = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        String s = stream1.readLine().trim().toLowerCase();
+        for (String w : s.split(" ")) {
+            try {
+                System.out.println(w);
+                System.out.println(splitter.getMorhInfo(w));
+            } catch (WrongCharaterException e) {
+
+            }
+        }
 //        Long startTime = System.currentTimeMillis();
 //        RussianMorphlogyAnalayzer morphlogyAnalayzer = new RussianMorphlogyAnalayzer();
 //        System.out.println("To build analayzer take " + (System.currentTimeMillis() - startTime) + " ms.");
