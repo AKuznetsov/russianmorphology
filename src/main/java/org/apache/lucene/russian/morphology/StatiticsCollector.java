@@ -23,7 +23,6 @@ import org.apache.lucene.russian.morphology.dictonary.WordCard;
 import org.apache.lucene.russian.morphology.dictonary.WordProccessor;
 import org.apache.lucene.russian.morphology.informations.Heuristic;
 import org.apache.lucene.russian.morphology.informations.Morph;
-import org.apache.lucene.russian.morphology.informations.RuleInfo;
 
 import java.io.IOException;
 import java.util.*;
@@ -137,7 +136,5 @@ public class StatiticsCollector implements WordProccessor {
         return length;
     }
 
-    public RuleInfo getRuleInfo() {
-        return null;
-    }
+
 }

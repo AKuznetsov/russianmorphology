@@ -15,12 +15,13 @@
  */
 package org.apache.lucene.russian.morphology;
 
+import org.apache.lucene.russian.morphology.informations.Heuristic;
 import org.apache.lucene.russian.morphology.informations.Morph;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 /**
  * Created by IntelliJ IDEA.
@@ -34,12 +35,26 @@ public class Test {
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         //
         Morph splitter = new Morph("sep.txt");
-        InputStream stream = Test.class.getResourceAsStream("/org/apache/lucene/russian/morphology/analayzer/russian-text.txt");
-        BufferedReader stream1 = new BufferedReader(new InputStreamReader(stream));
-        String s = stream1.readLine().trim().toLowerCase();
-        for (String w : s.split(" ")) {
-            System.out.println(splitter.getMorhInfo(w));
+        TreeSet<Short> shorts = new TreeSet<Short>();
+        int count = 0;
+        TreeMap<Integer, Integer> rulesStat = new TreeMap<Integer, Integer>();
+        for (Heuristic[] heuristics : splitter.getRules()) {
+            Integer d = rulesStat.get(heuristics.length);
+            rulesStat.put(heuristics.length, 1 + (d == null ? 0 : d));
+            boolean flag = true;
+            short actualSuffixLenght = heuristics[0].getActualSuffixLengh();
+            String normalSuffix = heuristics[0].getActualNormalSuffix();
+            for (Heuristic heuristic : heuristics) {
+                flag = flag && (heuristic.getActualSuffixLengh() == actualSuffixLenght)
+                        && normalSuffix.equals(heuristic.getActualNormalSuffix());
+            }
+            if (!flag) {
+                System.out.println(Arrays.asList(heuristics));
+                count++;
+            }
         }
+        System.out.println(count);
+        System.out.println(rulesStat);
         System.gc();
         System.out.println("Ready");
         System.in.read();
