@@ -38,59 +38,5 @@ public class HeuristicBuilder {
         dictonaryReader.proccess(statiticsCollector);
         statiticsCollector.saveHeuristic();
 
-
-//        StatiticsCollectors statiticsCollectors = new StatiticsCollectors(frequentyReader.read());
-//        dictonaryReader.proccess(statiticsCollectors);
-//        Collection<SuffixCounter> counterCollection = statiticsCollectors.getStatititics().values();
-//        Object[] objects = counterCollection.toArray();
-//        Arrays.sort(objects);
-//        System.out.println("Length " + objects.length + " ingored words " + statiticsCollectors.getIgnoredCount());
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println(objects[i]);
-//        }
-//
-//        final HeuristicBySuffixLegth heuristic = new HeuristicBySuffixLegth();
-//        for (int i = 0; i < objects.length; i++) {
-//            heuristic.addHeuristic(((SuffixCounter) objects[i]).getSuffixHeuristic());
-//        }
-//
-//        System.out.println("Single suffix " + heuristic.getSingleSuffixes().size());
-//        System.out.println("diffiren morgh " + heuristic.getWordWithMorphology().size());
-//        System.out.println("Ononims " + heuristic.getOnonyms().size());
-//        final Map<Long, Set<SimpleSuffixHeuristic>> map = heuristic.getUnkowns();
-//        System.out.println("Unknow suffix " + map.size());
-//        int cont = 0;
-//        for (Set<SimpleSuffixHeuristic> st : map.values()) {
-//
-//            if (cont > 50) break;
-//            if (st.size() < 3) {
-//                System.out.println(st);
-//                cont++;
-//            }
-//        }
-//        //final RussianSuffixDecoderEncoder decoderEncoder = new RussianSuffixDecoderEncoder(6);
-//        final AtomicLong c = new AtomicLong(0L);
-//        final AtomicLong all = new AtomicLong(0L);
-//        dictonaryReader.proccess(
-//                new WordProccessor() {
-//                    public void proccess(WordCard wordCard) throws IOException {
-//                        for (FlexiaModel fm : wordCard.getWordsFroms()) {
-//                            String form = fm.create(wordCard.getBase());
-//                            if(form.startsWith("прик") && form.endsWith("ья")) System.out.println(form);
-//
-//
-//                            int startSymbol = form.length() > RussianSuffixDecoderEncoder.SUFFIX_LENGTH ? form.length() - RussianSuffixDecoderEncoder.SUFFIX_LENGTH : 0;
-//                            String formSuffix = form.substring(startSymbol);
-//                            Long aLong = RussianSuffixDecoderEncoder.encode(formSuffix);
-//                            all.incrementAndGet();
-//                            if (map.containsKey(aLong)) c.incrementAndGet();
-//                        }
-//                    }
-//                }
-//        );
-//
-//
-//        System.out.println("Ankown words " + all.longValue());
-//        System.out.println("Ankown words " + c.longValue());
     }
 }

@@ -19,30 +19,61 @@ package org.apache.lucene.russian.morphology.analayzer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.russian.morphology.informations.LuceneMorph;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class RussianMorphlogyFilter extends TokenFilter {
-    private SuffixHeuristic suffixHeuristic;
+    private LuceneMorph luceneMorph;
 
-    public RussianMorphlogyFilter(TokenStream tokenStream, SuffixHeuristic suffixHeuristic) {
+    public RussianMorphlogyFilter(TokenStream tokenStream, LuceneMorph luceneMorph) {
         super(tokenStream);
-        this.suffixHeuristic = suffixHeuristic;
+        this.luceneMorph = luceneMorph;
     }
 
+
+    private List<String> stack = new ArrayList<String>();
+    private int index = 0;
+    private Token current = null;    
+
+    /**
+     * Returns the next token in the stream, or null at EOS.
+     */
     public Token next(final Token reusableToken) throws IOException {
+        assert reusableToken != null;
+        while (index < stack.size()) { // pop from stack
+            Token nextToken = createToken(stack.get(index++), current, reusableToken);
+            if (nextToken != null) {
+                return nextToken;
+            }
+        }
+
         Token nextToken = input.next(reusableToken);
-        if (nextToken == null || nextToken.term().length() == 0) return nextToken;
-        String word = nextToken.term();
-        Character testC = word.charAt(0);
+        if (nextToken == null) return null; // EOS; iterator exhausted
+        Character testC = nextToken.term().charAt(0);
         if (Character.UnicodeBlock.of(testC) != Character.UnicodeBlock.CYRILLIC) {
             return nextToken;
         }
-        Token current = (Token) nextToken.clone();
-        return createToken(suffixHeuristic.getCanonicalForm(word), current, reusableToken);
+        stack = luceneMorph.getMorhInfo(nextToken.term());
+        index = 0;
+        current = (Token) nextToken.clone();
+        nextToken = createToken(stack.get(index++), current, reusableToken);
+        return nextToken;
     }
 
+    /**
+     * Creates and returns a token for the given synonym of the current input
+     * token; Override for custom (stateless or stateful) behavior, if desired.
+     *
+     * @param synonym       a synonym for the current token's term
+     * @param current       the current token from the underlying child stream
+     * @param reusableToken the token to reuse
+     * @return a new token, or null to indicate that the given synonym should be
+     *         ignored
+     */
     protected Token createToken(String synonym, Token current, final Token reusableToken) {
         reusableToken.reinit(current, synonym);
         reusableToken.setTermBuffer(synonym);

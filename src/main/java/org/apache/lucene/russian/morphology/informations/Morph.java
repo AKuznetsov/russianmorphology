@@ -26,10 +26,10 @@ import java.util.List;
 
 
 public class Morph {
-    int[][] separators;
-    short[] rulesId;
-    Heuristic[][] rules;
-    String[] grammaInfo;
+    protected int[][] separators;
+    protected short[] rulesId;
+    protected Heuristic[][] rules;
+    protected String[] grammaInfo;
 
 
     public Morph(String fileName) throws IOException {
@@ -64,13 +64,12 @@ public class Morph {
         int[] ints = RussianSuffixDecoderEncoder.encodeToArray(revertWord(s));
         int ruleId = findRuleId(ints);
         for (Heuristic h : rules[rulesId[ruleId]]) {
-            System.out.println(h);
-            result.add(h.transofrmWord(s));
+            result.add(h.transofrmWord(s) + "|" + grammaInfo[h.getFormMorphInfo()]);
         }
         return result;
     }
 
-    private int findRuleId(int[] ints) {
+    protected int findRuleId(int[] ints) {
         int low = 0;
         int high = separators.length - 1;
         int mid = 0;
@@ -133,20 +132,30 @@ public class Morph {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
         String s = bufferedReader.readLine();
         Integer amount = Integer.valueOf(s);
-        separators = new int[amount][];
+
+        readSeparators(bufferedReader, amount);
+
+        readRulesId(bufferedReader, amount);
+
+        readRules(bufferedReader);
+        readGrammaInfo(bufferedReader);
+        bufferedReader.close();
+    }
+
+    private void readGrammaInfo(BufferedReader bufferedReader) throws IOException {
+        String s;
+        Integer amount;
+        s = bufferedReader.readLine();
+        amount = Integer.valueOf(s);
+        grammaInfo = new String[amount];
         for (int i = 0; i < amount; i++) {
-            String s1 = bufferedReader.readLine();
-            Integer wordLenght = Integer.valueOf(s1);
-            separators[i] = new int[wordLenght];
-            for (int j = 0; j < wordLenght; j++) {
-                separators[i][j] = Integer.valueOf(bufferedReader.readLine());
-            }
+            grammaInfo[i] = bufferedReader.readLine();
         }
-        rulesId = new short[amount];
-        for (int i = 0; i < amount; i++) {
-            String s1 = bufferedReader.readLine();
-            rulesId[i] = Short.valueOf(s1);
-        }
+    }
+
+    protected void readRules(BufferedReader bufferedReader) throws IOException {
+        String s;
+        Integer amount;
         s = bufferedReader.readLine();
         amount = Integer.valueOf(s);
         rules = new Heuristic[amount][];
@@ -158,16 +167,29 @@ public class Morph {
                 rules[i][j] = new Heuristic(bufferedReader.readLine());
             }
         }
-        s = bufferedReader.readLine();
-        amount = Integer.valueOf(s);
-        grammaInfo = new String[amount];
-        for (int i = 0; i < amount; i++) {
-            grammaInfo[i] = bufferedReader.readLine();
-        }
-        bufferedReader.close();
     }
 
-    private String revertWord(String s) {
+    private void readRulesId(BufferedReader bufferedReader, Integer amount) throws IOException {
+        rulesId = new short[amount];
+        for (int i = 0; i < amount; i++) {
+            String s1 = bufferedReader.readLine();
+            rulesId[i] = Short.valueOf(s1);
+        }
+    }
+
+    private void readSeparators(BufferedReader bufferedReader, Integer amount) throws IOException {
+        separators = new int[amount][];
+        for (int i = 0; i < amount; i++) {
+            String s1 = bufferedReader.readLine();
+            Integer wordLenght = Integer.valueOf(s1);
+            separators[i] = new int[wordLenght];
+            for (int j = 0; j < wordLenght; j++) {
+                separators[i][j] = Integer.valueOf(bufferedReader.readLine());
+            }
+        }
+    }
+
+    protected String revertWord(String s) {
         String result = "";
         for (int i = 1; i <= s.length(); i++) {
             result += s.charAt(s.length() - i);
