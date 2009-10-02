@@ -31,7 +31,8 @@ public class HeuristicBuilder {
         GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morph/rgramtab.tab");
         DictonaryReader dictonaryReader = new DictonaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", form);
 
-        StatiticsCollector statiticsCollector = new StatiticsCollector(grammaInfo);
+        RussianSuffixDecoderEncoder decoderEncoder = new RussianSuffixDecoderEncoder();
+        StatiticsCollector statiticsCollector = new StatiticsCollector(grammaInfo, decoderEncoder);
         dictonaryReader.proccess(statiticsCollector);
         statiticsCollector.saveHeuristic();
 

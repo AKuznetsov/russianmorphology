@@ -107,6 +107,6 @@ public class RussianSuffixDecoderEncoder implements LetterDecoderEncoder {
     }
 
     public String cleanString(String s) {
-        return s;
+        return s.replace((char) (34 + RussianSuffixDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET), (char) (6 + RussianSuffixDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET));
     }
 }

@@ -33,12 +33,13 @@ public class StatiticsCollector implements WordProccessor {
     private LetterDecoderEncoder decoderEncoder;
 
 
-    public StatiticsCollector(GrammaReader grammaReader) {
+    public StatiticsCollector(GrammaReader grammaReader, LetterDecoderEncoder decoderEncoder) {
         this.grammaReader = grammaReader;
+        this.decoderEncoder = decoderEncoder;
     }
 
     public void proccess(WordCard wordCard) throws IOException {
-        wordCard = cleanWordCard(wordCard);
+        cleanWordCard(wordCard);
         String normalStringMorph = wordCard.getWordsFroms().get(0).getCode();
         String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
         if (word.contains("-")) return;
@@ -55,8 +56,15 @@ public class StatiticsCollector implements WordProccessor {
         }
     }
 
-    private WordCard cleanWordCard(WordCard wordCard) {
-        return wordCard;
+    private void cleanWordCard(WordCard wordCard) {
+        wordCard.setBase(cleanString(wordCard.getBase()));
+        wordCard.setCanonicalFrom(cleanString(wordCard.getCanonicalFrom()));
+        wordCard.setCanonicalSuffix(cleanString(wordCard.getCanonicalSuffix()));
+        List<FlexiaModel> models = wordCard.getWordsFroms();
+        for (FlexiaModel m : models) {
+            m.setSuffix(cleanString(m.getSuffix()));
+            m.setPrefix(cleanString(m.getPrefix()));
+        }
     }
 
 
@@ -141,7 +149,6 @@ public class StatiticsCollector implements WordProccessor {
 
     private String cleanString(String s) {
         return decoderEncoder.cleanString(s);
-        //return s.replace((char) (34 + RussianSuffixDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET), (char) (6 + RussianSuffixDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET));
     }
 
 }
