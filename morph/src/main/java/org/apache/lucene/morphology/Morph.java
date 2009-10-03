@@ -29,11 +29,12 @@ public class Morph {
     protected short[] rulesId;
     protected Heuristic[][] rules;
     protected String[] grammaInfo;
-    LetterDecoderEncoder decoderEncoder;
+    protected LetterDecoderEncoder decoderEncoder;
 
 
-    public Morph(String fileName) throws IOException {
+    public Morph(String fileName,LetterDecoderEncoder decoderEncoder) throws IOException {
         readFromFile(fileName);
+        this.decoderEncoder = decoderEncoder;
     }
 
     public Morph(int[][] separators, short[] rulesId, Heuristic[][] rules, String[] grammaInfo) {

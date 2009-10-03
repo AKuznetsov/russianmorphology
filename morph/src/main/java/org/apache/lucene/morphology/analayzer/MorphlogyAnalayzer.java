@@ -22,21 +22,22 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.morphology.LuceneMorph;
+import org.apache.lucene.morphology.LetterDecoderEncoder;
 
 import java.io.IOException;
 import java.io.Reader;
 
-public class RussianMorphlogyAnalayzer extends Analyzer {
+public class MorphlogyAnalayzer extends Analyzer {
     private LuceneMorph luceneMorph;
 
-    public RussianMorphlogyAnalayzer() throws IOException {
-        luceneMorph = new LuceneMorph("sep.txt");
+    public MorphlogyAnalayzer(String pathToMorph,LetterDecoderEncoder letterDecoderEncoder) throws IOException {
+        luceneMorph = new LuceneMorph("sep.txt",letterDecoderEncoder);
     }
 
     public TokenStream tokenStream(String fieldName, Reader reader) {
         TokenStream result = new StandardTokenizer(reader);
         result = new StandardFilter(result);
         result = new LowerCaseFilter(result);
-        return new RussianMorphlogyFilter(result, luceneMorph);
+        return new MorphlogyFilter(result, luceneMorph);
     }
 }

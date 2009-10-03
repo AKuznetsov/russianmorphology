@@ -23,10 +23,9 @@ import java.util.List;
 
 
 public class LuceneMorph extends Morph {
-    LetterDecoderEncoder decoderEncoder;
 
-    public LuceneMorph(String fileName) throws IOException {
-        super(fileName);
+    public LuceneMorph(String fileName,LetterDecoderEncoder decoderEncoder) throws IOException {
+        super(fileName,decoderEncoder);
     }
 
     @Override

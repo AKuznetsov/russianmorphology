@@ -35,7 +35,7 @@ public class Test {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         //
-        Morph splitter = new Morph("sep.txt");
+        Morph splitter = new Morph("sep.txt",new RussianLetterDecoderEncoder());
         TreeSet<Short> shorts = new TreeSet<Short>();
         int count = 0;
         TreeMap<Integer, Integer> rulesStat = new TreeMap<Integer, Integer>();
@@ -57,7 +57,6 @@ public class Test {
         System.out.println(count);
         System.out.println(rulesStat);
         System.gc();
-        System.out.println("Ready");
         System.in.read();
     }
 }

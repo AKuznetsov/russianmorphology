@@ -26,10 +26,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class RussianMorphlogyFilter extends TokenFilter {
+public class MorphlogyFilter extends TokenFilter {
     private LuceneMorph luceneMorph;
 
-    public RussianMorphlogyFilter(TokenStream tokenStream, LuceneMorph luceneMorph) {
+    public MorphlogyFilter(TokenStream tokenStream, LuceneMorph luceneMorph) {
         super(tokenStream);
         this.luceneMorph = luceneMorph;
     }
@@ -54,6 +54,7 @@ public class RussianMorphlogyFilter extends TokenFilter {
         Token nextToken = input.next(reusableToken);
         if (nextToken == null) return null; // EOS; iterator exhausted
         Character testC = nextToken.term().charAt(0);
+        //todo check here for decoder endocoder
         if (Character.UnicodeBlock.of(testC) != Character.UnicodeBlock.CYRILLIC) {
             return nextToken;
         }

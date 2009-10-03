@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * Assumed that suffix contains only small russian letters and dash.
  * Also assumed that letter � and � coinsed.
  */
-public class RussianSuffixDecoderEncoder implements LetterDecoderEncoder {
+public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
     public static final int RUSSIAN_SMALL_LETTER_OFFSET = 1071;
     static public int SUFFIX_LENGTH = 6;
     public static final int EE_CHAR = 34;
@@ -107,6 +107,6 @@ public class RussianSuffixDecoderEncoder implements LetterDecoderEncoder {
     }
 
     public String cleanString(String s) {
-        return s.replace((char) (34 + RussianSuffixDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET), (char) (6 + RussianSuffixDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET));
+        return s.replace((char) (34 + RussianLetterDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET), (char) (6 + RussianLetterDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET));
     }
 }
