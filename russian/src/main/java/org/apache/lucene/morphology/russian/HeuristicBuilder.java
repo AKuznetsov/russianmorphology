@@ -16,20 +16,21 @@
 
 package org.apache.lucene.morphology.russian;
 
-import org.apache.lucene.morpholgy.dictionary.*;
+import org.apache.lucene.morpholgy.dictionary.DictonaryReader;
+import org.apache.lucene.morpholgy.dictionary.GrammaReader;
+import org.apache.lucene.morpholgy.dictionary.StatiticsCollector;
 
 import java.io.IOException;
-import java.util.Set;
+import java.util.HashSet;
 
 
 public class HeuristicBuilder {
     public static void main(String[] args) throws IOException {
-        IgnoredFormReader formReader = new IgnoredFormReader("data/igoredFrom.txt");
-        Set<String> form = formReader.getIngnoredFroms();
+        //IgnoredFormReader formReader = new IgnoredFormReader("data/igoredFrom.txt");
+        //Set<String> form = formReader.getIngnoredFroms();
 
-        FrequentyReader frequentyReader = new FrequentyReader("data/lemma.num");
         GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morph/rgramtab.tab");
-        DictonaryReader dictonaryReader = new DictonaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", form);
+        DictonaryReader dictonaryReader = new DictonaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<String>());
 
         RussianLetterDecoderEncoder decoderEncoder = new RussianLetterDecoderEncoder();
         StatiticsCollector statiticsCollector = new StatiticsCollector(grammaInfo, decoderEncoder);

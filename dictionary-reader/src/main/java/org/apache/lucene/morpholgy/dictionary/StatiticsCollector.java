@@ -68,7 +68,7 @@ public class StatiticsCollector implements WordProccessor {
     }
 
 
-    public void saveHeuristic() throws IOException {
+    public void saveHeuristic(String fileName) throws IOException {
 
         Map<Integer, Integer> dist = new TreeMap<Integer, Integer>();
         Set<Heuristic> prevSet = null;
@@ -116,7 +116,7 @@ public class StatiticsCollector implements WordProccessor {
             }
         }
         Morph morph = new Morph(ints, rulesId, heuristics, grammaReader.getGrammaInfoAsArray());
-        morph.writeToFile("sep.txt");
+        morph.writeToFile(fileName);
     }
 
     private String revertWord(String s) {

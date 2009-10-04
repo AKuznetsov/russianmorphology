@@ -16,13 +16,11 @@
 package org.apache.lucene.morphology.russian;
 
 
-import org.apache.lucene.morphology.Heuristic;
 import org.apache.lucene.morphology.Morph;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.TreeMap;
-import java.util.TreeSet;
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,27 +33,16 @@ public class Test {
 
     public static void main(String[] args) throws IOException, ClassNotFoundException {
         //
-        Morph splitter = new Morph("sep.txt",new RussianLetterDecoderEncoder());
-        TreeSet<Short> shorts = new TreeSet<Short>();
-        int count = 0;
-        TreeMap<Integer, Integer> rulesStat = new TreeMap<Integer, Integer>();
-        for (Heuristic[] heuristics : splitter.getRules()) {
-            Integer d = rulesStat.get(heuristics.length);
-            rulesStat.put(heuristics.length, 1 + (d == null ? 0 : d));
-            boolean flag = true;
-            short actualSuffixLenght = heuristics[0].getActualSuffixLengh();
-            String normalSuffix = heuristics[0].getActualNormalSuffix();
-            for (Heuristic heuristic : heuristics) {
-                flag = flag && (heuristic.getActualSuffixLengh() == actualSuffixLenght)
-                        && normalSuffix.equals(heuristic.getActualNormalSuffix());
-            }
-            if (!flag) {
-                System.out.println(Arrays.asList(heuristics));
-                count++;
-            }
+        Morph splitter = new Morph("russian/src/main/resources/org/apache/lucene/morphology/russian/morph.info", new RussianLetterDecoderEncoder());
+        FileReader fileReader = new FileReader("russian/src/main/resources/for.test.txt");
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String s = bufferedReader.readLine();
+        while (s != null) {
+            System.out.println(splitter.getMorhInfo(s));
+            s = bufferedReader.readLine();
         }
-        System.out.println(count);
-        System.out.println(rulesStat);
+
+        fileReader.close();
         System.gc();
         System.in.read();
     }
