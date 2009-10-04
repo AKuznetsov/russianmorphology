@@ -18,14 +18,19 @@ package org.apache.lucene.morphology;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class LuceneMorph extends Morph {
 
-    public LuceneMorph(String fileName,LetterDecoderEncoder decoderEncoder) throws IOException {
-        super(fileName,decoderEncoder);
+    public LuceneMorph(String fileName, LetterDecoderEncoder decoderEncoder) throws IOException {
+        super(fileName, decoderEncoder);
+    }
+
+    public LuceneMorph(InputStream inputStream, LetterDecoderEncoder decoderEncoder) throws IOException {
+        super(inputStream, decoderEncoder);
     }
 
     @Override

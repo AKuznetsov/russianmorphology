@@ -16,10 +16,7 @@
 package org.apache.lucene.morphology;
 
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,8 +29,13 @@ public class Morph {
     protected LetterDecoderEncoder decoderEncoder;
 
 
-    public Morph(String fileName,LetterDecoderEncoder decoderEncoder) throws IOException {
+    public Morph(String fileName, LetterDecoderEncoder decoderEncoder) throws IOException {
         readFromFile(fileName);
+        this.decoderEncoder = decoderEncoder;
+    }
+
+    public Morph(InputStream inputStream, LetterDecoderEncoder decoderEncoder) throws IOException {
+        readFromInputStream(inputStream);
         this.decoderEncoder = decoderEncoder;
     }
 
@@ -130,7 +132,12 @@ public class Morph {
     }
 
     public void readFromFile(String fileName) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new FileReader(fileName));
+        FileInputStream inputStream = new FileInputStream(fileName);
+        readFromInputStream(inputStream);
+    }
+
+    private void readFromInputStream(InputStream inputStream) throws IOException {
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
         String s = bufferedReader.readLine();
         Integer amount = Integer.valueOf(s);
 
