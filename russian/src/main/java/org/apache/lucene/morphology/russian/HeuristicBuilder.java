@@ -34,7 +34,7 @@ public class HeuristicBuilder {
         RussianLetterDecoderEncoder decoderEncoder = new RussianLetterDecoderEncoder();
         StatiticsCollector statiticsCollector = new StatiticsCollector(grammaInfo, decoderEncoder);
         dictonaryReader.proccess(statiticsCollector);
-        statiticsCollector.saveHeuristic();
+        statiticsCollector.saveHeuristic("russian/src/main/resources/org/apache/lucene/morphology/russian/morph.info");
 
     }
 }
