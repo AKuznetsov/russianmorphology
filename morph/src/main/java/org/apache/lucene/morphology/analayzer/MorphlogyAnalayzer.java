@@ -32,7 +32,7 @@ public class MorphlogyAnalayzer extends Analyzer {
     private LuceneMorph luceneMorph;
 
     public MorphlogyAnalayzer(String pathToMorph, LetterDecoderEncoder letterDecoderEncoder) throws IOException {
-        luceneMorph = new LuceneMorph("sep.txt", letterDecoderEncoder);
+        luceneMorph = new LuceneMorph(pathToMorph, letterDecoderEncoder);
     }
 
     public MorphlogyAnalayzer(InputStream inputStream, LetterDecoderEncoder letterDecoderEncoder) throws IOException {
