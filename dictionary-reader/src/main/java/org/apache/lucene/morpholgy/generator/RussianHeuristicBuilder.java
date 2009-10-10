@@ -14,17 +14,18 @@
  * limitations under the License.
  */
 
-package org.apache.lucene.morphology.russian;
+package org.apache.lucene.morpholgy.generator;
 
 import org.apache.lucene.morpholgy.dictionary.DictonaryReader;
 import org.apache.lucene.morpholgy.dictionary.GrammaReader;
 import org.apache.lucene.morpholgy.dictionary.StatiticsCollector;
+import org.apache.lucene.morphology.russian.RussianLetterDecoderEncoder;
 
 import java.io.IOException;
 import java.util.HashSet;
 
 
-public class HeuristicBuilder {
+public class RussianHeuristicBuilder {
     public static void main(String[] args) throws IOException {
         //IgnoredFormReader formReader = new IgnoredFormReader("data/igoredFrom.txt");
         //Set<String> form = formReader.getIngnoredFroms();
