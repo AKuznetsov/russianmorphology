@@ -111,6 +111,7 @@
                     <header>etc/header.txt</header>
                     <excludes>
                         <exclude>**/*.txt</exclude>
+                        <exclude>**/*.info</exclude>
                         <exclude>**/pom.xml</exclude>
                     </excludes>
                     <includes>
@@ -134,5 +135,6 @@
         <module>morph</module>
         <module>dictionary-reader</module>
         <module>russian</module>
+        <module>english</module>
     </modules>
 </project>

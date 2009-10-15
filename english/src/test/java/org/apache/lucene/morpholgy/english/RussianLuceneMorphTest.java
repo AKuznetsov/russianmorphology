@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.lucene.morphology.russian;
+package org.apache.lucene.morpholgy.english;
 
 import org.apache.lucene.morphology.LuceneMorph;
 import org.junit.Before;
@@ -26,23 +26,13 @@ public class RussianLuceneMorphTest {
 
     @Before
     public void setUp() throws IOException {
-        luceneMorph = new LuceneMorph(this.getClass().getResourceAsStream("/org/apache/lucene/morphology/russian/morph.info"), new RussianLetterDecoderEncoder());
+        luceneMorph = new LuceneMorph(this.getClass().getResourceAsStream("/org/apache/lucene/morphology/english/morph.info"), new EnglishLetterDecoderEncoder());
     }
 
     @Test
     public void shoudGetCorrentMorphInfo() throws IOException {
-//        InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/russian/russian-morphology-test.txt");
-//        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
-//        String s = bufferedReader.readLine();
-//        while (s != null) {
-//            String[] qa = s.trim().split(" ");
-//            Set<String> result = new HashSet<String>();
-//            for (int i = 1; i < qa.length; i++) {
-//                result.add(qa[i]);
-//            }
-//            Set<String> stringList = new HashSet<String>(luceneMorph.getMorhInfo(qa[0]));
-//            assertThat(stringList, equalTo(result));
-//            s = bufferedReader.readLine();
-//        }
+        System.out.println(luceneMorph.getMorhInfo("purchases"));
+        System.out.println(luceneMorph.getMorhInfo("existing"));
+        System.out.println(luceneMorph.getMorhInfo("was"));
     }
 }

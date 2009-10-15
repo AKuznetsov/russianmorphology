@@ -106,6 +106,15 @@ public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
         return false;
     }
 
+    public boolean checkString(String word) {
+        for (int i = 0; i < word.length(); i++) {
+            if (!checkCharacter(word.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public String cleanString(String s) {
         return s.replace((char) (34 + RussianLetterDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET), (char) (6 + RussianLetterDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET));
     }

@@ -109,6 +109,8 @@ public class Morph {
         FileWriter writer = new FileWriter(fileName);
         writer.write(separators.length + "\n");
         for (int[] i : separators) {
+            System.out.println(writer);
+            System.out.println(i);
             writer.write(i.length + "\n");
             for (int j : i) {
                 writer.write(j + "\n");

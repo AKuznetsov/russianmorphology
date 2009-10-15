@@ -25,6 +25,7 @@ import java.io.IOException;
 import java.util.*;
 
 
+//todo made refactoring thi8s class
 public class StatiticsCollector implements WordProccessor {
     private TreeMap<String, Set<Heuristic>> inversIndex = new TreeMap<String, Set<Heuristic>>();
     private Map<Set<Heuristic>, Integer> ruleInverIndex = new HashMap<Set<Heuristic>, Integer>();
@@ -43,8 +44,10 @@ public class StatiticsCollector implements WordProccessor {
         String normalStringMorph = wordCard.getWordsFroms().get(0).getCode();
         String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
         if (word.contains("-")) return;
+        if (!decoderEncoder.checkString(word)) return;
 
         for (FlexiaModel fm : wordCard.getWordsFroms()) {
+            if (!decoderEncoder.checkString(fm.create(wordCard.getBase()))) continue;
             Heuristic heuristic = createEvristic(wordCard.getBase(), wordCard.getCanonicalSuffix(), fm, normalStringMorph);
             String form = revertWord(fm.create(wordCard.getBase()));
             Set<Heuristic> suffixHeuristics = inversIndex.get(form);
@@ -109,7 +112,8 @@ public class StatiticsCollector implements WordProccessor {
         for (String key : inversIndex.keySet()) {
             Set<Heuristic> currentSet = inversIndex.get(key);
             if (!currentSet.equals(prevSet)) {
-                ints[count] = decoderEncoder.encodeToArray(key);
+                int[] word = decoderEncoder.encodeToArray(key);
+                ints[count] = word;
                 rulesId[count] = (short) ruleInverIndex.get(currentSet).intValue();
                 count++;
                 prevSet = currentSet;

@@ -27,5 +27,7 @@ public interface LetterDecoderEncoder {
 
     public boolean checkCharacter(char c);
 
+    public boolean checkString(String word);
+
     public String cleanString(String s);
 }
