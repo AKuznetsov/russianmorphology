@@ -106,11 +106,9 @@ public class Morph {
     }
 
     public void writeToFile(String fileName) throws IOException {
-        FileWriter writer = new FileWriter(fileName);
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8");
         writer.write(separators.length + "\n");
         for (int[] i : separators) {
-            System.out.println(writer);
-            System.out.println(i);
             writer.write(i.length + "\n");
             for (int j : i) {
                 writer.write(j + "\n");
@@ -139,7 +137,7 @@ public class Morph {
     }
 
     private void readFromInputStream(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
         String s = bufferedReader.readLine();
         Integer amount = Integer.valueOf(s);
 
