@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.lucene.morpholgy.dictionary;
+package org.apache.lucene.morphology.dictionary;
 
 
 import org.apache.lucene.morphology.Heuristic;

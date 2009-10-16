@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package org.apache.lucene.morpholgy.generator;
+package org.apache.lucene.morphology.generator;
 
-import org.apache.lucene.morpholgy.dictionary.DictonaryReader;
-import org.apache.lucene.morpholgy.dictionary.GrammaReader;
-import org.apache.lucene.morpholgy.dictionary.StatiticsCollector;
+import org.apache.lucene.morphology.dictionary.DictonaryReader;
+import org.apache.lucene.morphology.dictionary.GrammaReader;
+import org.apache.lucene.morphology.dictionary.StatiticsCollector;
 import org.apache.lucene.morphology.russian.RussianLetterDecoderEncoder;
 
 import java.io.IOException;

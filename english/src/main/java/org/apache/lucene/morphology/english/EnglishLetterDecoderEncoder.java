@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.lucene.morpholgy.english;
+package org.apache.lucene.morphology.english;
 
 import org.apache.lucene.morphology.LetterDecoderEncoder;
 import org.apache.lucene.morphology.SuffixToLongException;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.lucene.morpholgy.dictionary;
+package org.apache.lucene.morphology.dictionary;
 
 /**
  * Represent inofrmation of how word form created form it imutible part.
