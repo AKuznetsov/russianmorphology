@@ -75,4 +75,8 @@ public class LuceneMorph extends Morph {
         }
         return result.toArray(new Heuristic[result.size()]);
     }
+
+    public boolean checkString(String s) {
+        return decoderEncoder.checkString(s);
+    }
 }

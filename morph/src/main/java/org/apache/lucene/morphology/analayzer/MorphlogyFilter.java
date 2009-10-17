@@ -53,9 +53,7 @@ public class MorphlogyFilter extends TokenFilter {
 
         Token nextToken = input.next(reusableToken);
         if (nextToken == null) return null; // EOS; iterator exhausted
-        Character testC = nextToken.term().charAt(0);
-        //todo check here for decoder endocoder
-        if (Character.UnicodeBlock.of(testC) != Character.UnicodeBlock.CYRILLIC) {
+        if (!luceneMorph.checkString(nextToken.term())) {
             return nextToken;
         }
         stack = luceneMorph.getMorhInfo(nextToken.term());
