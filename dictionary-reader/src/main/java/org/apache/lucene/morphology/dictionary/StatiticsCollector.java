@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.*;
 
 
-//todo made refactoring thi8s class
+//todo made refactoring this class
 public class StatiticsCollector implements WordProccessor {
     private TreeMap<String, Set<Heuristic>> inversIndex = new TreeMap<String, Set<Heuristic>>();
     private Map<Set<Heuristic>, Integer> ruleInverIndex = new HashMap<Set<Heuristic>, Integer>();

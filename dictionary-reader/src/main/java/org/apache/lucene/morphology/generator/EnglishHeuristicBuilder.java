@@ -27,8 +27,6 @@ import java.util.HashSet;
 
 public class EnglishHeuristicBuilder {
     public static void main(String[] args) throws IOException {
-        //IgnoredFormReader formReader = new IgnoredFormReader("data/igoredFrom.txt");
-        //Set<String> form = formReader.getIngnoredFroms();
 
         GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morph/egramtab.tab");
         DictonaryReader dictonaryReader = new DictonaryReader("dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd", new HashSet<String>());
