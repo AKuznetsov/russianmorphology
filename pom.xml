@@ -5,7 +5,7 @@
     <groupId>org.apache.lucene.morpholgy</groupId>
     <artifactId>morpholgy</artifactId>
     <packaging>pom</packaging>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.7.1-SNAPSHOT</version>
     <name>morpholgy</name>
     <url>http://maven.apache.org</url>
 
