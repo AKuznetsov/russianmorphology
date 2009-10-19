@@ -21,7 +21,9 @@ import java.io.IOException;
 
 
 public class EnglishAnalayzer extends MorphlogyAnalayzer {
+
     public EnglishAnalayzer() throws IOException {
-        super(EnglishAnalayzer.class.getResourceAsStream("/org/apache/lucene/morphology/english/morph.info"), new EnglishLetterDecoderEncoder());
+        super(new EnglishLuceneMorphology());
     }
+
 }

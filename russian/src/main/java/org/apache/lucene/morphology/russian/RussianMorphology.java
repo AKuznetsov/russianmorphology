@@ -22,6 +22,6 @@ import java.io.IOException;
 public class RussianMorphology extends Morphology {
 
     public RussianMorphology() throws IOException {
-        super(RussianMorphology.class.getResourceAsStream("/org/apache/lucene/morphology/english/morph.info"), new RussianLetterDecoderEncoder());
+        super(RussianMorphology.class.getResourceAsStream("/org/apache/lucene/morphology/russian/morph.info"), new RussianLetterDecoderEncoder());
     }
 }

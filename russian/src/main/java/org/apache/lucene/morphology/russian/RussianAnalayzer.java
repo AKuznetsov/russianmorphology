@@ -22,6 +22,6 @@ import java.io.IOException;
 
 public class RussianAnalayzer extends MorphlogyAnalayzer {
     public RussianAnalayzer() throws IOException {
-        super(RussianAnalayzer.class.getResourceAsStream("/org/apache/lucene/morphology/russian/morph.info"), new RussianLetterDecoderEncoder());
+        super(new RussianLuceneMorphology());
     }
 }

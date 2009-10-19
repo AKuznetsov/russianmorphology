@@ -31,6 +31,10 @@ import java.io.Reader;
 public class MorphlogyAnalayzer extends Analyzer {
     private LuceneMorphology luceneMorph;
 
+    public MorphlogyAnalayzer(LuceneMorphology luceneMorph) {
+        this.luceneMorph = luceneMorph;
+    }
+
     public MorphlogyAnalayzer(String pathToMorph, LetterDecoderEncoder letterDecoderEncoder) throws IOException {
         luceneMorph = new LuceneMorphology(pathToMorph, letterDecoderEncoder);
     }
