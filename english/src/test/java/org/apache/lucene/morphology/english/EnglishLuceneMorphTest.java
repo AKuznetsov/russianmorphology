@@ -15,7 +15,7 @@
  */
 package org.apache.lucene.morphology.english;
 
-import org.apache.lucene.morphology.LuceneMorph;
+import org.apache.lucene.morphology.LuceneMorphology;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Before;
@@ -29,11 +29,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class EnglishLuceneMorphTest {
-    private LuceneMorph luceneMorph;
+    private LuceneMorphology luceneMorph;
 
     @Before
     public void setUp() throws IOException {
-        luceneMorph = new LuceneMorph(this.getClass().getResourceAsStream("/org/apache/lucene/morphology/english/morph.info"), new EnglishLetterDecoderEncoder());
+        luceneMorph = new LuceneMorphology(this.getClass().getResourceAsStream("/org/apache/lucene/morphology/english/morph.info"), new EnglishLetterDecoderEncoder());
     }
 
     @Test

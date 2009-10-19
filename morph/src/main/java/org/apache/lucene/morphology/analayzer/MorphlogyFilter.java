@@ -19,7 +19,7 @@ package org.apache.lucene.morphology.analayzer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.morphology.LuceneMorph;
+import org.apache.lucene.morphology.LuceneMorphology;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,9 +27,9 @@ import java.util.List;
 
 
 public class MorphlogyFilter extends TokenFilter {
-    private LuceneMorph luceneMorph;
+    private LuceneMorphology luceneMorph;
 
-    public MorphlogyFilter(TokenStream tokenStream, LuceneMorph luceneMorph) {
+    public MorphlogyFilter(TokenStream tokenStream, LuceneMorphology luceneMorph) {
         super(tokenStream);
         this.luceneMorph = luceneMorph;
     }

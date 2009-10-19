@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LuceneMorph extends Morph {
+public class LuceneMorphology extends Morphology {
 
-    public LuceneMorph(String fileName, LetterDecoderEncoder decoderEncoder) throws IOException {
+    public LuceneMorphology(String fileName, LetterDecoderEncoder decoderEncoder) throws IOException {
         super(fileName, decoderEncoder);
     }
 
-    public LuceneMorph(InputStream inputStream, LetterDecoderEncoder decoderEncoder) throws IOException {
+    public LuceneMorphology(InputStream inputStream, LetterDecoderEncoder decoderEncoder) throws IOException {
         super(inputStream, decoderEncoder);
     }
 

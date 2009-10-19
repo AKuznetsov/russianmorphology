@@ -28,7 +28,7 @@ import java.util.HashSet;
 public class EnglishHeuristicBuilder {
     public static void main(String[] args) throws IOException {
 
-        GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morph/egramtab.tab");
+        GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morphology/egramtab.tab");
         DictonaryReader dictonaryReader = new DictonaryReader("dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd", new HashSet<String>());
 
         EnglishLetterDecoderEncoder decoderEncoder = new EnglishLetterDecoderEncoder();

@@ -22,21 +22,21 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.morphology.LetterDecoderEncoder;
-import org.apache.lucene.morphology.LuceneMorph;
+import org.apache.lucene.morphology.LuceneMorphology;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
 public class MorphlogyAnalayzer extends Analyzer {
-    private LuceneMorph luceneMorph;
+    private LuceneMorphology luceneMorph;
 
     public MorphlogyAnalayzer(String pathToMorph, LetterDecoderEncoder letterDecoderEncoder) throws IOException {
-        luceneMorph = new LuceneMorph(pathToMorph, letterDecoderEncoder);
+        luceneMorph = new LuceneMorphology(pathToMorph, letterDecoderEncoder);
     }
 
     public MorphlogyAnalayzer(InputStream inputStream, LetterDecoderEncoder letterDecoderEncoder) throws IOException {
-        luceneMorph = new LuceneMorph(inputStream, letterDecoderEncoder);
+        luceneMorph = new LuceneMorphology(inputStream, letterDecoderEncoder);
     }
 
     public TokenStream tokenStream(String fieldName, Reader reader) {

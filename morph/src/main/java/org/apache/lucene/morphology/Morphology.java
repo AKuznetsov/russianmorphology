@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Morph {
+public class Morphology {
     protected int[][] separators;
     protected short[] rulesId;
     protected Heuristic[][] rules;
@@ -29,17 +29,17 @@ public class Morph {
     protected LetterDecoderEncoder decoderEncoder;
 
 
-    public Morph(String fileName, LetterDecoderEncoder decoderEncoder) throws IOException {
+    public Morphology(String fileName, LetterDecoderEncoder decoderEncoder) throws IOException {
         readFromFile(fileName);
         this.decoderEncoder = decoderEncoder;
     }
 
-    public Morph(InputStream inputStream, LetterDecoderEncoder decoderEncoder) throws IOException {
+    public Morphology(InputStream inputStream, LetterDecoderEncoder decoderEncoder) throws IOException {
         readFromInputStream(inputStream);
         this.decoderEncoder = decoderEncoder;
     }
 
-    public Morph(int[][] separators, short[] rulesId, Heuristic[][] rules, String[] grammaInfo) {
+    public Morphology(int[][] separators, short[] rulesId, Heuristic[][] rules, String[] grammaInfo) {
         this.separators = separators;
         this.rulesId = rulesId;
         this.rules = rules;

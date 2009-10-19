@@ -22,7 +22,6 @@ import org.apache.lucene.morphology.WrongCharaterException;
 import java.util.ArrayList;
 
 
-//todo extract supper class for common method with russian letter decoder
 public class EnglishLetterDecoderEncoder implements LetterDecoderEncoder {
     public static final int ENGLISH_SMALL_LETTER_OFFSET = 96;
     static public int SUFFIX_LENGTH = 6;

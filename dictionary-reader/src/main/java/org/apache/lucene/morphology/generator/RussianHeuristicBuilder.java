@@ -27,7 +27,7 @@ import java.util.HashSet;
 
 public class RussianHeuristicBuilder {
     public static void main(String[] args) throws IOException {
-        GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morph/rgramtab.tab");
+        GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morphology/rgramtab.tab");
         DictonaryReader dictonaryReader = new DictonaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<String>());
 
         RussianLetterDecoderEncoder decoderEncoder = new RussianLetterDecoderEncoder();
