@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.lucene.morpholgy</groupId>
-    <artifactId>morpholgy</artifactId>
+    <groupId>org.apache.lucene.morphology</groupId>
+    <artifactId>morphology</artifactId>
     <packaging>pom</packaging>
     <version>0.9-SNAPSHOT</version>
-    <name>morpholgy</name>
+    <name>morphology</name>
     <url>http://maven.apache.org</url>
 
     <scm>
@@ -16,13 +16,13 @@
 
     <distributionManagement>
         <repository>
-            <id>russian-morpholgy</id>
+            <id>russian-morphology</id>
             <url>
                 ../repo/releases
             </url>
         </repository>
         <snapshotRepository>
-            <id>russian-morpholgy-snapshots</id>
+            <id>russian-morphology-snapshots</id>
             <url>
                 ../repo/snapshots
             </url>
