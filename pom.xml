@@ -9,11 +9,9 @@
     <name>morpholgy</name>
     <url>http://maven.apache.org</url>
 
-
     <scm>
-        <connection>scm:svn:http://russianmorphology.googlecode.com/svn/tags/morpholgy-0.7</connection>
-        <developerConnection>scm:svn:https://russianmorphology.googlecode.com/svn/tags/morpholgy-0.7
-        </developerConnection>
+        <connection>scm:svn:http://russianmorphology.googlecode.com/svn/trunk/</connection>
+        <developerConnection>scm:svn:https://russianmorphology.googlecode.com/svn/trunk/</developerConnection>
     </scm>
 
 
