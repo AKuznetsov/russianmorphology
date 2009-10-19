@@ -3,13 +3,13 @@
     <parent>
         <artifactId>morpholgy</artifactId>
         <groupId>org.apache.lucene.morpholgy</groupId>
-        <version>0.8</version>
+        <version>0.9-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.lucene.morpholgy</groupId>
     <artifactId>morph</artifactId>
     <name>morph</name>
-    <version>0.8</version>
+    <version>0.9-SNAPSHOT</version>
     <url>http://maven.apache.org</url>
 
     <dependencies>
