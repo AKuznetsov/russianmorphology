@@ -1,23 +1,22 @@
 <?xml version="1.0"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <parent>
         <artifactId>morpholgy</artifactId>
         <groupId>org.apache.lucene.morpholgy</groupId>
-        <version>0.7-SNAPSHOT</version>
+        <version>0.7</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.lucene.morpholgy</groupId>
     <artifactId>russian</artifactId>
     <name>russian</name>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.7</version>
     <url>http://maven.apache.org</url>
     <dependencies>
 
         <dependency>
             <groupId>org.apache.lucene.morpholgy</groupId>
             <artifactId>morph</artifactId>
-            <version>0.7-SNAPSHOT</version>
+            <version>0.7</version>
         </dependency>
 
         <dependency>
