@@ -35,6 +35,22 @@ public class RussianLetterDecoderEncoderTest {
         decoderEncoder = new RussianLetterDecoderEncoder();
     }
 
+
+    @Test
+    public void testShouldPreserStringComporision() throws IOException {
+        InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/russian/decoder-test-monotonic.txt");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        String s = bufferedReader.readLine();
+        while (s != null) {
+            String[] qa = s.trim().split(" ");
+            if (qa[0].length() <= RussianLetterDecoderEncoder.WORD_PART_LENGHT && qa[1].length() <= RussianLetterDecoderEncoder.WORD_PART_LENGHT) {
+                assertThat(decoderEncoder.encode(qa[1]) > decoderEncoder.encode(qa[0]), equalTo(true));
+            }
+            s = bufferedReader.readLine();
+        }
+    }
+
+
     @Test
     public void testShouldCorretDecodeEncode() throws IOException {
         InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/russian/decoder-test-data.txt");
@@ -42,8 +58,10 @@ public class RussianLetterDecoderEncoderTest {
         String s = bufferedReader.readLine();
         while (s != null) {
             String[] qa = s.trim().split(" ");
-            Integer ecodedSuffix = decoderEncoder.encode(qa[0]);
-            assertThat(decoderEncoder.decode(ecodedSuffix), equalTo(qa[1]));
+            if (qa[0].length() <= RussianLetterDecoderEncoder.WORD_PART_LENGHT) {
+                Integer ecodedSuffix = decoderEncoder.encode(qa[0]);
+                assertThat(decoderEncoder.decode(ecodedSuffix), equalTo(qa[1]));
+            }
             s = bufferedReader.readLine();
         }
     }

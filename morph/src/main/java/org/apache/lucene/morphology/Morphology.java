@@ -18,6 +18,7 @@ package org.apache.lucene.morphology;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 
@@ -102,7 +103,7 @@ public class Morphology {
             int i3 = i1[i] < i2[i] ? -1 : (i1[i] == i2[i] ? 0 : 1);
             if (i3 != 0) return i3;
         }
-        return i2.length - i1.length;
+        return i1.length - i2.length;
     }
 
     public void writeToFile(String fileName) throws IOException {
@@ -186,6 +187,7 @@ public class Morphology {
     }
 
     private void readSeparators(BufferedReader bufferedReader, Integer amount) throws IOException {
+        HashSet intetger = new HashSet<Integer>();
         separators = new int[amount][];
         for (int i = 0; i < amount; i++) {
             String s1 = bufferedReader.readLine();
@@ -194,6 +196,7 @@ public class Morphology {
             for (int j = 0; j < wordLenght; j++) {
                 separators[i][j] = Integer.valueOf(bufferedReader.readLine());
             }
+            intetger.add(separators[i][0]);
         }
     }
 

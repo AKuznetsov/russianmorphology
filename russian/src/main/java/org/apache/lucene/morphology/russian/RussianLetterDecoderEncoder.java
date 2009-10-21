@@ -30,14 +30,15 @@ import java.util.ArrayList;
  */
 public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
     public static final int RUSSIAN_SMALL_LETTER_OFFSET = 1071;
-    static public int SUFFIX_LENGTH = 6;
+    public static final int WORD_PART_LENGHT = 6;
     public static final int EE_CHAR = 34;
     public static final int E_CHAR = 6;
     public static final int DASH_CHAR = 45;
     public static final int DASH_CODE = 33;
 
     public Integer encode(String string) {
-        if (string.length() > 6) throw new SuffixToLongException("Suffix length should not be greater then " + 12);
+        if (string.length() > WORD_PART_LENGHT)
+            throw new SuffixToLongException("Suffix length should not be greater then " + WORD_PART_LENGHT + " " + string);
         int result = 0;
         for (int i = 0; i < string.length(); i++) {
             int c = 0 + string.charAt(i) - RUSSIAN_SMALL_LETTER_OFFSET;
@@ -49,7 +50,7 @@ public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
                 throw new WrongCharaterException("Symblo " + string.charAt(i) + " is not small cirillic letter");
             result = result * 34 + c;
         }
-        for (int i = string.length(); i < 6; i++) {
+        for (int i = string.length(); i < WORD_PART_LENGHT; i++) {
             result *= 34;
         }
         return result;
@@ -57,9 +58,9 @@ public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
 
     public int[] encodeToArray(String s) {
         ArrayList<Integer> integers = new ArrayList<Integer>();
-        while (s.length() > 6) {
-            integers.add(encode(s.substring(0, 6)));
-            s = s.substring(6);
+        while (s.length() > WORD_PART_LENGHT) {
+            integers.add(encode(s.substring(0, WORD_PART_LENGHT)));
+            s = s.substring(WORD_PART_LENGHT);
         }
         integers.add(encode(s));
         int[] ints = new int[integers.size()];
@@ -116,6 +117,6 @@ public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
     }
 
     public String cleanString(String s) {
-        return s.replace((char) (34 + RussianLetterDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET), (char) (6 + RussianLetterDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET));
+        return s.replace((char) (EE_CHAR + RussianLetterDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET), (char) (E_CHAR + RussianLetterDecoderEncoder.RUSSIAN_SMALL_LETTER_OFFSET));
     }
 }
