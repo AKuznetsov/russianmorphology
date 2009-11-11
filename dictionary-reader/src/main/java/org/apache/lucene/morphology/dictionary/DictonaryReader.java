@@ -31,9 +31,9 @@ import java.util.*;
 public class DictonaryReader {
     private String fileName;
     private String fileEncoding = "windows-1251";
-    private List<List<FlexiaModel>> wordsFlexias = new ArrayList<List<FlexiaModel>>();
-    private List<List<String>> wordPrefixes = new ArrayList<List<String>>();
-    private Set<String> ingnoredForm = new HashSet<String>();
+    protected List<List<FlexiaModel>> wordsFlexias = new ArrayList<List<FlexiaModel>>();
+    protected List<List<String>> wordPrefixes = new ArrayList<List<String>>();
+    protected Set<String> ingnoredForm = new HashSet<String>();
 
     public DictonaryReader(String fileName, Set<String> ingnoredForm) {
         this.fileName = fileName;
@@ -57,7 +57,7 @@ public class DictonaryReader {
     }
 
 
-    private void readWords(BufferedReader reader, WordProccessor wordProccessor) throws IOException {
+    protected void readWords(BufferedReader reader, WordProccessor wordProccessor) throws IOException {
         String s = reader.readLine();
         int count = Integer.valueOf(s);
         for (int i = 0; i < count; i++) {
@@ -81,7 +81,7 @@ public class DictonaryReader {
     }
 
 
-    private void sckipBlock(BufferedReader reader) throws IOException {
+    protected void sckipBlock(BufferedReader reader) throws IOException {
         String s = reader.readLine();
         int count = Integer.valueOf(s);
         for (int i = 0; i < count; i++) {
@@ -90,7 +90,7 @@ public class DictonaryReader {
     }
 
 
-    private void readPrefix(BufferedReader reader) throws IOException {
+    protected void readPrefix(BufferedReader reader) throws IOException {
         String s = reader.readLine();
         int count = Integer.valueOf(s);
         for (int i = 0; i < count; i++) {
@@ -99,7 +99,7 @@ public class DictonaryReader {
         }
     }
 
-    private void readFlexias(BufferedReader reader) throws IOException {
+    protected  void readFlexias(BufferedReader reader) throws IOException {
         String s = reader.readLine();
         int count = Integer.valueOf(s);
         for (int i = 0; i < count; i++) {
@@ -112,7 +112,7 @@ public class DictonaryReader {
         }
     }
 
-    private void addFlexia(ArrayList<FlexiaModel> flexiaModelArrayList, String line) {
+    protected  void addFlexia(ArrayList<FlexiaModel> flexiaModelArrayList, String line) {
         String[] fl = line.split("\\*");
         // we inored all forms thats
         if (fl.length == 3) {
