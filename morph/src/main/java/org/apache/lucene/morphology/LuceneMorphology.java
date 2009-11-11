@@ -34,14 +34,8 @@ public class LuceneMorphology extends Morphology {
     }
 
     @Override
-    public List<String> getMorhInfo(String s) {
-        ArrayList<String> result = new ArrayList<String>();
-        int[] ints = decoderEncoder.encodeToArray(revertWord(s));
-        int ruleId = findRuleId(ints);
-        for (Heuristic h : rules[rulesId[ruleId]]) {
-            result.add(h.transofrmWord(s));
-        }
-        return result;
+    protected String createForm(String form, String grammaInfo) {
+        return form;
     }
 
     protected void readRules(BufferedReader bufferedReader) throws IOException {

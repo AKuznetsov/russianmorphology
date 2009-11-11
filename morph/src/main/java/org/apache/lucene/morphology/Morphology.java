@@ -68,9 +68,13 @@ public class Morphology {
         int[] ints = decoderEncoder.encodeToArray(revertWord(s));
         int ruleId = findRuleId(ints);
         for (Heuristic h : rules[rulesId[ruleId]]) {
-            result.add(h.transofrmWord(s) + "|" + grammaInfo[h.getFormMorphInfo()]);
+            result.add(createForm(h.transofrmWord(s),grammaInfo[h.getFormMorphInfo()]));
         }
         return result;
+    }
+
+    protected String createForm(String form,String grammaInfo){
+        return form+"|"+grammaInfo;
     }
 
     protected int findRuleId(int[] ints) {

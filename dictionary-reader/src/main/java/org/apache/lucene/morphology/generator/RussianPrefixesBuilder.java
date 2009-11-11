@@ -17,7 +17,6 @@
 package org.apache.lucene.morphology.generator;
 
 import org.apache.lucene.morphology.dictionary.*;
-import org.apache.lucene.morphology.russian.RussianLetterDecoderEncoder;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -26,7 +25,7 @@ import java.util.HashSet;
 public class RussianPrefixesBuilder {
     public static void main(String[] args) throws IOException {
         GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morph/rgramtab.tab");
-        PrefixesHypotises dictonaryReader = new PrefixesHypotises("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<String>());
+        PrefixesRulesBuilder dictonaryReader = new PrefixesRulesBuilder("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<String>());
 
         //RussianLetterDecoderEncoder decoderEncoder = new RussianLetterDecoderEncoder();
         //StatiticsCollector statiticsCollector = new StatiticsCollector(grammaInfo, decoderEncoder);

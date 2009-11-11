@@ -1,18 +1,20 @@
 package org.apache.lucene.morphology.dictionary;
 
+import org.apache.lucene.morphology.PrefixRule;
+
 import java.util.*;
 import java.io.IOException;
 import java.io.BufferedReader;
 
 
-public class PrefixesHypotises extends DictonaryReader {
+public class PrefixesRulesBuilder extends DictonaryReader {
     private Map<FlexiaModel,Set<FlexiaModel>> rules = new HashMap<FlexiaModel,Set<FlexiaModel>>();
 
-    public PrefixesHypotises(String fileName, Set<String> ingnoredForm) {
+    public PrefixesRulesBuilder(String fileName, Set<String> ingnoredForm) {
         super(fileName, ingnoredForm);
     }
 
-    public PrefixesHypotises(String fileName, String fileEncoding, Set<String> ingnoredForm) {
+    public PrefixesRulesBuilder(String fileName, String fileEncoding, Set<String> ingnoredForm) {
         super(fileName, fileEncoding, ingnoredForm);
     }
 
@@ -21,6 +23,22 @@ public class PrefixesHypotises extends DictonaryReader {
         super.proccess(wordProccessor);
         System.out.println(rules.size());
         System.out.println(rules);
+    }
+
+    public List<PrefixRule> getPrefixRules(){
+        List<PrefixRule> prefixRules = new ArrayList<PrefixRule>();
+        for(FlexiaModel key:rules.keySet()){
+            PrefixRule prefixRule = new PrefixRule();
+            prefixRule.setPrefix(key.getPrefix());
+            prefixRule.setLastLetter(key.getSuffix().charAt(0));
+            HashSet<String> map = new HashSet<String>();
+            for(FlexiaModel fm:rules.get(key)){
+                map.add(fm.getCode());
+            }
+            prefixRule.setForms(map);
+            prefixRules.add(prefixRule);
+        }
+        return prefixRules;
     }
 
     @Override
