@@ -33,7 +33,7 @@ public class RussianLuceneMorphTest {
 
     @Before
     public void setUp() throws IOException {
-        luceneMorph = new LuceneMorphology(this.getClass().getResourceAsStream("/org/apache/lucene/morphology/russian/morph.info"), new RussianLetterDecoderEncoder());
+        luceneMorph = new RussianLuceneMorphology();
     }
 
     @Test

@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LuceneMorphology extends Morphology {
+public class LuceneMorphology extends MorphologyWithPrefix {
 
     public LuceneMorphology(String fileName, LetterDecoderEncoder decoderEncoder) throws IOException {
         super(fileName, decoderEncoder);
@@ -31,6 +31,10 @@ public class LuceneMorphology extends Morphology {
 
     public LuceneMorphology(InputStream inputStream, LetterDecoderEncoder decoderEncoder) throws IOException {
         super(inputStream, decoderEncoder);
+    }
+
+    public LuceneMorphology(InputStream morphFormInputStream, InputStream prefixesInputStream, LetterDecoderEncoder decoderEncoder) throws IOException {
+        super(morphFormInputStream, prefixesInputStream, decoderEncoder);
     }
 
     @Override

@@ -1,21 +1,34 @@
+/**
+ * Copyright 2009 Alexander Kuznetsov
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package org.apache.lucene.morphology.dictionary;
 
 import org.apache.lucene.morphology.PrefixRule;
 
 import java.util.*;
-import java.io.IOException;
-import java.io.BufferedReader;
+import java.io.*;
 
 
 public class PrefixesRulesBuilder extends DictonaryReader {
+    private GrammaReader grammaInfo;
+
     private Map<FlexiaModel,Set<FlexiaModel>> rules = new HashMap<FlexiaModel,Set<FlexiaModel>>();
 
-    public PrefixesRulesBuilder(String fileName, Set<String> ingnoredForm) {
-        super(fileName, ingnoredForm);
-    }
-
-    public PrefixesRulesBuilder(String fileName, String fileEncoding, Set<String> ingnoredForm) {
+    public PrefixesRulesBuilder(String fileName, String fileEncoding, Set<String> ingnoredForm) throws IOException {
         super(fileName, fileEncoding, ingnoredForm);
+        grammaInfo = new GrammaReader("dictonary/Dicts/Morph/rgramtab.tab");
     }
 
     @Override
@@ -31,9 +44,10 @@ public class PrefixesRulesBuilder extends DictonaryReader {
             PrefixRule prefixRule = new PrefixRule();
             prefixRule.setPrefix(key.getPrefix());
             prefixRule.setLastLetter(key.getSuffix().charAt(0));
-            HashSet<String> map = new HashSet<String>();
+            HashSet<Short> map = new HashSet<Short>();
             for(FlexiaModel fm:rules.get(key)){
-                map.add(fm.getCode());
+                int gi = grammaInfo.getGrammInversIndex().get(fm.getCode());
+                map.add((short) gi);
             }
             prefixRule.setForms(map);
             prefixRules.add(prefixRule);
@@ -73,10 +87,10 @@ public class PrefixesRulesBuilder extends DictonaryReader {
     private void testFlexia(List<FlexiaModel> models, FlexiaModel fm) {
         for(FlexiaModel com:models){
             if(com.getSuffix().equals(fm.getSuffix()) && com.getPrefix().length() == 0){
-                Set<FlexiaModel> models1 = rules.get(convert(fm));
+                Set<FlexiaModel> models1 = rules.get(convertForKey(fm));
                 if(models1 == null){
                     models1 = new HashSet<FlexiaModel>();
-                    rules.put(convert(fm),models1);
+                    rules.put(convertForKey(fm),models1);
                 }
                 models1.add(convert(com));
             }
@@ -85,8 +99,14 @@ public class PrefixesRulesBuilder extends DictonaryReader {
 
     private FlexiaModel convert(FlexiaModel fm){
         String suf = fm.getSuffix();
-        if(suf.length() == 1) System.out.println(fm);
-        return new FlexiaModel(fm.getCode(),""+ suf.charAt(suf.length()-1)+ (suf.length() > 1 ?  suf.charAt(suf.length()-2) : ""),fm.getPrefix());
+        //if(suf.length() == 1) System.out.println(fm);
+        return new FlexiaModel(fm.getCode(),""+ suf.charAt(suf.length()-1),fm.getPrefix());
+    }
+
+    private FlexiaModel convertForKey(FlexiaModel fm){
+        String suf = fm.getSuffix();
+        //if(suf.length() == 1) System.out.println(fm);
+        return new FlexiaModel("pr",""+ suf.charAt(suf.length()-1),fm.getPrefix());
     }
 
     protected void addFlexia(ArrayList<FlexiaModel> flexiaModelArrayList, String line) {
@@ -97,4 +117,23 @@ public class PrefixesRulesBuilder extends DictonaryReader {
         if (fl.length == 2) flexiaModelArrayList.add(new FlexiaModel(fl[1], fl[0].toLowerCase(), ""));
     }
 
+    public void savePrefixes(String fileName) throws IOException {
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8");
+        List<PrefixRule> prefixRuleList = getPrefixRules();
+        writer.write(prefixRuleList.size()+"\n");
+        for(PrefixRule pr: prefixRuleList){
+            writePrefixRule(writer, pr);
+        }
+        writer.close();
+    }
+
+    private void writePrefixRule(OutputStreamWriter writer, PrefixRule pr) throws IOException {
+        writer.write(pr.getPrefix()+"\n");
+        writer.write(pr.getLastLetter()+"\n");
+        HashSet<Short> formInfo = pr.getForms();
+        writer.write(formInfo.size()+"\n");
+        for(Short s:formInfo){
+            writer.write(s+"\n");
+        }
+    }
 }
