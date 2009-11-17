@@ -15,12 +15,12 @@
  */
 package org.apache.lucene.morphology.english;
 
-import org.apache.lucene.morphology.Morphology;
+import org.apache.lucene.morphology.MorphologyImpl;
 
 import java.io.IOException;
 
 
-public class EnglishMorphology extends Morphology {
+public class EnglishMorphology extends MorphologyImpl {
 
     public EnglishMorphology() throws IOException {
         super(EnglishLuceneMorphology.class.getResourceAsStream("/org/apache/lucene/morphology/english/morph.info"), new EnglishLetterDecoderEncoder());

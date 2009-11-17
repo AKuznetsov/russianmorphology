@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class LuceneMorphology extends MorphologyWithPrefix {
+public class LuceneMorphology extends MorphologyImpl {
 
     public LuceneMorphology(String fileName, LetterDecoderEncoder decoderEncoder) throws IOException {
         super(fileName, decoderEncoder);
@@ -33,13 +33,15 @@ public class LuceneMorphology extends MorphologyWithPrefix {
         super(inputStream, decoderEncoder);
     }
 
-    public LuceneMorphology(InputStream morphFormInputStream, InputStream prefixesInputStream, LetterDecoderEncoder decoderEncoder) throws IOException {
-        super(morphFormInputStream, prefixesInputStream, decoderEncoder);
-    }
-
     @Override
-    protected String createForm(String form, String grammaInfo) {
-        return form;
+    public List<String> getMorhInfo(String s) {
+        ArrayList<String> result = new ArrayList<String>();
+        int[] ints = decoderEncoder.encodeToArray(revertWord(s));
+        int ruleId = findRuleId(ints);
+        for (Heuristic h : rules[rulesId[ruleId]]) {
+            result.add(h.transofrmWord(s));
+        }
+        return result;
     }
 
     protected void readRules(BufferedReader bufferedReader) throws IOException {

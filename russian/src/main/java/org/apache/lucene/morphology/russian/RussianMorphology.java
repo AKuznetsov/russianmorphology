@@ -15,11 +15,11 @@
  */
 package org.apache.lucene.morphology.russian;
 
-import org.apache.lucene.morphology.Morphology;
+import org.apache.lucene.morphology.MorphologyImpl;
 
 import java.io.IOException;
 
-public class RussianMorphology extends Morphology {
+public class RussianMorphology extends MorphologyImpl {
 
     public RussianMorphology() throws IOException {
         super(RussianMorphology.class.getResourceAsStream("/org/apache/lucene/morphology/russian/morph.info"), new RussianLetterDecoderEncoder());

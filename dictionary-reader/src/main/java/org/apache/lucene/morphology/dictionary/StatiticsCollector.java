@@ -19,7 +19,7 @@ package org.apache.lucene.morphology.dictionary;
 
 import org.apache.lucene.morphology.Heuristic;
 import org.apache.lucene.morphology.LetterDecoderEncoder;
-import org.apache.lucene.morphology.Morphology;
+import org.apache.lucene.morphology.MorphologyImpl;
 
 import java.io.IOException;
 import java.util.*;
@@ -119,7 +119,7 @@ public class StatiticsCollector implements WordProccessor {
                 prevSet = currentSet;
             }
         }
-        Morphology morphology = new Morphology(ints, rulesId, heuristics, grammaReader.getGrammaInfoAsArray());
+        MorphologyImpl morphology = new MorphologyImpl(ints, rulesId, heuristics, grammaReader.getGrammaInfoAsArray());
         morphology.writeToFile(fileName);
     }
 

@@ -1,5 +1,5 @@
 /**
- * Copyright 2009 Alexander Kuznetsov
+ * Copyright 2009 Alexander Kuznetsov 
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,28 +60,6 @@ public class FlexiaModel {
 
     @Override
     public String toString() {
-        return prefix + " " + suffix + " " + code;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        FlexiaModel that = (FlexiaModel) o;
-
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (prefix != null ? !prefix.equals(that.prefix) : that.prefix != null) return false;
-        if (suffix != null ? !suffix.equals(that.suffix) : that.suffix != null) return false;
-
-        return true;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = code != null ? code.hashCode() : 0;
-        result = 31 * result + (suffix != null ? suffix.hashCode() : 0);
-        result = 31 * result + (prefix != null ? prefix.hashCode() : 0);
-        return result;
+        return prefix + " " + suffix;
     }
 }
