@@ -63,7 +63,17 @@ public class MorphologyImpl implements Morphology {
         return grammaInfo;
     }
 
-    public List<String> getMorhInfo(String s) {
+    public List<String> getNormalForms(String s) {
+        ArrayList<String> result = new ArrayList<String>();
+        int[] ints = decoderEncoder.encodeToArray(revertWord(s));
+        int ruleId = findRuleId(ints);
+        for (Heuristic h : rules[rulesId[ruleId]]) {
+            result.add(h.transofrmWord(s));
+        }
+        return result;
+    }
+
+    public List<String> getMorfInfo(String s) {
         ArrayList<String> result = new ArrayList<String>();
         int[] ints = decoderEncoder.encodeToArray(revertWord(s));
         int ruleId = findRuleId(ints);

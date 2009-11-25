@@ -47,7 +47,7 @@ public class EnglishLuceneMorphTest {
             for (int i = 1; i < qa.length; i++) {
                 result.add(qa[i]);
             }
-            Set<String> stringList = new HashSet<String>(luceneMorph.getMorhInfo(qa[0]));
+            Set<String> stringList = new HashSet<String>(luceneMorph.getNormalForms(qa[0]));
             assertThat(stringList, equalTo(result));
             s = bufferedReader.readLine();
         }

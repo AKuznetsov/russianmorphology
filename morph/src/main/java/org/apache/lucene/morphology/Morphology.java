@@ -20,6 +20,8 @@ import java.util.List;
 
 public interface Morphology {
 
-    List<String> getMorhInfo(String s);
-    
+    List<String> getNormalForms(String s);
+
+    List<String> getMorfInfo(String s);
+
 }

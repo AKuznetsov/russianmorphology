@@ -56,7 +56,7 @@ public class MorphlogyFilter extends TokenFilter {
         if (!luceneMorph.checkString(nextToken.term())) {
             return nextToken;
         }
-        stack = luceneMorph.getMorhInfo(nextToken.term());
+        stack = luceneMorph.getNormalForms(nextToken.term());
         index = 0;
         current = (Token) nextToken.clone();
         nextToken = createToken(stack.get(index++), current, reusableToken);

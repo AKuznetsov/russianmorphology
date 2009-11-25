@@ -20,7 +20,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class LuceneMorphology extends MorphologyImpl {
@@ -31,17 +30,6 @@ public class LuceneMorphology extends MorphologyImpl {
 
     public LuceneMorphology(InputStream inputStream, LetterDecoderEncoder decoderEncoder) throws IOException {
         super(inputStream, decoderEncoder);
-    }
-
-    @Override
-    public List<String> getMorhInfo(String s) {
-        ArrayList<String> result = new ArrayList<String>();
-        int[] ints = decoderEncoder.encodeToArray(revertWord(s));
-        int ruleId = findRuleId(ints);
-        for (Heuristic h : rules[rulesId[ruleId]]) {
-            result.add(h.transofrmWord(s));
-        }
-        return result;
     }
 
     protected void readRules(BufferedReader bufferedReader) throws IOException {
