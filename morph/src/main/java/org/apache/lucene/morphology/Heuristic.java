@@ -40,6 +40,7 @@ public class Heuristic implements Serializable {
     }
 
     public String transofrmWord(String w) {
+        if (w.length() - actualSuffixLengh < 0) return w;
         return w.substring(0, w.length() - actualSuffixLengh) + actualNormalSuffix;
     }
 
