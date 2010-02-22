@@ -15,8 +15,8 @@
  */
 package org.apache.lucene.morphology.english;
 
-import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 import org.junit.Test;
@@ -43,19 +43,12 @@ public class EnglishAnalayzerTest {
         stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/english/englsih-analayzer-data.txt");
 
         InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
-        final Token reusableToken = new Token();
 
-        Token nextToken;
-        TokenStream in = morphlogyAnalayzer.tokenStream(null, reader);
+        TokenStream tokenStream = morphlogyAnalayzer.tokenStream(null, reader);
         HashSet<String> result = new HashSet<String>();
-        for (; ;) {
-            nextToken = in.next(reusableToken);
-
-            if (nextToken == null) {
-                break;
-            }
-
-            result.add(nextToken.term());
+        while (tokenStream.incrementToken()) {
+            TermAttribute attribute1 = tokenStream.getAttribute(TermAttribute.class);
+            result.add(attribute1.term());
         }
 
         stream.close();

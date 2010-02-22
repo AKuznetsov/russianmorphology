@@ -23,6 +23,7 @@ import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.morphology.LetterDecoderEncoder;
 import org.apache.lucene.morphology.LuceneMorphology;
+import org.apache.lucene.util.Version;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -44,7 +45,7 @@ public class MorphlogyAnalayzer extends Analyzer {
     }
 
     public TokenStream tokenStream(String fieldName, Reader reader) {
-        TokenStream result = new StandardTokenizer(reader);
+        TokenStream result = new StandardTokenizer(Version.LUCENE_30, reader);
         result = new StandardFilter(result);
         result = new LowerCaseFilter(result);
         return new MorphlogyFilter(result, luceneMorph);

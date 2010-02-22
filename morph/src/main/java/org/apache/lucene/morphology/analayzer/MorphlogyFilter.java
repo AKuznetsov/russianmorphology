@@ -16,67 +16,43 @@
 
 package org.apache.lucene.morphology.analayzer;
 
-import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import org.apache.lucene.morphology.LuceneMorphology;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Iterator;
 
 
 public class MorphlogyFilter extends TokenFilter {
     private LuceneMorphology luceneMorph;
+    private Iterator<String> iterator;
+    private TermAttribute termAtt;
 
     public MorphlogyFilter(TokenStream tokenStream, LuceneMorphology luceneMorph) {
         super(tokenStream);
         this.luceneMorph = luceneMorph;
+        termAtt = addAttribute(TermAttribute.class);
     }
 
 
-    private List<String> stack = new ArrayList<String>();
-    private int index = 0;
-    private Token current = null;
-
-    /**
-     * Returns the next token in the stream, or null at EOS.
-     */
-    public Token next(final Token reusableToken) throws IOException {
-        assert reusableToken != null;
-        while (index < stack.size()) { // pop from stack
-            Token nextToken = createToken(stack.get(index++), current, reusableToken);
-            if (nextToken != null) {
-                return nextToken;
+    public boolean incrementToken() throws IOException {
+        while (iterator == null || !iterator.hasNext()) {
+            boolean b = input.incrementToken();
+            if (!b) {
+                return false;
+            }
+            String s = termAtt.term();
+            if (luceneMorph.checkString(s)) {
+                iterator = luceneMorph.getNormalForms(termAtt.term()).iterator();
+            } else {
+                return true;
             }
         }
-
-        Token nextToken = input.next(reusableToken);
-        if (nextToken == null) return null; // EOS; iterator exhausted
-        if (!luceneMorph.checkString(nextToken.term())) {
-            return nextToken;
-        }
-        stack = luceneMorph.getNormalForms(nextToken.term());
-        index = 0;
-        current = (Token) nextToken.clone();
-        nextToken = createToken(stack.get(index++), current, reusableToken);
-        return nextToken;
+        String s = iterator.next();
+        termAtt.setTermBuffer(s);
+        return true;
     }
 
-    /**
-     * Creates and returns a token for the given synonym of the current input
-     * token; Override for custom (stateless or stateful) behavior, if desired.
-     *
-     * @param synonym       a synonym for the current token's term
-     * @param current       the current token from the underlying child stream
-     * @param reusableToken the token to reuse
-     * @return a new token, or null to indicate that the given synonym should be
-     *         ignored
-     */
-    protected Token createToken(String synonym, Token current, final Token reusableToken) {
-        reusableToken.reinit(current, synonym);
-        reusableToken.setTermBuffer(synonym);
-        reusableToken.setPositionIncrement(0);
-        return reusableToken;
-    }
 }
