@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.lucene.morphology</groupId>
     <artifactId>morphology</artifactId>
     <packaging>pom</packaging>
-    <version>0.8-SNAPSHOT</version>
+    <version>0.8</version>
     <name>morphology</name>
     <url>http://maven.apache.org</url>
 
     <scm>
-        <connection>scm:svn:http://russianmorphology.googlecode.com/svn/trunk/</connection>
-        <developerConnection>scm:svn:https://russianmorphology.googlecode.com/svn/trunk/</developerConnection>
+        <connection>scm:svn:http://russianmorphology.googlecode.com/svn/tags/morphology-0.8</connection>
+        <developerConnection>scm:svn:https://russianmorphology.googlecode.com/svn/tags/morphology-0.8</developerConnection>
     </scm>
 
 
