@@ -18,7 +18,7 @@ package org.apache.lucene.morphology.generator;
 
 import org.apache.lucene.morphology.dictionary.DictonaryReader;
 import org.apache.lucene.morphology.dictionary.GrammaReader;
-import org.apache.lucene.morphology.dictionary.StatiticsCollector;
+import org.apache.lucene.morphology.dictionary.StatisticsCollector;
 import org.apache.lucene.morphology.russian.RussianLetterDecoderEncoder;
 
 import java.io.IOException;
@@ -31,9 +31,9 @@ public class RussianHeuristicBuilder {
         DictonaryReader dictonaryReader = new DictonaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<String>());
 
         RussianLetterDecoderEncoder decoderEncoder = new RussianLetterDecoderEncoder();
-        StatiticsCollector statiticsCollector = new StatiticsCollector(grammaInfo, decoderEncoder);
-        dictonaryReader.proccess(statiticsCollector);
-        statiticsCollector.saveHeuristic("russian/src/main/resources/org/apache/lucene/morphology/russian/morph.info");
+        StatisticsCollector statisticsCollector = new StatisticsCollector(grammaInfo, decoderEncoder);
+        dictonaryReader.proccess(statisticsCollector);
+        statisticsCollector.saveHeuristic("russian/src/main/resources/org/apache/lucene/morphology/russian/morph.info");
 
     }
 }

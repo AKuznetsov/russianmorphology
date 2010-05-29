@@ -26,20 +26,20 @@ import java.util.*;
 
 
 //todo made refactoring this class
-public class StatiticsCollector implements WordProccessor {
-    private TreeMap<String, Set<Heuristic>> inversIndex = new TreeMap<String, Set<Heuristic>>();
-    private Map<Set<Heuristic>, Integer> ruleInverIndex = new HashMap<Set<Heuristic>, Integer>();
+public class StatisticsCollector implements WordProccessor {
+    private TreeMap<String, Set<Heuristic>> inverseIndex = new TreeMap<String, Set<Heuristic>>();
+    private Map<Set<Heuristic>, Integer> ruleInverseIndex = new HashMap<Set<Heuristic>, Integer>();
     private List<Set<Heuristic>> rules = new ArrayList<Set<Heuristic>>();
     private GrammaReader grammaReader;
     private LetterDecoderEncoder decoderEncoder;
 
 
-    public StatiticsCollector(GrammaReader grammaReader, LetterDecoderEncoder decoderEncoder) {
+    public StatisticsCollector(GrammaReader grammaReader, LetterDecoderEncoder decoderEncoder) {
         this.grammaReader = grammaReader;
         this.decoderEncoder = decoderEncoder;
     }
 
-    public void proccess(WordCard wordCard) throws IOException {
+    public void process(WordCard wordCard) throws IOException {
         cleanWordCard(wordCard);
         String normalStringMorph = wordCard.getWordsFroms().get(0).getCode();
         String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
@@ -47,13 +47,13 @@ public class StatiticsCollector implements WordProccessor {
         if (!decoderEncoder.checkString(word)) return;
 
         for (FlexiaModel fm : wordCard.getWordsFroms()) {
-            if (!decoderEncoder.checkString(fm.create(wordCard.getBase()))) continue;
+            if (!decoderEncoder.checkString(fm.create(wordCard.getBase())) || fm.create(wordCard.getBase()).contains("-")) continue;
             Heuristic heuristic = createEvristic(wordCard.getBase(), wordCard.getCanonicalSuffix(), fm, normalStringMorph);
             String form = revertWord(fm.create(wordCard.getBase()));
-            Set<Heuristic> suffixHeuristics = inversIndex.get(form);
+            Set<Heuristic> suffixHeuristics = inverseIndex.get(form);
             if (suffixHeuristics == null) {
                 suffixHeuristics = new HashSet<Heuristic>();
-                inversIndex.put(form, suffixHeuristics);
+                inverseIndex.put(form, suffixHeuristics);
             }
             suffixHeuristics.add(heuristic);
         }
@@ -76,24 +76,24 @@ public class StatiticsCollector implements WordProccessor {
         Map<Integer, Integer> dist = new TreeMap<Integer, Integer>();
         Set<Heuristic> prevSet = null;
         int count = 0;
-        for (String key : inversIndex.keySet()) {
-            Set<Heuristic> currentSet = inversIndex.get(key);
+        for (String key : inverseIndex.keySet()) {
+            Set<Heuristic> currentSet = inverseIndex.get(key);
             if (!currentSet.equals(prevSet)) {
                 Integer d = dist.get(key.length());
                 dist.put(key.length(), 1 + (d == null ? 0 : d));
                 prevSet = currentSet;
                 count++;
-                if (!ruleInverIndex.containsKey(currentSet)) {
-                    ruleInverIndex.put(currentSet, rules.size());
+                if (!ruleInverseIndex.containsKey(currentSet)) {
+                    ruleInverseIndex.put(currentSet, rules.size());
                     rules.add(currentSet);
                 }
             }
         }
         System.out.println("Word with diffirent rules " + count);
-        System.out.println("All ivers words " + inversIndex.size());
+        System.out.println("All ivers words " + inverseIndex.size());
         System.out.println(dist);
-        System.out.println("diffirent rule count " + ruleInverIndex.size());
-        Heuristic[][] heuristics = new Heuristic[ruleInverIndex.size()][];
+        System.out.println("diffirent rule count " + ruleInverseIndex.size());
+        Heuristic[][] heuristics = new Heuristic[ruleInverseIndex.size()][];
         int index = 0;
         for (Set<Heuristic> hs : rules) {
             heuristics[index] = new Heuristic[hs.size()];
@@ -109,12 +109,12 @@ public class StatiticsCollector implements WordProccessor {
         short[] rulesId = new short[count];
         count = 0;
         prevSet = null;
-        for (String key : inversIndex.keySet()) {
-            Set<Heuristic> currentSet = inversIndex.get(key);
+        for (String key : inverseIndex.keySet()) {
+            Set<Heuristic> currentSet = inverseIndex.get(key);
             if (!currentSet.equals(prevSet)) {
                 int[] word = decoderEncoder.encodeToArray(key);
                 ints[count] = word;
-                rulesId[count] = (short) ruleInverIndex.get(currentSet).intValue();
+                rulesId[count] = (short) ruleInverseIndex.get(currentSet).intValue();
                 count++;
                 prevSet = currentSet;
             }

@@ -32,7 +32,7 @@ import java.util.HashSet;
 public class EnglishAnalayzerTest {
 
     @Test
-    public void shoudGiveCorretWords() throws IOException {
+    public void shouldGiveCorrectWords() throws IOException {
         InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/english/englsih-analayzer-answer.txt");
         BufferedReader breader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         String[] strings = breader.readLine().replaceAll(" +", " ").trim().split(" ");

@@ -69,4 +69,14 @@ public class WordCard {
     public void setWordsFroms(List<FlexiaModel> wordsFroms) {
         this.wordsFroms = wordsFroms;
     }
+
+    @Override
+    public String toString() {
+        return "WordCard{" +
+                "canonicalFrom='" + canonicalFrom + '\'' +
+                ", base='" + base + '\'' +
+                ", canonicalSuffix='" + canonicalSuffix + '\'' +
+                ", wordsFroms=" + wordsFroms +
+                '}';
+    }
 }

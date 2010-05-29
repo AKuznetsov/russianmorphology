@@ -19,33 +19,33 @@ import java.io.Serializable;
 
 
 public class Heuristic implements Serializable {
-    byte actualSuffixLengh;
+    byte actualSuffixLength;
     String actualNormalSuffix;
     short formMorphInfo;
     short normalFormMorphInfo;
 
     public Heuristic(String s) {
         String[] strings = s.split("\\|");
-        actualSuffixLengh = Byte.valueOf(strings[0]);
+        actualSuffixLength = Byte.valueOf(strings[0]);
         actualNormalSuffix = strings[1];
         formMorphInfo = Short.valueOf(strings[2]);
         normalFormMorphInfo = Short.valueOf(strings[3]);
     }
 
-    public Heuristic(byte actualSuffixLengh, String actualNormalSuffix, short formMorphInfo, short normalFormMorphInfo) {
-        this.actualSuffixLengh = actualSuffixLengh;
+    public Heuristic(byte actualSuffixLength, String actualNormalSuffix, short formMorphInfo, short normalFormMorphInfo) {
+        this.actualSuffixLength = actualSuffixLength;
         this.actualNormalSuffix = actualNormalSuffix;
         this.formMorphInfo = formMorphInfo;
         this.normalFormMorphInfo = normalFormMorphInfo;
     }
 
-    public String transofrmWord(String w) {
-        if (w.length() - actualSuffixLengh < 0) return w;
-        return w.substring(0, w.length() - actualSuffixLengh) + actualNormalSuffix;
+    public String transformWord(String w) {
+        if (w.length() - actualSuffixLength < 0) return w;
+        return w.substring(0, w.length() - actualSuffixLength) + actualNormalSuffix;
     }
 
-    public byte getActualSuffixLengh() {
-        return actualSuffixLengh;
+    public byte getActualSuffixLength() {
+        return actualSuffixLength;
     }
 
     public String getActualNormalSuffix() {
@@ -67,7 +67,7 @@ public class Heuristic implements Serializable {
 
         Heuristic heuristic = (Heuristic) o;
 
-        if (actualSuffixLengh != heuristic.actualSuffixLengh) return false;
+        if (actualSuffixLength != heuristic.actualSuffixLength) return false;
         if (formMorphInfo != heuristic.formMorphInfo) return false;
         if (normalFormMorphInfo != heuristic.normalFormMorphInfo) return false;
         if (actualNormalSuffix != null ? !actualNormalSuffix.equals(heuristic.actualNormalSuffix) : heuristic.actualNormalSuffix != null)
@@ -78,7 +78,7 @@ public class Heuristic implements Serializable {
 
     @Override
     public int hashCode() {
-        int result = (int) actualSuffixLengh;
+        int result = (int) actualSuffixLength;
         result = 31 * result + (actualNormalSuffix != null ? actualNormalSuffix.hashCode() : 0);
         result = 31 * result + (int) formMorphInfo;
         result = 31 * result + (int) normalFormMorphInfo;
@@ -87,6 +87,6 @@ public class Heuristic implements Serializable {
 
     @Override
     public String toString() {
-        return "" + actualSuffixLengh + "|" + actualNormalSuffix + "|" + formMorphInfo + "|" + normalFormMorphInfo;
+        return "" + actualSuffixLength + "|" + actualNormalSuffix + "|" + formMorphInfo + "|" + normalFormMorphInfo;
     }
 }

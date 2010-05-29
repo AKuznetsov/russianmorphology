@@ -24,5 +24,5 @@ import java.io.IOException;
  */
 public interface WordProccessor {
 
-    public void proccess(WordCard wordCard) throws IOException;
+    public void process(WordCard wordCard) throws IOException;
 }

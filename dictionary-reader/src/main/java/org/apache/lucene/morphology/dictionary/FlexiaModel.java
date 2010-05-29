@@ -17,7 +17,7 @@
 package org.apache.lucene.morphology.dictionary;
 
 /**
- * Represent inofrmation of how word form created form it imutible part.
+ * Represent information of how word form created form it imutible part.
  */
 public class FlexiaModel {
     private String code;
@@ -60,6 +60,10 @@ public class FlexiaModel {
 
     @Override
     public String toString() {
-        return prefix + " " + suffix;
+        return "FlexiaModel{" +
+                "code='" + code + '\'' +
+                ", suffix='" + suffix + '\'' +
+                ", prefix='" + prefix + '\'' +
+                '}';
     }
 }

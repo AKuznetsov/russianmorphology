@@ -55,7 +55,7 @@ public class LuceneMorphology extends MorphologyImpl {
         for (Heuristic heuristic : heuristics) {
             boolean isAdded = true;
             for (Heuristic ch : result) {
-                isAdded = isAdded && !(ch.getActualNormalSuffix().equals(heuristic.getActualNormalSuffix()) && (ch.getActualSuffixLengh() == heuristic.getActualSuffixLengh()));
+                isAdded = isAdded && !(ch.getActualNormalSuffix().equals(heuristic.getActualNormalSuffix()) && (ch.getActualSuffixLength() == heuristic.getActualSuffixLength()));
             }
             if (isAdded) {
                 result.add(heuristic);

@@ -71,11 +71,17 @@ public class DictonaryReader {
             List<FlexiaModel> models = wordsFlexias.get(Integer.valueOf(wd[1]));
             FlexiaModel flexiaModel = models.get(0);
             if (models.size() > 0 && !ingnoredForm.contains(flexiaModel.getCode())) {
+
                 WordCard card = new WordCard(flexiaModel.create(wordBase), wordBase, flexiaModel.getSuffix());
                 for (FlexiaModel fm : models) {
                     card.addFlexia(fm);
                 }
-                wordProccessor.proccess(card);
+//                if(card.getBase().equals("face") || card.getBase().equals("fac")){
+//                    System.out.println(models);
+//                    System.out.println(card);
+                    wordProccessor.process(card);
+                //}
+
             }
         }
     }

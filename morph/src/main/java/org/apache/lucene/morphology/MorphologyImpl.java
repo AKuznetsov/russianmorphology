@@ -68,7 +68,7 @@ public class MorphologyImpl implements Morphology {
         int[] ints = decoderEncoder.encodeToArray(revertWord(s));
         int ruleId = findRuleId(ints);
         for (Heuristic h : rules[rulesId[ruleId]]) {
-            result.add(h.transofrmWord(s));
+            result.add(h.transformWord(s));
         }
         return result;
     }
@@ -78,7 +78,7 @@ public class MorphologyImpl implements Morphology {
         int[] ints = decoderEncoder.encodeToArray(revertWord(s));
         int ruleId = findRuleId(ints);
         for (Heuristic h : rules[rulesId[ruleId]]) {
-            result.add(h.transofrmWord(s) + "|" + grammaInfo[h.getFormMorphInfo()]);
+            result.add(h.transformWord(s) + "|" + grammaInfo[h.getFormMorphInfo()]);
         }
         return result;
     }
@@ -180,9 +180,9 @@ public class MorphologyImpl implements Morphology {
         rules = new Heuristic[amount][];
         for (int i = 0; i < amount; i++) {
             String s1 = bufferedReader.readLine();
-            Integer ruleLenght = Integer.valueOf(s1);
-            rules[i] = new Heuristic[ruleLenght];
-            for (int j = 0; j < ruleLenght; j++) {
+            Integer ruleLength = Integer.valueOf(s1);
+            rules[i] = new Heuristic[ruleLength];
+            for (int j = 0; j < ruleLength; j++) {
                 rules[i][j] = new Heuristic(bufferedReader.readLine());
             }
         }
@@ -197,7 +197,6 @@ public class MorphologyImpl implements Morphology {
     }
 
     private void readSeparators(BufferedReader bufferedReader, Integer amount) throws IOException {
-        HashSet intetger = new HashSet<Integer>();
         separators = new int[amount][];
         for (int i = 0; i < amount; i++) {
             String s1 = bufferedReader.readLine();
@@ -206,7 +205,6 @@ public class MorphologyImpl implements Morphology {
             for (int j = 0; j < wordLenght; j++) {
                 separators[i][j] = Integer.valueOf(bufferedReader.readLine());
             }
-            intetger.add(separators[i][0]);
         }
     }
 
