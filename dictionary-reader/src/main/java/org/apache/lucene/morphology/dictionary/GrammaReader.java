@@ -30,7 +30,7 @@ public class GrammaReader {
     private String fileName;
     private String fileEncoding = "windows-1251";
     private List<String> grammaInfo = new ArrayList<String>();
-    private Map<String, Integer> inversIndex = new HashMap<String, Integer>();
+    private Map<String, Integer> inverseIndex = new HashMap<String, Integer>();
 
     public GrammaReader(String fileName) throws IOException {
         this.fileName = fileName;
@@ -51,7 +51,7 @@ public class GrammaReader {
             if (!line.startsWith("//") && line.length() > 0) {
                 String[] strings = line.split(" ", 2);
                 Integer i = grammaInfo.size();
-                inversIndex.put(strings[0], i);
+                inverseIndex.put(strings[0], i);
                 grammaInfo.add(i, strings[1]);
             }
             line = bufferedReader.readLine();
@@ -67,10 +67,10 @@ public class GrammaReader {
     }
 
     public Map<String, Integer> getGrammInversIndex() {
-        return inversIndex;
+        return inverseIndex;
     }
 
-    public void setInversIndex(Map<String, Integer> inversIndex) {
-        this.inversIndex = inversIndex;
+    public void setInverseIndex(Map<String, Integer> inverseIndex) {
+        this.inverseIndex = inverseIndex;
     }
 }

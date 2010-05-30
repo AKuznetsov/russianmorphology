@@ -41,12 +41,12 @@ public class StatisticsCollector implements WordProccessor {
 
     public void process(WordCard wordCard) throws IOException {
         cleanWordCard(wordCard);
-        String normalStringMorph = wordCard.getWordsFroms().get(0).getCode();
+        String normalStringMorph = wordCard.getWordsForms().get(0).getCode();
         String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
         if (word.contains("-")) return;
         if (!decoderEncoder.checkString(word)) return;
 
-        for (FlexiaModel fm : wordCard.getWordsFroms()) {
+        for (FlexiaModel fm : wordCard.getWordsForms()) {
             if (!decoderEncoder.checkString(fm.create(wordCard.getBase())) || fm.create(wordCard.getBase()).contains("-")) continue;
             Heuristic heuristic = createEvristic(wordCard.getBase(), wordCard.getCanonicalSuffix(), fm, normalStringMorph);
             String form = revertWord(fm.create(wordCard.getBase()));
@@ -61,9 +61,9 @@ public class StatisticsCollector implements WordProccessor {
 
     private void cleanWordCard(WordCard wordCard) {
         wordCard.setBase(cleanString(wordCard.getBase()));
-        wordCard.setCanonicalFrom(cleanString(wordCard.getCanonicalFrom()));
+        wordCard.setCanonicalForm(cleanString(wordCard.getCanonicalForm()));
         wordCard.setCanonicalSuffix(cleanString(wordCard.getCanonicalSuffix()));
-        List<FlexiaModel> models = wordCard.getWordsFroms();
+        List<FlexiaModel> models = wordCard.getWordsForms();
         for (FlexiaModel m : models) {
             m.setSuffix(cleanString(m.getSuffix()));
             m.setPrefix(cleanString(m.getPrefix()));

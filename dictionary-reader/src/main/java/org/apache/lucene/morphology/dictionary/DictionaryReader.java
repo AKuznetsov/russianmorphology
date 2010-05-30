@@ -28,22 +28,22 @@ import java.util.*;
  * This class contain logic how read
  * dictonary and produce word with it all forms.
  */
-public class DictonaryReader {
+public class DictionaryReader {
     private String fileName;
     private String fileEncoding = "windows-1251";
     private List<List<FlexiaModel>> wordsFlexias = new ArrayList<List<FlexiaModel>>();
     private List<List<String>> wordPrefixes = new ArrayList<List<String>>();
-    private Set<String> ingnoredForm = new HashSet<String>();
+    private Set<String> ignoredForm = new HashSet<String>();
 
-    public DictonaryReader(String fileName, Set<String> ingnoredForm) {
+    public DictionaryReader(String fileName, Set<String> ignoredForm) {
         this.fileName = fileName;
-        this.ingnoredForm = ingnoredForm;
+        this.ignoredForm = ignoredForm;
     }
 
-    public DictonaryReader(String fileName, String fileEncoding, Set<String> ingnoredForm) {
+    public DictionaryReader(String fileName, String fileEncoding, Set<String> ignoredForm) {
         this.fileName = fileName;
         this.fileEncoding = fileEncoding;
-        this.ingnoredForm = ingnoredForm;
+        this.ignoredForm = ignoredForm;
     }
 
 
@@ -70,7 +70,7 @@ public class DictonaryReader {
             wordBase = "#".equals(wordBase) ? "" : wordBase;
             List<FlexiaModel> models = wordsFlexias.get(Integer.valueOf(wd[1]));
             FlexiaModel flexiaModel = models.get(0);
-            if (models.size() > 0 && !ingnoredForm.contains(flexiaModel.getCode())) {
+            if (models.size() > 0 && !ignoredForm.contains(flexiaModel.getCode())) {
 
                 WordCard card = new WordCard(flexiaModel.create(wordBase), wordBase, flexiaModel.getSuffix());
                 for (FlexiaModel fm : models) {

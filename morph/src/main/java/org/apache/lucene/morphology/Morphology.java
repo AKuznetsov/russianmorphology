@@ -22,6 +22,6 @@ public interface Morphology {
 
     List<String> getNormalForms(String s);
 
-    List<String> getMorfInfo(String s);
+    List<String> getMorphInfo(String s);
 
 }

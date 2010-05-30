@@ -73,7 +73,7 @@ public class MorphologyImpl implements Morphology {
         return result;
     }
 
-    public List<String> getMorfInfo(String s) {
+    public List<String> getMorphInfo(String s) {
         ArrayList<String> result = new ArrayList<String>();
         int[] ints = decoderEncoder.encodeToArray(revertWord(s));
         int ruleId = findRuleId(ints);

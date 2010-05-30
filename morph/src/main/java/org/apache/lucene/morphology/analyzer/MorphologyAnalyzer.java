@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.lucene.morphology.analayzer;
+package org.apache.lucene.morphology.analyzer;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.LowerCaseFilter;
@@ -29,18 +29,18 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
 
-public class MorphlogyAnalayzer extends Analyzer {
+public class MorphologyAnalyzer extends Analyzer {
     private LuceneMorphology luceneMorph;
 
-    public MorphlogyAnalayzer(LuceneMorphology luceneMorph) {
+    public MorphologyAnalyzer(LuceneMorphology luceneMorph) {
         this.luceneMorph = luceneMorph;
     }
 
-    public MorphlogyAnalayzer(String pathToMorph, LetterDecoderEncoder letterDecoderEncoder) throws IOException {
+    public MorphologyAnalyzer(String pathToMorph, LetterDecoderEncoder letterDecoderEncoder) throws IOException {
         luceneMorph = new LuceneMorphology(pathToMorph, letterDecoderEncoder);
     }
 
-    public MorphlogyAnalayzer(InputStream inputStream, LetterDecoderEncoder letterDecoderEncoder) throws IOException {
+    public MorphologyAnalyzer(InputStream inputStream, LetterDecoderEncoder letterDecoderEncoder) throws IOException {
         luceneMorph = new LuceneMorphology(inputStream, letterDecoderEncoder);
     }
 

@@ -23,23 +23,23 @@ import java.util.List;
  * Represent word and all it forms.
  */
 public class WordCard {
-    private String canonicalFrom;
+    private String canonicalForm;
     private String base;
     private String canonicalSuffix;
-    private List<FlexiaModel> wordsFroms = new ArrayList<FlexiaModel>();
+    private List<FlexiaModel> wordsForms = new ArrayList<FlexiaModel>();
 
-    public WordCard(String canonicalFrom, String base, String canonicalSuffix) {
-        this.canonicalFrom = canonicalFrom;
+    public WordCard(String canonicalForm, String base, String canonicalSuffix) {
+        this.canonicalForm = canonicalForm;
         this.canonicalSuffix = canonicalSuffix;
         this.base = base;
     }
 
     public void addFlexia(FlexiaModel flexiaModel) {
-        wordsFroms.add(flexiaModel);
+        wordsForms.add(flexiaModel);
     }
 
-    public String getCanonicalFrom() {
-        return canonicalFrom;
+    public String getCanonicalForm() {
+        return canonicalForm;
     }
 
     public String getCanonicalSuffix() {
@@ -50,12 +50,12 @@ public class WordCard {
         return base;
     }
 
-    public List<FlexiaModel> getWordsFroms() {
-        return wordsFroms;
+    public List<FlexiaModel> getWordsForms() {
+        return wordsForms;
     }
 
-    public void setCanonicalFrom(String canonicalFrom) {
-        this.canonicalFrom = canonicalFrom;
+    public void setCanonicalForm(String canonicalForm) {
+        this.canonicalForm = canonicalForm;
     }
 
     public void setBase(String base) {
@@ -66,17 +66,17 @@ public class WordCard {
         this.canonicalSuffix = canonicalSuffix;
     }
 
-    public void setWordsFroms(List<FlexiaModel> wordsFroms) {
-        this.wordsFroms = wordsFroms;
+    public void setWordsForms(List<FlexiaModel> wordsForms) {
+        this.wordsForms = wordsForms;
     }
 
     @Override
     public String toString() {
         return "WordCard{" +
-                "canonicalFrom='" + canonicalFrom + '\'' +
+                "canonicalForm='" + canonicalForm + '\'' +
                 ", base='" + base + '\'' +
                 ", canonicalSuffix='" + canonicalSuffix + '\'' +
-                ", wordsFroms=" + wordsFroms +
+                ", wordsForms=" + wordsForms +
                 '}';
     }
 }

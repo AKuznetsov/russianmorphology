@@ -39,12 +39,12 @@ public class EnglishAnalayzerTest {
         HashSet<String> answer = new HashSet<String>(Arrays.asList(strings));
         stream.close();
 
-        EnglishAnalayzer morphlogyAnalayzer = new EnglishAnalayzer();
+        EnglishAnalyzer morphlogyAnalyzer = new EnglishAnalyzer();
         stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/english/englsih-analayzer-data.txt");
 
         InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
 
-        TokenStream tokenStream = morphlogyAnalayzer.tokenStream(null, reader);
+        TokenStream tokenStream = morphlogyAnalyzer.tokenStream(null, reader);
         HashSet<String> result = new HashSet<String>();
         while (tokenStream.incrementToken()) {
             TermAttribute attribute1 = tokenStream.getAttribute(TermAttribute.class);

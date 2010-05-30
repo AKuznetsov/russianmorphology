@@ -13,17 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.lucene.morphology.english;
+package org.apache.lucene.morphology.russian;
 
-import org.apache.lucene.morphology.analayzer.MorphlogyAnalayzer;
+import org.apache.lucene.morphology.analyzer.MorphologyAnalyzer;
 
 import java.io.IOException;
 
 
-public class EnglishAnalayzer extends MorphlogyAnalayzer {
-
-    public EnglishAnalayzer() throws IOException {
-        super(new EnglishLuceneMorphology());
+public class RussianAnalyzer extends MorphologyAnalyzer {
+    public RussianAnalyzer() throws IOException {
+        super(new RussianLuceneMorphology());
     }
-
 }

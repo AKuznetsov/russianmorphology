@@ -16,7 +16,7 @@
 
 package org.apache.lucene.morphology.generator;
 
-import org.apache.lucene.morphology.dictionary.DictonaryReader;
+import org.apache.lucene.morphology.dictionary.DictionaryReader;
 import org.apache.lucene.morphology.dictionary.GrammaReader;
 import org.apache.lucene.morphology.dictionary.StatisticsCollector;
 import org.apache.lucene.morphology.english.EnglishLetterDecoderEncoder;
@@ -29,11 +29,11 @@ public class EnglishHeuristicBuilder {
     public static void main(String[] args) throws IOException {
 
         GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morph/egramtab.tab");
-        DictonaryReader dictonaryReader = new DictonaryReader("dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd", new HashSet<String>());
+        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd", new HashSet<String>());
 
         EnglishLetterDecoderEncoder decoderEncoder = new EnglishLetterDecoderEncoder();
         StatisticsCollector statisticsCollector = new StatisticsCollector(grammaInfo, decoderEncoder);
-        dictonaryReader.proccess(statisticsCollector);
+        dictionaryReader.proccess(statisticsCollector);
         statisticsCollector.saveHeuristic("english/src/main/resources/org/apache/lucene/morphology/english/morph.info");
 
     }

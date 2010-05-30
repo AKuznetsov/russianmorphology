@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.apache.lucene.morphology.analayzer;
+package org.apache.lucene.morphology.analyzer;
 
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
