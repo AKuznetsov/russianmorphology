@@ -42,25 +42,18 @@ public class DictionaryReader {
         this.filters = filters;
     }
 
-    public DictionaryReader(String fileName, String fileEncoding, Set<String> ignoredForm, List<WordFilter> filters) {
-        this.fileName = fileName;
-        this.fileEncoding = fileEncoding;
-        this.ignoredForm = ignoredForm;
-        this.filters = filters;
-    }
 
-
-    public void proccess(WordProccessor wordProccessor) throws IOException {
+    public void process(WordProcessor wordProcessor) throws IOException {
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new FileInputStream(fileName), fileEncoding));
         readFlexias(bufferedReader);
-        sckipBlock(bufferedReader);
-        sckipBlock(bufferedReader);
+        skipBlock(bufferedReader);
+        skipBlock(bufferedReader);
         readPrefix(bufferedReader);
-        readWords(bufferedReader, wordProccessor);
+        readWords(bufferedReader, wordProcessor);
     }
 
 
-    private void readWords(BufferedReader reader, WordProccessor wordProccessor) throws IOException {
+    private void readWords(BufferedReader reader, WordProcessor wordProcessor) throws IOException {
         String s = reader.readLine();
         int count = Integer.valueOf(s);
         int actual = 0;
@@ -79,7 +72,7 @@ public class DictionaryReader {
                 continue;
             }
 
-            wordProccessor.process(card);
+            wordProcessor.process(card);
             actual++;
 
         }
@@ -106,11 +99,11 @@ public class DictionaryReader {
     }
 
 
-    private void sckipBlock(BufferedReader reader) throws IOException {
+    private void skipBlock(BufferedReader reader) throws IOException {
         String s = reader.readLine();
         int count = Integer.valueOf(s);
         for (int i = 0; i < count; i++) {
-            s = reader.readLine();
+            reader.readLine();
         }
     }
 

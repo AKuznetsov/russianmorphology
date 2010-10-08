@@ -20,9 +20,8 @@ import java.io.IOException;
 
 /**
  * Interface allows get information from
- * {@org.apache.lucene.russian.morphology.dictonary.DirtonaryReader}.
  */
-public interface WordProccessor {
+public interface WordProcessor {
 
     public void process(WordCard wordCard) throws IOException;
 }

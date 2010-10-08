@@ -18,7 +18,6 @@ package org.apache.lucene.morphology;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 
@@ -26,7 +25,7 @@ public class MorphologyImpl implements Morphology {
     protected int[][] separators;
     protected short[] rulesId;
     protected Heuristic[][] rules;
-    protected String[] grammaInfo;
+    protected String[] grammarInfo;
     protected LetterDecoderEncoder decoderEncoder;
 
 
@@ -40,27 +39,11 @@ public class MorphologyImpl implements Morphology {
         this.decoderEncoder = decoderEncoder;
     }
 
-    public MorphologyImpl(int[][] separators, short[] rulesId, Heuristic[][] rules, String[] grammaInfo) {
+    public MorphologyImpl(int[][] separators, short[] rulesId, Heuristic[][] rules, String[] grammarInfo) {
         this.separators = separators;
         this.rulesId = rulesId;
         this.rules = rules;
-        this.grammaInfo = grammaInfo;
-    }
-
-    public int[][] getSeparators() {
-        return separators;
-    }
-
-    public short[] getRulesId() {
-        return rulesId;
-    }
-
-    public Heuristic[][] getRules() {
-        return rules;
-    }
-
-    public String[] getGrammaInfo() {
-        return grammaInfo;
+        this.grammarInfo = grammarInfo;
     }
 
     public List<String> getNormalForms(String s) {
@@ -78,7 +61,7 @@ public class MorphologyImpl implements Morphology {
         int[] ints = decoderEncoder.encodeToArray(revertWord(s));
         int ruleId = findRuleId(ints);
         for (Heuristic h : rules[rulesId[ruleId]]) {
-            result.add(h.transformWord(s) + "|" + grammaInfo[h.getFormMorphInfo()]);
+            result.add(h.transformWord(s) + "|" + grammarInfo[h.getFormMorphInfo()]);
         }
         return result;
     }
@@ -135,8 +118,8 @@ public class MorphologyImpl implements Morphology {
                 writer.write(heuristic.toString() + "\n");
             }
         }
-        writer.write(grammaInfo.length + "\n");
-        for (String s : grammaInfo) {
+        writer.write(grammarInfo.length + "\n");
+        for (String s : grammarInfo) {
             writer.write(s + "\n");
         }
         writer.close();
@@ -166,9 +149,9 @@ public class MorphologyImpl implements Morphology {
         Integer amount;
         s = bufferedReader.readLine();
         amount = Integer.valueOf(s);
-        grammaInfo = new String[amount];
+        grammarInfo = new String[amount];
         for (int i = 0; i < amount; i++) {
-            grammaInfo[i] = bufferedReader.readLine();
+            grammarInfo[i] = bufferedReader.readLine();
         }
     }
 

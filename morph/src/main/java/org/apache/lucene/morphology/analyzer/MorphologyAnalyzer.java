@@ -48,6 +48,6 @@ public class MorphologyAnalyzer extends Analyzer {
         TokenStream result = new StandardTokenizer(Version.LUCENE_30, reader);
         result = new StandardFilter(result);
         result = new LowerCaseFilter(result);
-        return new MorphlogyFilter(result, luceneMorph);
+        return new MorphologyFilter(result, luceneMorph);
     }
 }

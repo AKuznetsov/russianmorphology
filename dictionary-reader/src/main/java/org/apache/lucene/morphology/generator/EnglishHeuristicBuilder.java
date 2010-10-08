@@ -28,14 +28,14 @@ import java.util.List;
 public class EnglishHeuristicBuilder {
     public static void main(String[] args) throws IOException {
 
-        GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morph/egramtab.tab");
+        GrammarReader grammarInfo = new GrammarReader("dictonary/Dicts/Morph/egramtab.tab");
         EnglishLetterDecoderEncoder decoderEncoder = new EnglishLetterDecoderEncoder();
         List<WordFilter> filters = Arrays.asList(new WordStringCleaner(decoderEncoder), new WordCleaner(decoderEncoder));
 
         DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd", new HashSet<String>(), filters);
 
-        StatisticsCollector statisticsCollector = new StatisticsCollector(grammaInfo, decoderEncoder);
-        dictionaryReader.proccess(statisticsCollector);
+        StatisticsCollector statisticsCollector = new StatisticsCollector(grammarInfo, decoderEncoder);
+        dictionaryReader.process(statisticsCollector);
         statisticsCollector.saveHeuristic("english/src/main/resources/org/apache/lucene/morphology/english/morph.info");
 
     }

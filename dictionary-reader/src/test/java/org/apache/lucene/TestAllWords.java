@@ -67,9 +67,9 @@ public class TestAllWords {
     }
 
     private void testFullGramma(final Morphology morphology, LetterDecoderEncoder decoderEncoder, String pathToGramma, String pathToDict) throws IOException {
-        GrammaReader grammaInfo = new GrammaReader(pathToGramma);
-        final List<String> morphInfo = grammaInfo.getGrammaInfo();
-        final Map<String, Integer> inversIndex = grammaInfo.getGrammInversIndex();
+        GrammarReader grammarInfo = new GrammarReader(pathToGramma);
+        final List<String> morphInfo = grammarInfo.getGrammarInfo();
+        final Map<String, Integer> inversIndex = grammarInfo.getGrammarInverseIndex();
 
         List<WordFilter> filters = Arrays.asList(new WordStringCleaner(decoderEncoder), new WordCleaner(decoderEncoder));
 
@@ -79,7 +79,7 @@ public class TestAllWords {
         final AtomicLong wordCount = new AtomicLong(0);
         Long startTime = System.currentTimeMillis();
 
-        dictionaryReader.proccess(new WordProccessor() {
+        dictionaryReader.process(new WordProcessor() {
             public void process(WordCard wordCard) throws IOException {
                 String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
                 for (FlexiaModel fm : wordCard.getWordsForms()) {
@@ -125,7 +125,7 @@ public class TestAllWords {
         Long startTime = System.currentTimeMillis();
 
         DictionaryReader dictionaryReader = new DictionaryReader(pathToDic, new HashSet<String>(), filters);
-        dictionaryReader.proccess(new WordProccessor() {
+        dictionaryReader.process(new WordProcessor() {
             public void process(WordCard wordCard) throws IOException {
                 String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
                 for (FlexiaModel fm : wordCard.getWordsForms()) {

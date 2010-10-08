@@ -25,12 +25,12 @@ import java.io.IOException;
 import java.util.Iterator;
 
 
-public class MorphlogyFilter extends TokenFilter {
+public class MorphologyFilter extends TokenFilter {
     private LuceneMorphology luceneMorph;
     private Iterator<String> iterator;
     private TermAttribute termAtt;
 
-    public MorphlogyFilter(TokenStream tokenStream, LuceneMorphology luceneMorph) {
+    public MorphologyFilter(TokenStream tokenStream, LuceneMorphology luceneMorph) {
         super(tokenStream);
         this.luceneMorph = luceneMorph;
         termAtt = addAttribute(TermAttribute.class);

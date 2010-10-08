@@ -26,16 +26,16 @@ import java.util.*;
 
 
 //todo made refactoring this class
-public class StatisticsCollector implements WordProccessor {
+public class StatisticsCollector implements WordProcessor {
     private TreeMap<String, Set<Heuristic>> inverseIndex = new TreeMap<String, Set<Heuristic>>();
     private Map<Set<Heuristic>, Integer> ruleInverseIndex = new HashMap<Set<Heuristic>, Integer>();
     private List<Set<Heuristic>> rules = new ArrayList<Set<Heuristic>>();
-    private GrammaReader grammaReader;
+    private GrammarReader grammarReader;
     private LetterDecoderEncoder decoderEncoder;
 
 
-    public StatisticsCollector(GrammaReader grammaReader, LetterDecoderEncoder decoderEncoder) {
-        this.grammaReader = grammaReader;
+    public StatisticsCollector(GrammarReader grammarReader, LetterDecoderEncoder decoderEncoder) {
+        this.grammarReader = grammarReader;
         this.decoderEncoder = decoderEncoder;
     }
 
@@ -115,7 +115,7 @@ public class StatisticsCollector implements WordProccessor {
                 prevSet = currentSet;
             }
         }
-        MorphologyImpl morphology = new MorphologyImpl(ints, rulesId, heuristics, grammaReader.getGrammaInfoAsArray());
+        MorphologyImpl morphology = new MorphologyImpl(ints, rulesId, heuristics, grammarReader.getGrammarInfoAsArray());
         morphology.writeToFile(fileName);
     }
 
@@ -134,8 +134,8 @@ public class StatisticsCollector implements WordProccessor {
         Integer length = getCommonLength(form, normalForm);
         Integer actualSuffixLengh = form.length() - length;
         String actualNormalSuffix = normalForm.substring(length);
-        Integer integer = grammaReader.getGrammInversIndex().get(fm.getCode());
-        Integer nf = grammaReader.getGrammInversIndex().get(normalSuffixForm);
+        Integer integer = grammarReader.getGrammarInverseIndex().get(fm.getCode());
+        Integer nf = grammarReader.getGrammarInverseIndex().get(normalSuffixForm);
         return new Heuristic((byte) actualSuffixLengh.intValue(), actualNormalSuffix, (short) integer.intValue(), (short) nf.intValue());
     }
 

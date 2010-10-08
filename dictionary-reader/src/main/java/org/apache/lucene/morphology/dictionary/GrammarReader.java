@@ -25,19 +25,19 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-//todo spleet this class on two.
-public class GrammaReader {
+
+public class GrammarReader {
     private String fileName;
     private String fileEncoding = "windows-1251";
-    private List<String> grammaInfo = new ArrayList<String>();
+    private List<String> grammarInfo = new ArrayList<String>();
     private Map<String, Integer> inverseIndex = new HashMap<String, Integer>();
 
-    public GrammaReader(String fileName) throws IOException {
+    public GrammarReader(String fileName) throws IOException {
         this.fileName = fileName;
         setUp();
     }
 
-    public GrammaReader(String fileName, String fileEncoding) throws IOException {
+    public GrammarReader(String fileName, String fileEncoding) throws IOException {
         this.fileName = fileName;
         this.fileEncoding = fileEncoding;
         setUp();
@@ -50,27 +50,23 @@ public class GrammaReader {
             line = line.trim();
             if (!line.startsWith("//") && line.length() > 0) {
                 String[] strings = line.split(" ", 2);
-                Integer i = grammaInfo.size();
+                Integer i = grammarInfo.size();
                 inverseIndex.put(strings[0], i);
-                grammaInfo.add(i, strings[1]);
+                grammarInfo.add(i, strings[1]);
             }
             line = bufferedReader.readLine();
         }
     }
 
-    public List<String> getGrammaInfo() {
-        return grammaInfo;
+    public List<String> getGrammarInfo() {
+        return grammarInfo;
     }
 
-    public String[] getGrammaInfoAsArray() {
-        return grammaInfo.toArray(new String[grammaInfo.size()]);
+    public String[] getGrammarInfoAsArray() {
+        return grammarInfo.toArray(new String[grammarInfo.size()]);
     }
 
-    public Map<String, Integer> getGrammInversIndex() {
+    public Map<String, Integer> getGrammarInverseIndex() {
         return inverseIndex;
-    }
-
-    public void setInverseIndex(Map<String, Integer> inverseIndex) {
-        this.inverseIndex = inverseIndex;
     }
 }

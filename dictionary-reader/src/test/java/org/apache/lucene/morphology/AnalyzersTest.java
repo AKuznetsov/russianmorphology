@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.lucene.morphology.english;
+package org.apache.lucene.morphology;
 
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.TermAttribute;
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
+import org.apache.lucene.morphology.russian.RussianAnalyzer;
 import org.junit.Test;
 
 import java.io.BufferedReader;
@@ -28,19 +28,38 @@ import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashSet;
 
+import static org.hamcrest.Matchers.equalTo;
+import static org.junit.Assert.assertThat;
 
-public class EnglishAnalayzerTest {
+
+public class AnalyzersTest {
 
     @Test
-    public void shouldGiveCorrectWords() throws IOException {
-        InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/english/englsih-analayzer-answer.txt");
+    public void englishAnalyzerShouldGiveCorrectWords() throws IOException {
+        Analyzer morphlogyAnalyzer = new EnglishAnalyzer();
+        String answerPath = "/english/english-analyzer-answer.txt";
+        String testPath = "/english/english-analyzer-data.txt";
+
+        testAnalayzer(morphlogyAnalyzer, answerPath, testPath);
+    }
+
+    @Test
+    public void shoudGiveCorretWords() throws IOException {
+        Analyzer morphlogyAnalyzer = new RussianAnalyzer();
+        String answerPath = "/russian/russian-analyzer-answer.txt";
+        String testPath = "/russian/russian-analyzer-data.txt";
+
+        testAnalayzer(morphlogyAnalyzer, answerPath, testPath);
+    }
+
+    private void testAnalayzer(Analyzer morphlogyAnalyzer, String answerPath, String testPath) throws IOException {
+        InputStream stream = this.getClass().getResourceAsStream(answerPath);
         BufferedReader breader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         String[] strings = breader.readLine().replaceAll(" +", " ").trim().split(" ");
         HashSet<String> answer = new HashSet<String>(Arrays.asList(strings));
         stream.close();
 
-        EnglishAnalyzer morphlogyAnalyzer = new EnglishAnalyzer();
-        stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/english/englsih-analayzer-data.txt");
+        stream = this.getClass().getResourceAsStream(testPath);
 
         InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
 
