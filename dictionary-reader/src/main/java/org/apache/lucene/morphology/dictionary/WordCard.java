@@ -38,6 +38,10 @@ public class WordCard {
         wordsForms.add(flexiaModel);
     }
 
+    public void removeFlexia(FlexiaModel flexiaModel) {
+        wordsForms.remove(flexiaModel);
+    }
+
     public String getCanonicalForm() {
         return canonicalForm;
     }

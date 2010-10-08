@@ -16,21 +16,23 @@
 
 package org.apache.lucene.morphology.generator;
 
-import org.apache.lucene.morphology.dictionary.DictionaryReader;
-import org.apache.lucene.morphology.dictionary.GrammaReader;
-import org.apache.lucene.morphology.dictionary.StatisticsCollector;
+import org.apache.lucene.morphology.dictionary.*;
 import org.apache.lucene.morphology.russian.RussianLetterDecoderEncoder;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 
 
 public class RussianHeuristicBuilder {
     public static void main(String[] args) throws IOException {
         GrammaReader grammaInfo = new GrammaReader("dictonary/Dicts/Morph/rgramtab.tab");
-        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<String>());
-
         RussianLetterDecoderEncoder decoderEncoder = new RussianLetterDecoderEncoder();
+        List<WordFilter> filters = Arrays.asList(new WordStringCleaner(decoderEncoder), new WordCleaner(decoderEncoder));
+
+        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<String>(), filters);
+
         StatisticsCollector statisticsCollector = new StatisticsCollector(grammaInfo, decoderEncoder);
         dictionaryReader.proccess(statisticsCollector);
         statisticsCollector.saveHeuristic("russian/src/main/resources/org/apache/lucene/morphology/russian/morph.info");

@@ -42,12 +42,8 @@ public class StatisticsCollector implements WordProccessor {
     public void process(WordCard wordCard) throws IOException {
         cleanWordCard(wordCard);
         String normalStringMorph = wordCard.getWordsForms().get(0).getCode();
-        String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
-        if (word.contains("-")) return;
-        if (!decoderEncoder.checkString(word)) return;
 
         for (FlexiaModel fm : wordCard.getWordsForms()) {
-            if (!decoderEncoder.checkString(fm.create(wordCard.getBase())) || fm.create(wordCard.getBase()).contains("-")) continue;
             Heuristic heuristic = createEvristic(wordCard.getBase(), wordCard.getCanonicalSuffix(), fm, normalStringMorph);
             String form = revertWord(fm.create(wordCard.getBase()));
             Set<Heuristic> suffixHeuristics = inverseIndex.get(form);
@@ -138,8 +134,8 @@ public class StatisticsCollector implements WordProccessor {
         Integer length = getCommonLength(form, normalForm);
         Integer actualSuffixLengh = form.length() - length;
         String actualNormalSuffix = normalForm.substring(length);
-        Integer integer = grammaReader.getGrammInversIndex().get(fm.getCode().substring(0, 2));
-        Integer nf = grammaReader.getGrammInversIndex().get(normalSuffixForm.substring(0, 2));
+        Integer integer = grammaReader.getGrammInversIndex().get(fm.getCode());
+        Integer nf = grammaReader.getGrammInversIndex().get(normalSuffixForm);
         return new Heuristic((byte) actualSuffixLengh.intValue(), actualNormalSuffix, (short) integer.intValue(), (short) nf.intValue());
     }
 

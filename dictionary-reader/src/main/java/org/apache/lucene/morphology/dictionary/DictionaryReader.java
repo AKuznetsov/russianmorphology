@@ -34,16 +34,19 @@ public class DictionaryReader {
     private List<List<FlexiaModel>> wordsFlexias = new ArrayList<List<FlexiaModel>>();
     private List<List<String>> wordPrefixes = new ArrayList<List<String>>();
     private Set<String> ignoredForm = new HashSet<String>();
+    private List<WordFilter> filters = new ArrayList<WordFilter>();
 
-    public DictionaryReader(String fileName, Set<String> ignoredForm) {
+    public DictionaryReader(String fileName, Set<String> ignoredForm, List<WordFilter> filters) {
         this.fileName = fileName;
         this.ignoredForm = ignoredForm;
+        this.filters = filters;
     }
 
-    public DictionaryReader(String fileName, String fileEncoding, Set<String> ignoredForm) {
+    public DictionaryReader(String fileName, String fileEncoding, Set<String> ignoredForm, List<WordFilter> filters) {
         this.fileName = fileName;
         this.fileEncoding = fileEncoding;
         this.ignoredForm = ignoredForm;
+        this.filters = filters;
     }
 
 
@@ -60,30 +63,46 @@ public class DictionaryReader {
     private void readWords(BufferedReader reader, WordProccessor wordProccessor) throws IOException {
         String s = reader.readLine();
         int count = Integer.valueOf(s);
+        int actual = 0;
         for (int i = 0; i < count; i++) {
             s = reader.readLine();
             if (i % 10000 == 0) System.out.println("Proccess " + i + " wordBase of " + count);
 
-            String[] wd = s.split(" ");
-            String wordBase = wd[0].toLowerCase();
-            if (wordBase.startsWith("-")) continue;
-            wordBase = "#".equals(wordBase) ? "" : wordBase;
-            List<FlexiaModel> models = wordsFlexias.get(Integer.valueOf(wd[1]));
-            FlexiaModel flexiaModel = models.get(0);
-            if (models.size() > 0 && !ignoredForm.contains(flexiaModel.getCode())) {
+            WordCard card = buildForm(s);
 
-                WordCard card = new WordCard(flexiaModel.create(wordBase), wordBase, flexiaModel.getSuffix());
-                for (FlexiaModel fm : models) {
-                    card.addFlexia(fm);
-                }
-//                if(card.getBase().equals("face") || card.getBase().equals("fac")){
-//                    System.out.println(models);
-//                    System.out.println(card);
-                    wordProccessor.process(card);
-                //}
-
+            for (WordFilter wf : filters) {
+                if (card == null) break;
+                card = wf.transform(card);
             }
+
+            if (card == null) {
+                continue;
+            }
+
+            wordProccessor.process(card);
+            actual++;
+
         }
+        System.out.println("Finished word processing actual words " + actual);
+    }
+
+    private WordCard buildForm(String s) {
+        String[] wd = s.split(" ");
+        String wordBase = wd[0].toLowerCase();
+        if (wordBase.startsWith("-")) return null;
+        wordBase = "#".equals(wordBase) ? "" : wordBase;
+        List<FlexiaModel> models = wordsFlexias.get(Integer.valueOf(wd[1]));
+        FlexiaModel flexiaModel = models.get(0);
+        if (models.size() == 0 || ignoredForm.contains(flexiaModel.getCode())) {
+            return null;
+        }
+
+        WordCard card = new WordCard(flexiaModel.create(wordBase), wordBase, flexiaModel.getSuffix());
+
+        for (FlexiaModel fm : models) {
+            card.addFlexia(fm);
+        }
+        return card;
     }
 
 
@@ -122,7 +141,7 @@ public class DictionaryReader {
         String[] fl = line.split("\\*");
         // we inored all forms thats
         if (fl.length == 3) {
-            System.out.println(line);
+            //System.out.println(line);
             // flexiaModelArrayList.add(new FlexiaModel(fl[1], cleanString(fl[0].toLowerCase()), cleanString(fl[2].toLowerCase())));
         }
         if (fl.length == 2) flexiaModelArrayList.add(new FlexiaModel(fl[1], fl[0].toLowerCase(), ""));

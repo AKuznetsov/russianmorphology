@@ -66,4 +66,26 @@ public class FlexiaModel {
                 ", prefix='" + prefix + '\'' +
                 '}';
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FlexiaModel that = (FlexiaModel) o;
+
+        if (code != null ? !code.equals(that.code) : that.code != null) return false;
+        if (prefix != null ? !prefix.equals(that.prefix) : that.prefix != null) return false;
+        if (suffix != null ? !suffix.equals(that.suffix) : that.suffix != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = code != null ? code.hashCode() : 0;
+        result = 31 * result + (suffix != null ? suffix.hashCode() : 0);
+        result = 31 * result + (prefix != null ? prefix.hashCode() : 0);
+        return result;
+    }
 }

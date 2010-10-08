@@ -17,8 +17,6 @@ package org.apache.lucene.morphology.russian;
 
 import org.apache.lucene.morphology.SuffixToLongException;
 import org.apache.lucene.morphology.WrongCharaterException;
-import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -26,6 +24,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.junit.Assert.assertThat;
 
 public class RussianLetterDecoderEncoderTest {
     private RussianLetterDecoderEncoder decoderEncoder;
@@ -37,7 +38,7 @@ public class RussianLetterDecoderEncoderTest {
 
 
     @Test
-    public void testShouldPreserStringComporision() throws IOException {
+    public void testShouldPreserverStringComporision() throws IOException {
         InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/russian/decoder-test-monotonic.txt");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         String s = bufferedReader.readLine();
@@ -52,22 +53,22 @@ public class RussianLetterDecoderEncoderTest {
 
 
     @Test
-    public void testShouldCorretDecodeEncode() throws IOException {
+    public void testShouldCorrectDecodeEncode() throws IOException {
         InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/russian/decoder-test-data.txt");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         String s = bufferedReader.readLine();
         while (s != null) {
             String[] qa = s.trim().split(" ");
             if (qa[0].length() <= RussianLetterDecoderEncoder.WORD_PART_LENGHT) {
-                Integer ecodedSuffix = decoderEncoder.encode(qa[0]);
-                assertThat(decoderEncoder.decode(ecodedSuffix), equalTo(qa[1]));
+                Integer encodedSuffix = decoderEncoder.encode(qa[0]);
+                assertThat(decoderEncoder.decode(encodedSuffix), equalTo(qa[1]));
             }
             s = bufferedReader.readLine();
         }
     }
 
     @Test
-    public void testShouldCorretDecodeEncodeStringToArray() throws IOException {
+    public void testShouldCorrectDecodeEncodeStringToArray() throws IOException {
         InputStream stream = this.getClass().getResourceAsStream("/org/apache/lucene/morphology/russian/decoder-test-data-for-array.txt");
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
         String s = bufferedReader.readLine();
@@ -85,7 +86,7 @@ public class RussianLetterDecoderEncoderTest {
     }
 
     @Test(expected = WrongCharaterException.class)
-    public void shouldThrownExeptionIfSuffixContainWrongCharater() {
+    public void shouldThrownExceptionIfSuffixContainWrongCharater() {
         decoderEncoder.encode("1");
     }
 }
