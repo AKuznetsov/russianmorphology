@@ -20,21 +20,22 @@ import org.apache.lucene.morphology.dictionary.*;
 import org.apache.lucene.morphology.russian.RussianLetterDecoderEncoder;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 
 public class RussianHeuristicBuilder {
     public static void main(String[] args) throws IOException {
         GrammarReader grammarInfo = new GrammarReader("dictonary/Dicts/Morph/rgramtab.tab");
         RussianLetterDecoderEncoder decoderEncoder = new RussianLetterDecoderEncoder();
-        List<WordFilter> filters = Arrays.asList(new WordStringCleaner(decoderEncoder), new WordCleaner(decoderEncoder));
 
-        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<String>(), filters);
+        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<String>());
 
         StatisticsCollector statisticsCollector = new StatisticsCollector(grammarInfo, decoderEncoder);
-        dictionaryReader.process(statisticsCollector);
+        WordCleaner wordCleaner = new WordCleaner(decoderEncoder, statisticsCollector);
+        WordStringCleaner wordStringCleaner = new WordStringCleaner(decoderEncoder, wordCleaner);
+        RemoveFlexiaWithPrefixes removeFlexiaWithPrefixes = new RemoveFlexiaWithPrefixes(wordStringCleaner);
+        RussianAdvSplitterFilter russianAdvSplitterFilter = new RussianAdvSplitterFilter(removeFlexiaWithPrefixes);
+        dictionaryReader.process(russianAdvSplitterFilter);
         statisticsCollector.saveHeuristic("russian/src/main/resources/org/apache/lucene/morphology/russian/morph.info");
 
     }

@@ -20,9 +20,7 @@ import org.apache.lucene.morphology.EnglishLetterDecoderEncoder;
 import org.apache.lucene.morphology.dictionary.*;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 
 
 public class EnglishHeuristicBuilder {
@@ -30,12 +28,14 @@ public class EnglishHeuristicBuilder {
 
         GrammarReader grammarInfo = new GrammarReader("dictonary/Dicts/Morph/egramtab.tab");
         EnglishLetterDecoderEncoder decoderEncoder = new EnglishLetterDecoderEncoder();
-        List<WordFilter> filters = Arrays.asList(new WordStringCleaner(decoderEncoder), new WordCleaner(decoderEncoder));
 
-        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd", new HashSet<String>(), filters);
+        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd", new HashSet<String>());
 
         StatisticsCollector statisticsCollector = new StatisticsCollector(grammarInfo, decoderEncoder);
-        dictionaryReader.process(statisticsCollector);
+        WordCleaner wordCleaner = new WordCleaner(decoderEncoder, statisticsCollector);
+        WordStringCleaner wordStringCleaner = new WordStringCleaner(decoderEncoder, wordCleaner);
+        RemoveFlexiaWithPrefixes removeFlexiaWithPrefixes = new RemoveFlexiaWithPrefixes(wordStringCleaner);
+        dictionaryReader.process(removeFlexiaWithPrefixes);
         statisticsCollector.saveHeuristic("english/src/main/resources/org/apache/lucene/morphology/english/morph.info");
 
     }

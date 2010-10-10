@@ -15,32 +15,23 @@
  */
 package org.apache.lucene.morphology.dictionary;
 
-import org.apache.lucene.morphology.LetterDecoderEncoder;
-
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 
-public class WordCleaner extends WordFilter {
+public class RemoveFlexiaWithPrefixes extends WordFilter {
 
-    private LetterDecoderEncoder decoderEncoder;
-
-    public WordCleaner(LetterDecoderEncoder decoderEncoder, WordProcessor wordProcessor) {
+    public RemoveFlexiaWithPrefixes(WordProcessor wordProcessor) {
         super(wordProcessor);
-        this.decoderEncoder = decoderEncoder;
     }
 
+    @Override
     public List<WordCard> transform(WordCard wordCard) {
-        String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
-
-        if (word.contains("-")) return Collections.emptyList();
-        if (!decoderEncoder.checkString(word)) return Collections.emptyList();
 
         List<FlexiaModel> flexiaModelsToRemove = new LinkedList<FlexiaModel>();
         for (FlexiaModel fm : wordCard.getWordsForms()) {
-            if (!decoderEncoder.checkString(fm.create(wordCard.getBase())) || fm.create(wordCard.getBase()).contains("-")) {
+            if (fm.getPrefix().length() > 0) {
                 flexiaModelsToRemove.add(fm);
             }
         }

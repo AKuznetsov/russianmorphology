@@ -16,9 +16,22 @@
 
 package org.apache.lucene.morphology.dictionary;
 
+import java.io.IOException;
+import java.util.List;
 
-public interface WordFilter {
 
-    public WordCard transform(WordCard wordCard);
+abstract public class WordFilter implements WordProcessor {
+    private WordProcessor wordProcessor;
 
+    public WordFilter(WordProcessor wordProcessor) {
+        this.wordProcessor = wordProcessor;
+    }
+
+    abstract public List<WordCard> transform(WordCard wordCard);
+
+    public void process(WordCard wordCard) throws IOException {
+        for (WordCard wc : transform(wordCard)) {
+            wordProcessor.process(wc);
+        }
+    }
 }

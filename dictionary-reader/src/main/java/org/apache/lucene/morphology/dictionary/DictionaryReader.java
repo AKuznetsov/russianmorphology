@@ -21,7 +21,10 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 /**
@@ -32,14 +35,11 @@ public class DictionaryReader {
     private String fileName;
     private String fileEncoding = "windows-1251";
     private List<List<FlexiaModel>> wordsFlexias = new ArrayList<List<FlexiaModel>>();
-    private List<List<String>> wordPrefixes = new ArrayList<List<String>>();
     private Set<String> ignoredForm = new HashSet<String>();
-    private List<WordFilter> filters = new ArrayList<WordFilter>();
 
-    public DictionaryReader(String fileName, Set<String> ignoredForm, List<WordFilter> filters) {
+    public DictionaryReader(String fileName, Set<String> ignoredForm) {
         this.fileName = fileName;
         this.ignoredForm = ignoredForm;
-        this.filters = filters;
     }
 
 
@@ -62,11 +62,6 @@ public class DictionaryReader {
             if (i % 10000 == 0) System.out.println("Proccess " + i + " wordBase of " + count);
 
             WordCard card = buildForm(s);
-
-            for (WordFilter wf : filters) {
-                if (card == null) break;
-                card = wf.transform(card);
-            }
 
             if (card == null) {
                 continue;
@@ -112,8 +107,7 @@ public class DictionaryReader {
         String s = reader.readLine();
         int count = Integer.valueOf(s);
         for (int i = 0; i < count; i++) {
-            s = reader.readLine();
-            wordPrefixes.add(Arrays.asList(s.toLowerCase().split(",")));
+            reader.readLine();
         }
     }
 
@@ -135,7 +129,7 @@ public class DictionaryReader {
         // we inored all forms thats
         if (fl.length == 3) {
             //System.out.println(line);
-            // flexiaModelArrayList.add(new FlexiaModel(fl[1], cleanString(fl[0].toLowerCase()), cleanString(fl[2].toLowerCase())));
+            flexiaModelArrayList.add(new FlexiaModel(fl[1], fl[0].toLowerCase(), fl[2].toLowerCase()));
         }
         if (fl.length == 2) flexiaModelArrayList.add(new FlexiaModel(fl[1], fl[0].toLowerCase(), ""));
     }

@@ -17,18 +17,21 @@ package org.apache.lucene.morphology.dictionary;
 
 import org.apache.lucene.morphology.LetterDecoderEncoder;
 
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 
-public class WordStringCleaner implements WordFilter {
+public class WordStringCleaner extends WordFilter {
 
     private LetterDecoderEncoder decoderEncoder;
 
-    public WordStringCleaner(LetterDecoderEncoder decoderEncoder) {
+    public WordStringCleaner(LetterDecoderEncoder decoderEncoder, WordProcessor wordProcessor) {
+        super(wordProcessor);
         this.decoderEncoder = decoderEncoder;
     }
 
-    public WordCard transform(WordCard wordCard) {
+    public List<WordCard> transform(WordCard wordCard) {
         wordCard.setBase(cleanString(wordCard.getBase()));
         wordCard.setCanonicalForm(cleanString(wordCard.getCanonicalForm()));
         wordCard.setCanonicalSuffix(cleanString(wordCard.getCanonicalSuffix()));
@@ -39,7 +42,7 @@ public class WordStringCleaner implements WordFilter {
             //made correct code
             m.setCode(m.getCode().substring(0, 2));
         }
-        return wordCard;
+        return new LinkedList<WordCard>(Arrays.asList(wordCard));
     }
 
 

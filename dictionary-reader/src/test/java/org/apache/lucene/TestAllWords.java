@@ -24,7 +24,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -71,15 +70,12 @@ public class TestAllWords {
         final List<String> morphInfo = grammarInfo.getGrammarInfo();
         final Map<String, Integer> inversIndex = grammarInfo.getGrammarInverseIndex();
 
-        List<WordFilter> filters = Arrays.asList(new WordStringCleaner(decoderEncoder), new WordCleaner(decoderEncoder));
-
-
-        DictionaryReader dictionaryReader = new DictionaryReader(pathToDict, new HashSet<String>(), filters);
+        DictionaryReader dictionaryReader = new DictionaryReader(pathToDict, new HashSet<String>());
 
         final AtomicLong wordCount = new AtomicLong(0);
         Long startTime = System.currentTimeMillis();
 
-        dictionaryReader.process(new WordProcessor() {
+        WordProcessor wordProcessor = new WordProcessor() {
             public void process(WordCard wordCard) throws IOException {
                 String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
                 for (FlexiaModel fm : wordCard.getWordsForms()) {
@@ -90,7 +86,12 @@ public class TestAllWords {
                     wordCount.set(2L + wordCount.get());
                 }
             }
-        });
+        };
+
+        WordCleaner wordCleaner = new WordCleaner(decoderEncoder, wordProcessor);
+        WordStringCleaner wordStringCleaner = new WordStringCleaner(decoderEncoder, wordCleaner);
+        RemoveFlexiaWithPrefixes removeFlexiaWithPrefixes = new RemoveFlexiaWithPrefixes(wordStringCleaner);
+        dictionaryReader.process(removeFlexiaWithPrefixes);
 
         long time = System.currentTimeMillis() - startTime;
         System.out.println("Done " + wordCount.get() + " in " + time + " ms. " + wordCount.get() / (time / 1000L) + " word per second");
@@ -101,10 +102,9 @@ public class TestAllWords {
         final LuceneMorphology morphology = new EnglishLuceneMorphology();
 
         LetterDecoderEncoder decoderEncoder = new EnglishLetterDecoderEncoder();
-        List<WordFilter> filters = Arrays.asList(new WordStringCleaner(decoderEncoder), new WordCleaner(decoderEncoder));
         String pathToDic = prefix + "dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd";
 
-        testAllWordForLucene(morphology, filters, pathToDic);
+        testAllWordForLucene(morphology, decoderEncoder, pathToDic);
     }
 
     @Test
@@ -112,20 +112,19 @@ public class TestAllWords {
         final LuceneMorphology morphology = new RussianLuceneMorphology();
 
         LetterDecoderEncoder decoderEncoder = new RussianLetterDecoderEncoder();
-        List<WordFilter> filters = Arrays.asList(new WordStringCleaner(decoderEncoder), new WordCleaner(decoderEncoder));
 
         String pathToDic = prefix + "dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd";
 
-        testAllWordForLucene(morphology, filters, pathToDic);
+        testAllWordForLucene(morphology, decoderEncoder, pathToDic);
 
     }
 
-    private void testAllWordForLucene(final LuceneMorphology morphology, List<WordFilter> filters, String pathToDic) throws IOException {
+    private void testAllWordForLucene(final LuceneMorphology morphology, LetterDecoderEncoder decoderEncoder, String pathToDic) throws IOException {
         final AtomicLong wordCount = new AtomicLong(0);
         Long startTime = System.currentTimeMillis();
 
-        DictionaryReader dictionaryReader = new DictionaryReader(pathToDic, new HashSet<String>(), filters);
-        dictionaryReader.process(new WordProcessor() {
+        DictionaryReader dictionaryReader = new DictionaryReader(pathToDic, new HashSet<String>());
+        WordProcessor wordProcessor = new WordProcessor() {
             public void process(WordCard wordCard) throws IOException {
                 String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
                 for (FlexiaModel fm : wordCard.getWordsForms()) {
@@ -134,7 +133,12 @@ public class TestAllWords {
                     wordCount.set(1L + wordCount.get());
                 }
             }
-        });
+        };
+
+        WordCleaner wordCleaner = new WordCleaner(decoderEncoder, wordProcessor);
+        WordStringCleaner wordStringCleaner = new WordStringCleaner(decoderEncoder, wordCleaner);
+        RemoveFlexiaWithPrefixes removeFlexiaWithPrefixes = new RemoveFlexiaWithPrefixes(wordStringCleaner);
+        dictionaryReader.process(removeFlexiaWithPrefixes);
 
         long time = System.currentTimeMillis() - startTime;
         System.out.println("Done " + wordCount.get() + " in " + time + " ms. " + wordCount.get() / (time / 1000L) + " word per second");
