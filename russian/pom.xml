@@ -3,13 +3,13 @@
     <parent>
         <artifactId>morphology</artifactId>
         <groupId>org.apache.lucene.morphology</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>1.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.lucene.morphology</groupId>
     <artifactId>russian</artifactId>
     <name>russian</name>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.0</version>
     <url>http://maven.apache.org</url>
     <dependencies>
 
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>org.apache.lucene.morphology</groupId>
             <artifactId>morph</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>1.0</version>
         </dependency>
 
         <dependency>
