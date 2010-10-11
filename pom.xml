@@ -4,13 +4,13 @@
     <groupId>org.apache.lucene.morphology</groupId>
     <artifactId>morphology</artifactId>
     <packaging>pom</packaging>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <name>morphology</name>
     <url>http://maven.apache.org</url>
 
     <scm>
-        <connection>scm:svn:http://russianmorphology.googlecode.com/svn/tags/morphology-1.0</connection>
-        <developerConnection>scm:svn:https://russianmorphology.googlecode.com/svn/tags/morphology-1.0</developerConnection>
+        <connection>scm:svn:http://russianmorphology.googlecode.com/svn/trunk/</connection>
+        <developerConnection>scm:svn:https://russianmorphology.googlecode.com/svn/trunk/</developerConnection>
     </scm>
 
 
