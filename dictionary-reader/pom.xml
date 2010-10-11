@@ -3,27 +3,27 @@
     <parent>
         <artifactId>morphology</artifactId>
         <groupId>org.apache.lucene.morphology</groupId>
-        <version>1.0</version>
+        <version>1.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.lucene.morphology</groupId>
     <artifactId>dictionary-reader</artifactId>
     <name>dictionary-reader</name>
-    <version>1.0</version>
+    <version>1.1-SNAPSHOT</version>
     <url>http://maven.apache.org</url>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.lucene.morphology</groupId>
             <artifactId>russian</artifactId>
-            <version>1.0</version>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
 
 
         <dependency>
             <groupId>org.apache.lucene.morphology</groupId>
             <artifactId>english</artifactId>
-            <version>1.0</version>
+            <version>1.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 
