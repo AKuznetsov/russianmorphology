@@ -4,7 +4,7 @@
     <groupId>org.apache.lucene.morphology</groupId>
     <artifactId>morphology</artifactId>
     <packaging>pom</packaging>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <name>morphology</name>
     <url>http://maven.apache.org</url>
 
@@ -18,13 +18,13 @@
         <repository>
             <id>russian-morphology</id>
             <url>
-                file://../../repo/releases
+                file://../repo/releases
             </url>
         </repository>
         <snapshotRepository>
             <id>russian-morphology-snapshots</id>
             <url>
-                file://../../repo/snapshots
+                file://../repo/snapshots
             </url>
             <uniqueVersion>true</uniqueVersion>
         </snapshotRepository>
