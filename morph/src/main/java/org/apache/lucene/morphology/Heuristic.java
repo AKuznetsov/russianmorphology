@@ -39,9 +39,9 @@ public class Heuristic implements Serializable {
         this.normalFormMorphInfo = normalFormMorphInfo;
     }
 
-    public String transformWord(String w) {
-        if (w.length() - actualSuffixLength < 0) return w;
-        return w.substring(0, w.length() - actualSuffixLength) + actualNormalSuffix;
+    public StringBuilder transformWord(String w) {
+        if (w.length() - actualSuffixLength < 0) return new StringBuilder(w);
+        return new StringBuilder(w.substring(0, w.length() - actualSuffixLength)).append(actualNormalSuffix);
     }
 
     public byte getActualSuffixLength() {

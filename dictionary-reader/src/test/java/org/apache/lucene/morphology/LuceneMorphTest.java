@@ -16,6 +16,7 @@
 package org.apache.lucene.morphology;
 
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
+import org.apache.lucene.morphology.english.EnglishLuceneMorphology;
 import org.junit.Test;
 
 import java.io.BufferedReader;

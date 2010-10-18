@@ -16,7 +16,7 @@
 
 package org.apache.lucene.morphology.generator;
 
-import org.apache.lucene.morphology.EnglishLetterDecoderEncoder;
+import org.apache.lucene.morphology.english.EnglishLetterDecoderEncoder;
 import org.apache.lucene.morphology.dictionary.*;
 
 import java.io.IOException;

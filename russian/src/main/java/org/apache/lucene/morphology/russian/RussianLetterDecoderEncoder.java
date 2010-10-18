@@ -21,6 +21,7 @@ import org.apache.lucene.morphology.SuffixToLongException;
 import org.apache.lucene.morphology.WrongCharaterException;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * This helper class allow encode suffix of russian word
@@ -57,7 +58,7 @@ public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
     }
 
     public int[] encodeToArray(String s) {
-        ArrayList<Integer> integers = new ArrayList<Integer>();
+        LinkedList<Integer> integers = new LinkedList<Integer>();
         while (s.length() > WORD_PART_LENGHT) {
             integers.add(encode(s.substring(0, WORD_PART_LENGHT)));
             s = s.substring(WORD_PART_LENGHT);

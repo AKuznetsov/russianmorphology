@@ -17,6 +17,9 @@ package org.apache.lucene;
 
 import org.apache.lucene.morphology.*;
 import org.apache.lucene.morphology.dictionary.*;
+import org.apache.lucene.morphology.english.EnglishLetterDecoderEncoder;
+import org.apache.lucene.morphology.english.EnglishLuceneMorphology;
+import org.apache.lucene.morphology.english.EnglishMorphology;
 import org.apache.lucene.morphology.russian.RussianLetterDecoderEncoder;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianMorphology;
@@ -46,7 +49,7 @@ public class TestAllWords {
 
     @Test
     public void shouldEnglishMorphologyIncludeAllWordsFormsWithMorphInfo() throws IOException {
-        final Morphology morphology = new EnglishMorphology();
+        final MorphologyImpl morphology = new EnglishMorphology();
         LetterDecoderEncoder decoderEncoder = new EnglishLetterDecoderEncoder();
         String pathToGramma = prefix + "dictonary/Dicts/Morph/egramtab.tab";
         String pathToDict = prefix + "dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd";
@@ -57,7 +60,7 @@ public class TestAllWords {
 
     @Test
     public void shouldRussianMorphologyIncludeAllWordsFormsWithMorphInfo() throws IOException {
-        final Morphology morphology = new RussianMorphology();
+        final MorphologyImpl morphology = new RussianMorphology();
         LetterDecoderEncoder decoderEncoder = new RussianLetterDecoderEncoder();
         String pathToGramma = prefix + "dictonary/Dicts/Morph/rgramtab.tab";
         String pathToDict = prefix + "dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd";
@@ -65,7 +68,7 @@ public class TestAllWords {
         testFullGramma(morphology, decoderEncoder, pathToGramma, pathToDict);
     }
 
-    private void testFullGramma(final Morphology morphology, LetterDecoderEncoder decoderEncoder, String pathToGramma, String pathToDict) throws IOException {
+    private void testFullGramma(final MorphologyImpl morphology, LetterDecoderEncoder decoderEncoder, String pathToGramma, String pathToDict) throws IOException {
         GrammarReader grammarInfo = new GrammarReader(pathToGramma);
         final List<String> morphInfo = grammarInfo.getGrammarInfo();
         final Map<String, Integer> inversIndex = grammarInfo.getGrammarInverseIndex();
@@ -92,7 +95,6 @@ public class TestAllWords {
         WordStringCleaner wordStringCleaner = new WordStringCleaner(decoderEncoder, wordCleaner);
         RemoveFlexiaWithPrefixes removeFlexiaWithPrefixes = new RemoveFlexiaWithPrefixes(wordStringCleaner);
         dictionaryReader.process(removeFlexiaWithPrefixes);
-
         long time = System.currentTimeMillis() - startTime;
         System.out.println("Done " + wordCount.get() + " in " + time + " ms. " + wordCount.get() / (time / 1000L) + " word per second");
     }
