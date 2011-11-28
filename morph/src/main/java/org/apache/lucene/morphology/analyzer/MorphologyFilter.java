@@ -18,6 +18,7 @@ package org.apache.lucene.morphology.analyzer;
 
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import org.apache.lucene.morphology.LuceneMorphology;
 
@@ -28,30 +29,31 @@ import java.util.Iterator;
 public class MorphologyFilter extends TokenFilter {
     private LuceneMorphology luceneMorph;
     private Iterator<String> iterator;
-    private TermAttribute termAtt;
+    private final CharTermAttribute termAtt = addAttribute(CharTermAttribute.class);
+
 
     public MorphologyFilter(TokenStream tokenStream, LuceneMorphology luceneMorph) {
         super(tokenStream);
         this.luceneMorph = luceneMorph;
-        termAtt = addAttribute(TermAttribute.class);
     }
 
 
-    public boolean incrementToken() throws IOException {
+   final public boolean incrementToken() throws IOException {
         while (iterator == null || !iterator.hasNext()) {
             boolean b = input.incrementToken();
             if (!b) {
                 return false;
             }
-            String s = termAtt.term();
+            String s = new String(termAtt.buffer(),0,termAtt.length());
             if (luceneMorph.checkString(s)) {
-                iterator = luceneMorph.getNormalForms(termAtt.term()).iterator();
+                iterator = luceneMorph.getNormalForms(s).iterator();
             } else {
                 return true;
             }
         }
         String s = iterator.next();
-        termAtt.setTermBuffer(s);
+        termAtt.setEmpty();
+        termAtt.append(s);
         return true;
     }
 

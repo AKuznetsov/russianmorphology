@@ -44,10 +44,15 @@ public class MorphologyAnalyzer extends Analyzer {
         luceneMorph = new LuceneMorphology(inputStream, letterDecoderEncoder);
     }
 
-    public TokenStream tokenStream(String fieldName, Reader reader) {
-        TokenStream result = new StandardTokenizer(Version.LUCENE_30, reader);
-        result = new StandardFilter(result);
-        result = new LowerCaseFilter(result);
+    final public TokenStream tokenStream(String fieldName, Reader reader) {
+        TokenStream result = new StandardTokenizer(Version.LUCENE_35, reader);
+        result = new StandardFilter(Version.LUCENE_35,result);
+        result = new LowerCaseFilter(Version.LUCENE_35,result);
         return new MorphologyFilter(result, luceneMorph);
+    }
+
+    @Override
+    final public TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException {
+        return super.reusableTokenStream(fieldName, reader);
     }
 }
