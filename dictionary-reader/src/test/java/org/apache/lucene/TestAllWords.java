@@ -96,7 +96,7 @@ public class TestAllWords {
         RemoveFlexiaWithPrefixes removeFlexiaWithPrefixes = new RemoveFlexiaWithPrefixes(wordStringCleaner);
         dictionaryReader.process(removeFlexiaWithPrefixes);
         long time = System.currentTimeMillis() - startTime;
-        System.out.println("Done " + wordCount.get() + " in " + time + " ms. " + wordCount.get() / (time / 1000L) + " word per second");
+        System.out.println("Done " + wordCount.get() + " in " + time + " ms. " + wordCount.get() / (time / 1000.0) + " word per second");
     }
 
     @Test
