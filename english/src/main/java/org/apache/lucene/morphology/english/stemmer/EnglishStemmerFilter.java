@@ -39,6 +39,7 @@ public class EnglishStemmerFilter extends TokenFilter {
             return false;
         }
         String s = new String(termAtt.buffer(), 0, termAtt.length());
+        s = englishStemmer.getStemmedWord(s);
         termAtt.setEmpty();
         termAtt.append(s);
         return true;
