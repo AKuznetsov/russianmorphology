@@ -17,12 +17,17 @@
 package org.apache.lucene.morphology.analyzer;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.LowerCaseFilter;
-import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.TokenFilter;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
+import org.apache.lucene.analysis.core.WhitespaceTokenizer;
+import org.apache.lucene.analysis.payloads.DelimitedPayloadTokenFilter;
+import org.apache.lucene.analysis.payloads.PayloadEncoder;
+import org.apache.lucene.analysis.payloads.PayloadHelper;
 import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.morphology.LetterDecoderEncoder;
 import org.apache.lucene.morphology.LuceneMorphology;
+import org.apache.lucene.util.BytesRef;
 import org.apache.lucene.util.Version;
 
 import java.io.IOException;
@@ -44,15 +49,39 @@ public class MorphologyAnalyzer extends Analyzer {
         luceneMorph = new LuceneMorphology(inputStream, letterDecoderEncoder);
     }
 
-    final public TokenStream tokenStream(String fieldName, Reader reader) {
-        TokenStream result = new StandardTokenizer(Version.LUCENE_35, reader);
-        result = new StandardFilter(Version.LUCENE_35,result);
-        result = new LowerCaseFilter(Version.LUCENE_35,result);
-        return new MorphologyFilter(result, luceneMorph);
-    }
 
     @Override
-    final public TokenStream reusableTokenStream(String fieldName, Reader reader) throws IOException {
-        return super.reusableTokenStream(fieldName, reader);
+    protected TokenStreamComponents createComponents(String s) {
+
+        StandardTokenizer src = new StandardTokenizer();
+        final PayloadEncoder encoder = new PayloadEncoder() {
+            @Override
+            public BytesRef encode(char[] buffer) {
+                final Float payload = Float.valueOf(new String(buffer));
+                System.out.println(payload);
+                final byte[] bytes = PayloadHelper.encodeFloat(payload);
+                return new BytesRef(bytes, 0, bytes.length);
+            }
+
+            @Override
+            public BytesRef encode(char[] buffer, int offset, int length) {
+
+                final Float payload = Float.valueOf(new String(buffer, offset, length));
+                System.out.println(payload);
+                final byte[] bytes = PayloadHelper.encodeFloat(payload);
+
+                return new BytesRef(bytes, 0, bytes.length);
+            }
+        };
+        TokenFilter filter = new StandardFilter(src);
+        filter = new LowerCaseFilter(filter);
+        filter = new MorphologyFilter(filter, luceneMorph);
+
+        return new TokenStreamComponents(src, filter) {
+            @Override
+            protected void setReader(final Reader reader) throws IOException {
+                super.setReader(reader);
+            }
+        };
     }
 }

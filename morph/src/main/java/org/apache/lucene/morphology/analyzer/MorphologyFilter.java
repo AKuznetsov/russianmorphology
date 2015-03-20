@@ -19,7 +19,6 @@ package org.apache.lucene.morphology.analyzer;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
-import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import org.apache.lucene.morphology.LuceneMorphology;
 
 import java.io.IOException;

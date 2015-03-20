@@ -19,7 +19,6 @@ import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.morphology.english.EnglishAnalyzer;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.tokenattributes.TermAttribute;
 import org.apache.lucene.morphology.russian.RussianAnalyzer;
 import org.junit.Test;
 
@@ -66,6 +65,7 @@ public class AnalyzersTest {
         InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
 
         TokenStream tokenStream = morphlogyAnalyzer.tokenStream(null, reader);
+        tokenStream.reset();
         HashSet<String> result = new HashSet<String>();
         while (tokenStream.incrementToken()) {
             CharTermAttribute attribute1 = tokenStream.getAttribute(CharTermAttribute.class);

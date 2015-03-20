@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -43,6 +44,8 @@ public class LuceneMorphTest {
     @Test
     public void russianMorphologyShouldGetCorrectNormalForm() throws IOException {
         LuceneMorphology luceneMorph = new RussianLuceneMorphology();
+        List<String> v = luceneMorph.getMorphInfo("вина");
+        System.out.println(v);
         String pathToTestData = "/russian/russian-morphology-test.txt";
         testMorphology(luceneMorph, pathToTestData);
     }
