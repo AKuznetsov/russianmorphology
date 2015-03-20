@@ -19,8 +19,6 @@ package org.apache.lucene.morphology.analyzer;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.core.LowerCaseFilter;
-import org.apache.lucene.analysis.core.WhitespaceTokenizer;
-import org.apache.lucene.analysis.payloads.DelimitedPayloadTokenFilter;
 import org.apache.lucene.analysis.payloads.PayloadEncoder;
 import org.apache.lucene.analysis.payloads.PayloadHelper;
 import org.apache.lucene.analysis.standard.StandardFilter;
@@ -28,7 +26,6 @@ import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.morphology.LetterDecoderEncoder;
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.util.BytesRef;
-import org.apache.lucene.util.Version;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -84,4 +81,6 @@ public class MorphologyAnalyzer extends Analyzer {
             }
         };
     }
+
+
 }

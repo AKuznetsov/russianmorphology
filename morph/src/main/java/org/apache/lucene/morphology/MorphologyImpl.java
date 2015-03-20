@@ -50,8 +50,15 @@ public class MorphologyImpl implements Morphology {
         ArrayList<String> result = new ArrayList<String>();
         int[] ints = decoderEncoder.encodeToArray(revertWord(s));
         int ruleId = findRuleId(ints);
+        boolean notSeenEmptyString = true;
         for (Heuristic h : rules[rulesId[ruleId]]) {
-            result.add(h.transformWord(s).toString());
+            String e = h.transformWord(s).toString();
+            if (e.length() > 0) {
+                result.add(e);
+            } else if (notSeenEmptyString) {
+                result.add(s);
+                notSeenEmptyString = false;
+            }
         }
         return result;
     }

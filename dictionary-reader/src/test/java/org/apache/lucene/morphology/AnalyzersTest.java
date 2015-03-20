@@ -18,9 +18,13 @@ package org.apache.lucene.morphology;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
+import org.apache.lucene.morphology.analyzer.MorphologyAnalyzer;
+import org.apache.lucene.morphology.analyzer.MorphologyFilter;
 import org.apache.lucene.morphology.english.EnglishAnalyzer;
 import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.morphology.english.EnglishLuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianAnalyzer;
+import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
 import org.junit.Test;
 
 import java.io.*;
@@ -48,6 +52,22 @@ public class AnalyzersTest {
         String testPath = "/russian/russian-analyzer-data.txt";
 
         testAnalayzer(morphlogyAnalyzer, answerPath, testPath);
+    }
+
+    @Test
+    public void emptyStringTest() throws IOException {
+        LuceneMorphology russianLuceneMorphology = new RussianLuceneMorphology();
+        LuceneMorphology englishLuceneMorphology = new EnglishLuceneMorphology();
+
+        MorphologyAnalyzer russianAnalyzer = new MorphologyAnalyzer(russianLuceneMorphology);
+        InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream("тест пм тест".getBytes()), "UTF-8");
+        TokenStream stream = russianAnalyzer.tokenStream(null, reader);
+        MorphologyFilter englishFilter = new MorphologyFilter(stream, englishLuceneMorphology);
+
+        englishFilter.reset();
+        while (englishFilter.incrementToken()) {
+            System.out.println(englishFilter.toString());
+        }
     }
 
     @Test
