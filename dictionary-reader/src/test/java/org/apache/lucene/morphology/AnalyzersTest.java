@@ -17,17 +17,14 @@ package org.apache.lucene.morphology;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.morphology.english.EnglishAnalyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.morphology.russian.RussianAnalyzer;
 import org.junit.Test;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.HashSet;
+import java.io.*;
+import java.util.*;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
@@ -36,7 +33,7 @@ import static org.junit.Assert.assertThat;
 public class AnalyzersTest {
 
     @Test
-    public void englishAnalyzerShouldGiveCorrectWords() throws IOException {
+    public void shouldGiveCorrectWordsForEnglish() throws IOException {
         Analyzer morphlogyAnalyzer = new EnglishAnalyzer();
         String answerPath = "/english/english-analyzer-answer.txt";
         String testPath = "/english/english-analyzer-data.txt";
@@ -45,12 +42,35 @@ public class AnalyzersTest {
     }
 
     @Test
-    public void shoudGiveCorretWords() throws IOException {
+    public void shouldGiveCorrectWordsForRussian() throws IOException {
         Analyzer morphlogyAnalyzer = new RussianAnalyzer();
         String answerPath = "/russian/russian-analyzer-answer.txt";
         String testPath = "/russian/russian-analyzer-data.txt";
 
         testAnalayzer(morphlogyAnalyzer, answerPath, testPath);
+    }
+
+    @Test
+    public void shouldProvideCorrectIndentForWordWithMelitaForm() throws IOException {
+        Analyzer morphlogyAnalyzer = new RussianAnalyzer();
+        InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream("принеси мне вина на новый год".getBytes()), "UTF-8");
+
+        TokenStream tokenStream = morphlogyAnalyzer.tokenStream(null, reader);
+        tokenStream.reset();
+        Set<String> foromsOfWine = new HashSet<String>();
+        foromsOfWine.add("вина");
+        foromsOfWine.add("винo");
+        boolean wordSeen = false;
+        while (tokenStream.incrementToken()) {
+            CharTermAttribute charTerm = tokenStream.getAttribute(CharTermAttribute.class);
+            PositionIncrementAttribute position = tokenStream.getAttribute(PositionIncrementAttribute.class);
+            if(foromsOfWine.contains(charTerm.toString()) && wordSeen){
+                assertThat(position.getPositionIncrement(),equalTo(0));
+            }
+            if(foromsOfWine.contains(charTerm.toString())){
+                wordSeen = true;
+            }
+        }
     }
 
     private void testAnalayzer(Analyzer morphlogyAnalyzer, String answerPath, String testPath) throws IOException {

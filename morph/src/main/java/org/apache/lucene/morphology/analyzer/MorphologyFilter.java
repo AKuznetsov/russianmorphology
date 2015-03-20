@@ -19,6 +19,7 @@ package org.apache.lucene.morphology.analyzer;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
 import org.apache.lucene.morphology.LuceneMorphology;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ public class MorphologyFilter extends TokenFilter {
     private LuceneMorphology luceneMorph;
     private Iterator<String> iterator;
     private final CharTermAttribute termAtt = addAttribute(CharTermAttribute.class);
-
+    private final PositionIncrementAttribute position = addAttribute(PositionIncrementAttribute.class);
 
     public MorphologyFilter(TokenStream tokenStream, LuceneMorphology luceneMorph) {
         super(tokenStream);
@@ -37,14 +38,16 @@ public class MorphologyFilter extends TokenFilter {
     }
 
 
-   final public boolean incrementToken() throws IOException {
+    final public boolean incrementToken() throws IOException {
+        boolean oldToken = true;
         while (iterator == null || !iterator.hasNext()) {
             boolean b = input.incrementToken();
             if (!b) {
                 return false;
             }
-            String s = new String(termAtt.buffer(),0,termAtt.length());
+            String s = new String(termAtt.buffer(), 0, termAtt.length());
             if (luceneMorph.checkString(s)) {
+                oldToken = false;
                 iterator = luceneMorph.getNormalForms(s).iterator();
             } else {
                 return true;
@@ -53,6 +56,9 @@ public class MorphologyFilter extends TokenFilter {
         String s = iterator.next();
         termAtt.setEmpty();
         termAtt.append(s);
+        if (oldToken) {
+            position.setPositionIncrement(0);
+        }
         return true;
     }
 
