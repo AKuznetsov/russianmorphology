@@ -37,7 +37,7 @@ public class EnglishLetterDecoderEncoder implements LetterDecoderEncoder {
                 c = DASH_CODE;
             }
             if (c < 0 || c > 27)
-                throw new WrongCharaterException("Symblo " + string.charAt(i) + " is not small cirillic letter");
+                throw new WrongCharaterException("Symbol " + string.charAt(i) + " is not small cirillic letter");
             result = result * 28 + c;
         }
         for (int i = string.length(); i < 6; i++) {

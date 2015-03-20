@@ -48,7 +48,7 @@ public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
             }
             if (c == EE_CHAR) c = E_CHAR;
             if (c < 0 || c > 33)
-                throw new WrongCharaterException("Symblo " + string.charAt(i) + " is not small cirillic letter");
+                throw new WrongCharaterException("Symbol " + string.charAt(i) + " is not small cirillic letter");
             result = result * 34 + c;
         }
         for (int i = string.length(); i < WORD_PART_LENGHT; i++) {
