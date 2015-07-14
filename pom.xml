@@ -15,6 +15,10 @@
         <tag>HEAD</tag>
     </scm>
 
+    <properties>
+        <lucene.version>5.1.0</lucene.version>
+    </properties>
+
     <distributionManagement>
         <repository>
             <id>bintray</id>
@@ -24,9 +28,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2</version>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-test-framework</artifactId>
+            <version>${lucene.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -38,12 +42,12 @@
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
-            <version>5.1.0</version>
+            <version>${lucene.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-analyzers-common</artifactId>
-            <version>5.1.0</version>
+            <version>${lucene.version}</version>
         </dependency>
     </dependencies>
 

@@ -16,8 +16,15 @@
 package org.apache.lucene.morphology;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.BaseTokenStreamTestCase;
+import org.apache.lucene.analysis.TokenFilter;
+import org.apache.lucene.analysis.core.LowerCaseFilter;
+import org.apache.lucene.analysis.miscellaneous.SetKeywordMarkerFilter;
+import org.apache.lucene.analysis.standard.StandardFilter;
+import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
+import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.morphology.analyzer.MorphologyAnalyzer;
 import org.apache.lucene.morphology.analyzer.MorphologyFilter;
 import org.apache.lucene.morphology.english.EnglishAnalyzer;
@@ -31,10 +38,9 @@ import java.io.*;
 import java.util.*;
 
 import static org.hamcrest.Matchers.equalTo;
-import static org.junit.Assert.assertThat;
 
 
-public class AnalyzersTest {
+public class AnalyzersTest extends BaseTokenStreamTestCase {
 
     @Test
     public void shouldGiveCorrectWordsForEnglish() throws IOException {
@@ -115,5 +121,45 @@ public class AnalyzersTest {
         stream.close();
 
         assertThat(result, equalTo(answer));
+    }
+
+    @Test
+    public void testPositionIncrement() throws IOException {
+        EnglishAnalyzer englishAnalyzer = new EnglishAnalyzer();
+        assertTokenStreamContents(
+                englishAnalyzer.tokenStream("test", "There are tests!"),
+                new String[]{"there", "are", "be", "test"},
+                new int[]{0, 6, 6, 10},
+                new int[]{5, 9, 9, 15},
+                new String[]{"<ALPHANUM>", "<ALPHANUM>", "<ALPHANUM>", "<ALPHANUM>"},
+                new int[]{1, 1, 0, 1}
+        );
+    }
+
+    @Test
+    public void testKeywordHandling() throws IOException {
+        Analyzer analyzer = new EnglishKeywordTestAnalyzer();
+        assertTokenStreamContents(
+                analyzer.tokenStream("test", "Tests shouldn't be stemmed, but tests should!"),
+                new String[]{"tests", "shouldn't", "be", "stem", "but", "test", "shall"}
+        );
+    }
+
+    private static class EnglishKeywordTestAnalyzer extends Analyzer {
+        @Override
+        protected TokenStreamComponents createComponents(String s) {
+            StandardTokenizer src = new StandardTokenizer();
+            TokenFilter filter = new StandardFilter(src);
+            CharArraySet dontStem = new CharArraySet(1, false);
+            dontStem.add("Tests");
+            filter = new SetKeywordMarkerFilter(filter, dontStem);
+            filter = new LowerCaseFilter(filter);
+            try {
+                filter = new MorphologyFilter(filter, new EnglishLuceneMorphology());
+            } catch (IOException ex) {
+                throw new RuntimeException("cannot create EnglishLuceneMorphology", ex);
+            }
+            return new TokenStreamComponents(src, filter);
+        }
     }
 }
