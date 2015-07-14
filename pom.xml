@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.apache.lucene.morphology</groupId>
     <artifactId>morphology</artifactId>
@@ -64,20 +65,8 @@
             </snapshots>
         </repository>
     </repositories>
-    
-    <pluginRepositories>
-        <pluginRepository>
-            <id>mc-release</id>
-            <name>maven-license-plugin repository of releases</name>
-            <url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </pluginRepository>
-    </pluginRepositories>
+
+
     <build>
         <plugins>
             <plugin>
@@ -98,30 +87,37 @@
                     <target>1.7</target>
                 </configuration>
             </plugin>
-            <plugin>                <!--                 usage: http://code.google.com/p/maven-license-plugin/wiki/HowTo                -->
-                <artifactId>maven-license-plugin</artifactId>
-                <groupId>com.mathieucarbou.mojo</groupId>
-                <configuration>
-                    <basedir>${project.parent.basedir}</basedir>
-                    <header>etc/header.txt</header>
-                    <excludes>
-                        <exclude>**/*.txt</exclude>
-                        <exclude>**/*.info</exclude>
-                        <exclude>**/pom.xml</exclude>
-                    </excludes>
-                    <includes>
-                        <include>**/src/**</include>
-                    </includes>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>                &lt;!&ndash;                 usage: http://code.google.com/p/maven-license-plugin/wiki/HowTo                &ndash;&gt;-->
+
+                <!--<groupId>com.mycila</groupId>-->
+                <!--<artifactId>license-maven-plugin</artifactId>-->
+                <!--<version>2.11</version>-->
+
+                <!--<configuration>-->
+                    <!--<properties>-->
+                        <!--<owner>Alexander Kuznetsov</owner>-->
+                        <!--&lt;!&ndash;<email>mathieu.carbou@gmail.com</email>&ndash;&gt;-->
+                    <!--</properties>-->
+                    <!--<basedir>${project.parent.basedir}</basedir>-->
+                    <!--<header>etc/header.txt</header>-->
+                    <!--<excludes>-->
+                        <!--<exclude>**/*.txt</exclude>-->
+                        <!--<exclude>**/*.info</exclude>-->
+                        <!--<exclude>**/pom.xml</exclude>-->
+                    <!--</excludes>-->
+                    <!--<includes>-->
+                        <!--<include>**/src/**</include>-->
+                    <!--</includes>-->
+                <!--</configuration>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<phase>test</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>check</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
     <profiles>
@@ -160,6 +156,6 @@
         <module>dictionary-reader</module>
         <module>russian</module>
         <module>english</module>
-    <module>context</module>
-  </modules>
+        <module>context</module>
+    </modules>
 </project>

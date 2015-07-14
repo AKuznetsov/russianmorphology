@@ -51,25 +51,6 @@ public class MorphologyAnalyzer extends Analyzer {
     protected TokenStreamComponents createComponents(String s) {
 
         StandardTokenizer src = new StandardTokenizer();
-        final PayloadEncoder encoder = new PayloadEncoder() {
-            @Override
-            public BytesRef encode(char[] buffer) {
-                final Float payload = Float.valueOf(new String(buffer));
-                System.out.println(payload);
-                final byte[] bytes = PayloadHelper.encodeFloat(payload);
-                return new BytesRef(bytes, 0, bytes.length);
-            }
-
-            @Override
-            public BytesRef encode(char[] buffer, int offset, int length) {
-
-                final Float payload = Float.valueOf(new String(buffer, offset, length));
-                System.out.println(payload);
-                final byte[] bytes = PayloadHelper.encodeFloat(payload);
-
-                return new BytesRef(bytes, 0, bytes.length);
-            }
-        };
         TokenFilter filter = new StandardFilter(src);
         filter = new LowerCaseFilter(filter);
         filter = new MorphologyFilter(filter, luceneMorph);

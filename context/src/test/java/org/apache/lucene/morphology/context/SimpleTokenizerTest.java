@@ -1,52 +1,32 @@
-/**
- * Copyright 2015 Alexander Kuznetsov
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package org.apache.lucene.morphology.context;
+
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 
-public class CalculateContextItem {
+public class SimpleTokenizerTest {
 
-    public List<ContextItem> createContextItems(String text) throws IOException {
+    @Test
+    public void testSimpleTokenizer() throws IOException {
         Analyzer statAnalyzer = new StatAnalyzer();
         InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream("принеси мне вина на новый год? - и что я жду тебя, где вино".getBytes()), "UTF-8");
-
-
-//        new RussianMorphology();
 
         TokenStream tokenStream = statAnalyzer.tokenStream(null, reader);
         tokenStream.reset();
 
-        List<List<String>> listedLink =  new LinkedList<>();
+        boolean wordSeen = false;
         while (tokenStream.incrementToken()) {
             CharTermAttribute charTerm = tokenStream.getAttribute(CharTermAttribute.class);
             PositionIncrementAttribute position = tokenStream.getAttribute(PositionIncrementAttribute.class);
-
-
+            System.out.println(charTerm.toString());
         }
-
-        return null;
     }
+
 }
