@@ -76,7 +76,7 @@ public class MorphologyAnalyzer extends Analyzer {
 
         return new TokenStreamComponents(src, filter) {
             @Override
-            protected void setReader(final Reader reader) throws IOException {
+            protected void setReader(final Reader reader) {
                 super.setReader(reader);
             }
         };
