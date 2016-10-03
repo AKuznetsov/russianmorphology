@@ -16,7 +16,7 @@
     </scm>
 
     <properties>
-        <lucene.version>5.1.0</lucene.version>
+        <lucene.version>6.1.0</lucene.version>
     </properties>
 
     <distributionManagement>
@@ -97,14 +97,16 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
                 <configuration>
-                    <source>1.5</source>
-                    <target>1.5</target>
+                    <source>1.8</source>
+                    <target>1.8</target>
                 </configuration>
             </plugin>
             <plugin>                <!--                 usage: http://code.google.com/p/maven-license-plugin/wiki/HowTo                -->
                 <artifactId>maven-license-plugin</artifactId>
-                <groupId>com.mathieucarbou.mojo</groupId>
+                <groupId>com.google.code.maven-license-plugin</groupId>
+                <version>1.4.0</version>
                 <configuration>
                     <basedir>${project.parent.basedir}</basedir>
                     <header>etc/header.txt</header>
@@ -135,6 +137,7 @@
                 <plugins>
                     <plugin>
                         <artifactId>maven-source-plugin</artifactId>
+                        <version>3.0.1</version>
                         <executions>
                             <execution>
                                 <id>attach-sources</id>
@@ -146,6 +149,7 @@
                     </plugin>
                     <plugin>
                         <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>2.10.4</version>
                         <executions>
                             <execution>
                                 <id>attach-javadocs</id>

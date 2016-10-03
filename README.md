@@ -1,28 +1,28 @@
 # Russian Morphology for lucene
 
-Russian and English morphology for java and lucene 5.1 framework based on open source dictionary from site [АОТ](http://aot.ru). It use dictionary base morphology with some heuristics for unknown words. It support homonym for example for Russian word "вина" it gives two variants "вино" and "вина". 
+Russian and English morphology for java and lucene 6.1 framework based on open source dictionary from site [АОТ](http://aot.ru). It use dictionary base morphology with some heuristics for unknown words. It support homonym for example for Russian word "вина" it gives two variants "вино" and "вина".
 
 
 ### How to use
 
 First download 
-[morph-1.0.jar](https://bintray.com/artifact/download/akuznetsov/russianmorphology/org/apache/lucene/morphology/morph/1.1/morph-1.1.jar)  
-and add it to your class path. When download [Russian](https://bintray.com/artifact/download/akuznetsov/russianmorphology/org/apache/lucene/morphology/russian/1.1/russian-1.1.jar) or 
-[English](https://bintray.com/artifact/download/akuznetsov/russianmorphology/org/apache/lucene/morphology/english/1.1/english-1.1.jar) package. 
+[morph-1.2.jar](https://bintray.com/artifact/download/akuznetsov/russianmorphology/org/apache/lucene/morphology/morph/1.2/morph-1.2.jar)  
+and add it to your class path. When download [Russian](https://bintray.com/artifact/download/akuznetsov/russianmorphology/org/apache/lucene/morphology/russian/1.2/russian-1.2.jar) or 
+[English](https://bintray.com/artifact/download/akuznetsov/russianmorphology/org/apache/lucene/morphology/english/1.2/english-1.2.jar) package. 
 
 If you use maven you can add dependency 
 
         <dependency>
             <groupId>org.apache.lucene.morphology</groupId>
             <artifactId>russian</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
         </dependency>
 
 
         <dependency>
             <groupId>org.apache.lucene.morphology</groupId>
             <artifactId>english</artifactId>
-            <version>1.1</version>
+            <version>1.2</version>
         </dependency>
 
 Don't forget add link to repository
