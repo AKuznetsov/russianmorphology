@@ -1,6 +1,6 @@
-# Russian Morphology for lucene
+# Russian Morphology for Apache Lucene
 
-Russian and English morphology for java and lucene 6.1 framework based on open source dictionary from site [АОТ](http://aot.ru). It use dictionary base morphology with some heuristics for unknown words. It support homonym for example for Russian word "вина" it gives two variants "вино" and "вина".
+Russian and English morphology for java and [Apache Lucene](http://lucene.apache.org) 6.1 framework based on open source dictionary from site [АОТ](http://aot.ru). It use dictionary base morphology with some heuristics for unknown words. It support homonym for example for Russian word "вина" it gives two variants "вино" and "вина".
 
 
 ### How to use
