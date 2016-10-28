@@ -17,8 +17,8 @@
 package org.apache.lucene.morphology.analyzer;
 
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.LowerCaseFilter;
 import org.apache.lucene.analysis.TokenFilter;
-import org.apache.lucene.analysis.core.LowerCaseFilter;
 import org.apache.lucene.analysis.payloads.PayloadEncoder;
 import org.apache.lucene.analysis.payloads.PayloadHelper;
 import org.apache.lucene.analysis.standard.StandardFilter;
