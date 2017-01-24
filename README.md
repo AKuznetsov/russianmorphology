@@ -62,6 +62,21 @@ Also if you need get a list of base forms of word, you can use following example
      LuceneMorphology luceneMorph = new EnglishLuceneMorphology();
      List<String> wordBaseForms = luceneMorph.getMorphInfo(word);
 
+### Solr
+
+You can use the LuceneMorphology as morphology filter in a Solr _schema.xml_ using a **MorphologyFilterFactory:**
+
+```xml
+<fieldType name="content" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+		<filter class="org.apache.lucene.analysis.morphology.MorphologyFilterFactory" language="Russian"/>
+		<filter class="org.apache.lucene.analysis.morphology.MorphologyFilterFactory" language="English"/>
+      </analyzer>
+</fieldType>
+```
+
+Just add _morphology-1.3.jar_ in your Solr lib-directories
 
 ### Restrictions
   
