@@ -83,3 +83,7 @@ Just add _morphology-1.3.jar_ in your Solr lib-directories
   * It works only with UTF-8.
   * It assume what letters е and ё are the same.
   * Word forms with prefixes like "наибольший" treated as separate word. 
+
+### License
+
+Apache License, Version 2.0
