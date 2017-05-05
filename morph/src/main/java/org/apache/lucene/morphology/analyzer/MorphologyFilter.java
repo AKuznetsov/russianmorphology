@@ -78,6 +78,7 @@ public class MorphologyFilter extends TokenFilter {
         }
     }
 
+    @Override
     public void reset() throws IOException {
         super.reset();
         save = null;
