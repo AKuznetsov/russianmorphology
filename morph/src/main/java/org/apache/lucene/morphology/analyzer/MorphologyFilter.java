@@ -82,5 +82,6 @@ public class MorphologyFilter extends TokenFilter {
     public void reset() throws IOException {
         super.reset();
         state = null;
+        iterator = null;
     }
 }
