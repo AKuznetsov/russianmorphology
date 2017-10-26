@@ -1,53 +1,16 @@
 # Russian Morphology for Apache Lucene
 
-Russian and English morphology for java and [Apache Lucene](http://lucene.apache.org) 6.1 framework based on open source dictionary from site [АОТ](http://aot.ru). It use dictionary base morphology with some heuristics for unknown words. It support homonym for example for Russian word "вина" it gives two variants "вино" and "вина".
+Russian and English morphology for Java and [Apache Lucene](http://lucene.apache.org) 6.6 framework based on open source dictionary from site [АОТ](http://aot.ru). It use dictionary base morphology with some heuristics for unknown words. It support homonym for example for Russian word "вина" it gives two variants "вино" and "вина".
 
 
 ### How to use
 
-First download 
-[morph-1.2.jar](https://bintray.com/artifact/download/akuznetsov/russianmorphology/org/apache/lucene/morphology/morph/1.2/morph-1.2.jar)  
-and add it to your class path. When download [Russian](https://bintray.com/artifact/download/akuznetsov/russianmorphology/org/apache/lucene/morphology/russian/1.2/russian-1.2.jar) or 
-[English](https://bintray.com/artifact/download/akuznetsov/russianmorphology/org/apache/lucene/morphology/english/1.2/english-1.2.jar) package. 
+Build project, by running `mvn clean package`, this will provide you the latest versions of the artifacts - 1.3-SNAPSHOT, add it to your classpath. You could select which version to use - Russian or English.
 
-If you use maven you can add dependency 
-
-        <dependency>
-            <groupId>org.apache.lucene.morphology</groupId>
-            <artifactId>russian</artifactId>
-            <version>1.2</version>
-        </dependency>
-
-
-        <dependency>
-            <groupId>org.apache.lucene.morphology</groupId>
-            <artifactId>english</artifactId>
-            <version>1.2</version>
-        </dependency>
-
-Don't forget add link to repository
-
-
-    <repositories>
-    ...............
-      <repository>
-        <snapshots>
-          <enabled>false</enabled>
-        </snapshots>
-        <id>bintray-akuznetsov-russianmorphology</id>
-        <name>bintray</name>
-        <url>http://dl.bintray.com/akuznetsov/russianmorphology</url>
-      </repository>
-    </repositories>
-
-
-
-Now you can create a Lucene Analyzer 
-
+Now you can create a Lucene Analyzer:
 
       RussianAnalayzer russian = new RussianAnalayzer();
       EnglishAnalayzer english = new EnglishAnalayzer();
-
 
 You can write you own analyzer using filter that convert word in it's right forms. 
 
