@@ -5,7 +5,7 @@ Russian and English morphology for Java and [Apache Lucene](http://lucene.apache
 
 ### How to use
 
-Build project, by running `mvn clean package`, this will provide you the latest versions of the artifacts - 1.4, add it to your classpath. You could select which version to use - Russian or English.
+Build project, by running `mvn clean package`, this will provide you the latest versions of the artifacts - 1.5, add it to your classpath. You could select which version to use - Russian or English.
 
 Now you can create a Lucene Analyzer:
 
@@ -39,7 +39,7 @@ You can use the LuceneMorphology as morphology filter in a Solr _schema.xml_ usi
 </fieldType>
 ```
 
-Just add _morphology-1.4.jar_ in your Solr lib-directories
+Just add _morphology-1.5.jar_ in your Solr lib-directories
 
 ### Restrictions
   

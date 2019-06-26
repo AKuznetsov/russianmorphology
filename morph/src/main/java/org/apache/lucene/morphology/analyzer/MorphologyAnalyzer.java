@@ -21,7 +21,6 @@ import org.apache.lucene.analysis.LowerCaseFilter;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.payloads.PayloadEncoder;
 import org.apache.lucene.analysis.payloads.PayloadHelper;
-import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.morphology.LetterDecoderEncoder;
 import org.apache.lucene.morphology.LuceneMorphology;
@@ -29,7 +28,7 @@ import org.apache.lucene.util.BytesRef;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.Reader;
+
 
 public class MorphologyAnalyzer extends Analyzer {
     private LuceneMorphology luceneMorph;
@@ -70,17 +69,10 @@ public class MorphologyAnalyzer extends Analyzer {
                 return new BytesRef(bytes, 0, bytes.length);
             }
         };
-        TokenFilter filter = new StandardFilter(src);
-        filter = new LowerCaseFilter(filter);
+
+        TokenFilter filter = new LowerCaseFilter(src);
         filter = new MorphologyFilter(filter, luceneMorph);
 
-        return new TokenStreamComponents(src, filter) {
-            @Override
-            protected void setReader(final Reader reader) {
-                super.setReader(reader);
-            }
-        };
+        return new TokenStreamComponents(r -> src.setReader(r), filter);
     }
-
-
 }

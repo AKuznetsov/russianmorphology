@@ -21,7 +21,6 @@ import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.LowerCaseFilter;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.miscellaneous.SetKeywordMarkerFilter;
-import org.apache.lucene.analysis.standard.StandardFilter;
 import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.apache.lucene.analysis.tokenattributes.PositionIncrementAttribute;
@@ -149,10 +148,9 @@ public class AnalyzersTest extends BaseTokenStreamTestCase {
         @Override
         protected TokenStreamComponents createComponents(String s) {
             StandardTokenizer src = new StandardTokenizer();
-            TokenFilter filter = new StandardFilter(src);
             CharArraySet dontStem = new CharArraySet(1, false);
             dontStem.add("Tests");
-            filter = new SetKeywordMarkerFilter(filter, dontStem);
+            TokenFilter filter = new SetKeywordMarkerFilter(src, dontStem);
             filter = new LowerCaseFilter(filter);
             try {
                 filter = new MorphologyFilter(filter, new EnglishLuceneMorphology());
