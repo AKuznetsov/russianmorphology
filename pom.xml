@@ -4,7 +4,7 @@
     <groupId>org.apache.lucene.morphology</groupId>
     <artifactId>morphology</artifactId>
     <packaging>pom</packaging>
-    <version>1.4</version>
+    <version>1.5</version>
     <name>morphology</name>
     <url>http://maven.apache.org</url>
 
@@ -16,8 +16,8 @@
     </scm>
 
     <properties>
-        <lucene.version>7.2.1</lucene.version>
-        <morphology.version>1.4</morphology.version>
+        <lucene.version>8.0.0</lucene.version>
+        <morphology.version>1.5</morphology.version>
         <junit.version>4.12</junit.version>
     </properties>
 
