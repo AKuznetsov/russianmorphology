@@ -65,11 +65,11 @@
         <repository>
             <id>maven2-repository.dev.java.net</id>
             <name>Java.net Repository for Maven</name>
-            <url>http://download.java.net/maven/2/</url>
+            <url>https://download.java.net/maven/2/</url>
         </repository>
         <repository>
             <id>bintray</id>
-            <url>http://dl.bintray.com/akuznetsov/russianmorphology</url>
+            <url>https://dl.bintray.com/akuznetsov/russianmorphology</url>
             <releases>
                 <enabled>true</enabled>
             </releases>
@@ -83,7 +83,7 @@
         <pluginRepository>
             <id>mc-release</id>
             <name>maven-license-plugin repository of releases</name>
-            <url>http://mc-repo.googlecode.com/svn/maven2/releases</url>
+            <url>https://mc-repo.googlecode.com/svn/maven2/releases</url>
             <snapshots>
                 <enabled>false</enabled>
             </snapshots>
