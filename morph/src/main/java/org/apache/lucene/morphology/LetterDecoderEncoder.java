@@ -17,17 +17,17 @@ package org.apache.lucene.morphology;
 
 
 public interface LetterDecoderEncoder {
-    public Integer encode(String string);
+    Integer encode(String string);
 
-    public int[] encodeToArray(String s);
+    int[] encodeToArray(String s);
 
-    public String decodeArray(int[] array);
+    String decodeArray(int[] array);
 
-    public String decode(Integer suffixN);
+    String decode(Integer suffixN);
 
-    public boolean checkCharacter(char c);
+    boolean checkCharacter(char c);
 
-    public boolean checkString(String word);
+    boolean checkString(String word);
 
-    public String cleanString(String s);
+    String cleanString(String s);
 }

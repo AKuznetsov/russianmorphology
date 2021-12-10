@@ -17,7 +17,6 @@ package org.apache.lucene.morphology.dictionary;
 
 import org.apache.lucene.morphology.LetterDecoderEncoder;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,7 +37,7 @@ public class WordCleaner extends WordFilter {
         if (word.contains("-")) return Collections.emptyList();
         if (!decoderEncoder.checkString(word)) return Collections.emptyList();
 
-        List<FlexiaModel> flexiaModelsToRemove = new LinkedList<FlexiaModel>();
+        List<FlexiaModel> flexiaModelsToRemove = new LinkedList<>();
         for (FlexiaModel fm : wordCard.getWordsForms()) {
             if (!decoderEncoder.checkString(fm.create(wordCard.getBase())) || fm.create(wordCard.getBase()).contains("-")) {
                 flexiaModelsToRemove.add(fm);
@@ -48,6 +47,6 @@ public class WordCleaner extends WordFilter {
             wordCard.removeFlexia(fm);
         }
 
-        return new LinkedList<WordCard>(Arrays.asList(wordCard));
+        return new LinkedList<>(Collections.singletonList(wordCard));
     }
 }

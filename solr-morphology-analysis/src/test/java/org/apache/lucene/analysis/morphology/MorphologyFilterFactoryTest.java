@@ -30,7 +30,7 @@ import java.util.Map;
 public class MorphologyFilterFactoryTest {
 
     private static final String LANGUAGE_KEY = "language";
-    private ResourceLoader loader = new ClasspathResourceLoader();
+    private ResourceLoader loader = new ClasspathResourceLoader(MorphologyFilterFactoryTest.class);
     private Map<String, String> args;
 
     @Before

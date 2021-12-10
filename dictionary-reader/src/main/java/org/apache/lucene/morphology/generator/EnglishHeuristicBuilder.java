@@ -29,7 +29,7 @@ public class EnglishHeuristicBuilder {
         GrammarReader grammarInfo = new GrammarReader("dictonary/Dicts/Morph/egramtab.tab");
         EnglishLetterDecoderEncoder decoderEncoder = new EnglishLetterDecoderEncoder();
 
-        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd", new HashSet<String>());
+        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/EngSrc/morphs.mrd", new HashSet<>());
 
         StatisticsCollector statisticsCollector = new StatisticsCollector(grammarInfo, decoderEncoder);
         WordCleaner wordCleaner = new WordCleaner(decoderEncoder, statisticsCollector);

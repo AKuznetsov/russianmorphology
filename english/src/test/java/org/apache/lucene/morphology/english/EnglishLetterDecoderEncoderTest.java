@@ -16,7 +16,8 @@
 package org.apache.lucene.morphology.english;
 
 import static org.hamcrest.core.IsEqual.equalTo;
-import static org.junit.Assert.assertThat;
+
+import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 
 
@@ -30,11 +31,11 @@ public class EnglishLetterDecoderEncoderTest {
 
     @org.junit.Test
     public void testDecodeEncodeToArray() {
-        assertThat(decoderEncoder.decodeArray(decoderEncoder.encodeToArray("abcdefghijklmnopqrstuvwxyz")), equalTo("abcdefghijklmnopqrstuvwxyz"));
-        assertThat(decoderEncoder.decodeArray(decoderEncoder.encodeToArray("xyz")), equalTo("xyz"));
-        assertThat(decoderEncoder.decodeArray(decoderEncoder.encodeToArray("ytrrty")), equalTo("ytrrty"));
-        assertThat(decoderEncoder.decodeArray(decoderEncoder.encodeToArray("ytrrtyz")), equalTo("ytrrtyz"));
-        assertThat(decoderEncoder.decodeArray(decoderEncoder.encodeToArray("ytrrtyzqwqwe")), equalTo("ytrrtyzqwqwe"));
+        MatcherAssert.assertThat(decoderEncoder.decodeArray(decoderEncoder.encodeToArray("abcdefghijklmnopqrstuvwxyz")), equalTo("abcdefghijklmnopqrstuvwxyz"));
+        MatcherAssert.assertThat(decoderEncoder.decodeArray(decoderEncoder.encodeToArray("xyz")), equalTo("xyz"));
+        MatcherAssert.assertThat(decoderEncoder.decodeArray(decoderEncoder.encodeToArray("ytrrty")), equalTo("ytrrty"));
+        MatcherAssert.assertThat(decoderEncoder.decodeArray(decoderEncoder.encodeToArray("ytrrtyz")), equalTo("ytrrtyz"));
+        MatcherAssert.assertThat(decoderEncoder.decodeArray(decoderEncoder.encodeToArray("ytrrtyzqwqwe")), equalTo("ytrrtyzqwqwe"));
 
     }
 }

@@ -16,6 +16,8 @@
 
 package org.apache.lucene.morphology.dictionary;
 
+import java.util.Objects;
+
 /**
  * Represent information of how word form created form it imutible part.
  */
@@ -74,11 +76,9 @@ public class FlexiaModel {
 
         FlexiaModel that = (FlexiaModel) o;
 
-        if (code != null ? !code.equals(that.code) : that.code != null) return false;
-        if (prefix != null ? !prefix.equals(that.prefix) : that.prefix != null) return false;
-        if (suffix != null ? !suffix.equals(that.suffix) : that.suffix != null) return false;
-
-        return true;
+        if (!Objects.equals(code, that.code)) return false;
+        if (!Objects.equals(prefix, that.prefix)) return false;
+        return Objects.equals(suffix, that.suffix);
     }
 
     @Override

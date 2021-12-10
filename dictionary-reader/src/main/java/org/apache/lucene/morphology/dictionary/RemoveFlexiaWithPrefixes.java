@@ -15,7 +15,7 @@
  */
 package org.apache.lucene.morphology.dictionary;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class RemoveFlexiaWithPrefixes extends WordFilter {
     @Override
     public List<WordCard> transform(WordCard wordCard) {
 
-        List<FlexiaModel> flexiaModelsToRemove = new LinkedList<FlexiaModel>();
+        List<FlexiaModel> flexiaModelsToRemove = new LinkedList<>();
         for (FlexiaModel fm : wordCard.getWordsForms()) {
             if (fm.getPrefix().length() > 0) {
                 flexiaModelsToRemove.add(fm);
@@ -39,6 +39,6 @@ public class RemoveFlexiaWithPrefixes extends WordFilter {
             wordCard.removeFlexia(fm);
         }
 
-        return new LinkedList<WordCard>(Arrays.asList(wordCard));
+        return new LinkedList<>(Collections.singletonList(wordCard));
     }
 }

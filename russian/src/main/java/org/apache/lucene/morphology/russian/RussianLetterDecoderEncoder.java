@@ -20,7 +20,6 @@ import org.apache.lucene.morphology.LetterDecoderEncoder;
 import org.apache.lucene.morphology.SuffixToLongException;
 import org.apache.lucene.morphology.WrongCharaterException;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 
 /**
@@ -42,7 +41,7 @@ public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
             throw new SuffixToLongException("Suffix length should not be greater then " + WORD_PART_LENGHT + " " + string);
         int result = 0;
         for (int i = 0; i < string.length(); i++) {
-            int c = 0 + string.charAt(i) - RUSSIAN_SMALL_LETTER_OFFSET;
+            int c = string.charAt(i) - RUSSIAN_SMALL_LETTER_OFFSET;
             if (c == 45 - RUSSIAN_SMALL_LETTER_OFFSET) {
                 c = DASH_CODE;
             }
@@ -58,7 +57,7 @@ public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
     }
 
     public int[] encodeToArray(String s) {
-        LinkedList<Integer> integers = new LinkedList<Integer>();
+        LinkedList<Integer> integers = new LinkedList<>();
         while (s.length() > WORD_PART_LENGHT) {
             integers.add(encode(s.substring(0, WORD_PART_LENGHT)));
             s = s.substring(WORD_PART_LENGHT);
@@ -74,16 +73,16 @@ public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
     }
 
     public String decodeArray(int[] array) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i : array) {
-            result += decode(i);
+            result.append(decode(i));
         }
-        return result;
+        return result.toString();
     }
 
 
     public String decode(Integer suffixN) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         while (suffixN > 33) {
             int c = suffixN % 34 + RUSSIAN_SMALL_LETTER_OFFSET;
             if (c == RUSSIAN_SMALL_LETTER_OFFSET) {
@@ -91,21 +90,20 @@ public class RussianLetterDecoderEncoder implements LetterDecoderEncoder {
                 continue;
             }
             if (c == DASH_CODE + RUSSIAN_SMALL_LETTER_OFFSET) c = DASH_CHAR;
-            result = (char) c + result;
+            result.insert(0, (char) c);
             suffixN /= 34;
         }
         long c = suffixN + RUSSIAN_SMALL_LETTER_OFFSET;
         if (c == DASH_CODE + RUSSIAN_SMALL_LETTER_OFFSET) c = DASH_CHAR;
-        result = (char) c + result;
-        return result;
+        result.insert(0, (char) c);
+        return result.toString();
     }
 
     public boolean checkCharacter(char c) {
-        int code = 0 + c;
+        int code = c;
         if (code == 45) return true;
         code -= RUSSIAN_SMALL_LETTER_OFFSET;
-        if (code > 0 && code < 33) return true;
-        return false;
+        return code > 0 && code < 33;
     }
 
     public boolean checkString(String word) {

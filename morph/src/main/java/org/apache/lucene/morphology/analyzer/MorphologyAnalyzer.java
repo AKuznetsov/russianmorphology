@@ -73,6 +73,6 @@ public class MorphologyAnalyzer extends Analyzer {
         TokenFilter filter = new LowerCaseFilter(src);
         filter = new MorphologyFilter(filter, luceneMorph);
 
-        return new TokenStreamComponents(r -> src.setReader(r), filter);
+        return new TokenStreamComponents(src::setReader, filter);
     }
 }

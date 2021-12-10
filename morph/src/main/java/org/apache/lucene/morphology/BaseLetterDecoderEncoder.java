@@ -21,7 +21,7 @@ import java.util.ArrayList;
 
 public abstract class BaseLetterDecoderEncoder implements LetterDecoderEncoder {
     public int[] encodeToArray(String s) {
-        ArrayList<Integer> integers = new ArrayList<Integer>();
+        ArrayList<Integer> integers = new ArrayList<>();
         while (s.length() > 6) {
             integers.add(encode(s.substring(0, 6)));
             s = s.substring(6);
@@ -37,11 +37,11 @@ public abstract class BaseLetterDecoderEncoder implements LetterDecoderEncoder {
     }
 
     public String decodeArray(int[] array) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i : array) {
-            result += decode(i);
+            result.append(decode(i));
         }
-        return result;
+        return result.toString();
     }
 
     public boolean checkString(String word) {

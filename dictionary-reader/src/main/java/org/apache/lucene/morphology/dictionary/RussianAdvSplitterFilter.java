@@ -32,13 +32,13 @@ public class RussianAdvSplitterFilter extends WordFilter {
 
     @Override
     public List<WordCard> transform(WordCard wordCard) {
-        LinkedList<WordCard> result = new LinkedList<WordCard>();
+        LinkedList<WordCard> result = new LinkedList<>();
         result.add(wordCard);
 
         String baseWord = "";
         String canonicalForm = "";
         String canonicalSuffix = "";
-        List<FlexiaModel> flexiaModels = new LinkedList<FlexiaModel>();
+        List<FlexiaModel> flexiaModels = new LinkedList<>();
         for (FlexiaModel flexiaModel : wordCard.getWordsForms()) {
             if (flexiaModel.getPrefix().length() > 0) {
                 flexiaModels.add(new FlexiaModel(flexiaModel.getCode(), flexiaModel.getSuffix(), ""));

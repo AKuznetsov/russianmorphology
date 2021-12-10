@@ -34,13 +34,13 @@ public class LuceneMorphology extends MorphologyImpl {
 
     protected void readRules(BufferedReader bufferedReader) throws IOException {
         String s;
-        Integer amount;
+        int amount;
         s = bufferedReader.readLine();
-        amount = Integer.valueOf(s);
+        amount = Integer.parseInt(s);
         rules = new Heuristic[amount][];
         for (int i = 0; i < amount; i++) {
             String s1 = bufferedReader.readLine();
-            Integer ruleLenght = Integer.valueOf(s1);
+            int ruleLenght = Integer.parseInt(s1);
             Heuristic[] heuristics = new Heuristic[ruleLenght];
             for (int j = 0; j < ruleLenght; j++) {
                 heuristics[j] = new Heuristic(bufferedReader.readLine());
@@ -51,7 +51,7 @@ public class LuceneMorphology extends MorphologyImpl {
 
 
     private Heuristic[] modeifyHeuristic(Heuristic[] heuristics) {
-        ArrayList<Heuristic> result = new ArrayList<Heuristic>();
+        ArrayList<Heuristic> result = new ArrayList<>();
         for (Heuristic heuristic : heuristics) {
             boolean isAdded = true;
             for (Heuristic ch : result) {
@@ -61,7 +61,7 @@ public class LuceneMorphology extends MorphologyImpl {
                 result.add(heuristic);
             }
         }
-        return result.toArray(new Heuristic[result.size()]);
+        return result.toArray(new Heuristic[0]);
     }
 
     public boolean checkString(String s) {
