@@ -23,6 +23,7 @@ import org.apache.lucene.morphology.english.EnglishMorphology;
 import org.apache.lucene.morphology.russian.RussianLetterDecoderEncoder;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianMorphology;
+import org.hamcrest.MatcherAssert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -33,7 +34,6 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicLong;
 
 import static org.hamcrest.Matchers.hasItem;
-import static org.junit.Assert.assertThat;
 
 
 public class TestAllWords {
@@ -73,21 +73,19 @@ public class TestAllWords {
         final List<String> morphInfo = grammarInfo.getGrammarInfo();
         final Map<String, Integer> inversIndex = grammarInfo.getGrammarInverseIndex();
 
-        DictionaryReader dictionaryReader = new DictionaryReader(pathToDict, new HashSet<String>());
+        DictionaryReader dictionaryReader = new DictionaryReader(pathToDict, new HashSet<>());
 
         final AtomicLong wordCount = new AtomicLong(0);
-        Long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
-        WordProcessor wordProcessor = new WordProcessor() {
-            public void process(WordCard wordCard) throws IOException {
-                String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
-                for (FlexiaModel fm : wordCard.getWordsForms()) {
-                    String wordForm = wordCard.getBase() + fm.getSuffix();
-                    String morph = morphInfo.get(inversIndex.get(fm.getCode()));
-                    assertThat(morphology.getMorphInfo(wordForm), hasItem(word + "|" + morph));
-                    assertThat(morphology.getNormalForms(wordForm), hasItem(word));
-                    wordCount.set(2L + wordCount.get());
-                }
+        WordProcessor wordProcessor = wordCard -> {
+            String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
+            for (FlexiaModel fm : wordCard.getWordsForms()) {
+                String wordForm = wordCard.getBase() + fm.getSuffix();
+                String morph = morphInfo.get(inversIndex.get(fm.getCode()));
+                MatcherAssert.assertThat(morphology.getMorphInfo(wordForm), hasItem(word + "|" + morph));
+                MatcherAssert.assertThat(morphology.getNormalForms(wordForm), hasItem(word));
+                wordCount.set(2L + wordCount.get());
             }
         };
 
@@ -123,17 +121,15 @@ public class TestAllWords {
 
     private void testAllWordForLucene(final LuceneMorphology morphology, LetterDecoderEncoder decoderEncoder, String pathToDic) throws IOException {
         final AtomicLong wordCount = new AtomicLong(0);
-        Long startTime = System.currentTimeMillis();
+        long startTime = System.currentTimeMillis();
 
-        DictionaryReader dictionaryReader = new DictionaryReader(pathToDic, new HashSet<String>());
-        WordProcessor wordProcessor = new WordProcessor() {
-            public void process(WordCard wordCard) throws IOException {
-                String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
-                for (FlexiaModel fm : wordCard.getWordsForms()) {
-                    String wordForm = wordCard.getBase() + fm.getSuffix();
-                    assertThat(morphology.getNormalForms(wordForm), hasItem(word));
-                    wordCount.set(1L + wordCount.get());
-                }
+        DictionaryReader dictionaryReader = new DictionaryReader(pathToDic, new HashSet<>());
+        WordProcessor wordProcessor = wordCard -> {
+            String word = wordCard.getBase() + wordCard.getCanonicalSuffix();
+            for (FlexiaModel fm : wordCard.getWordsForms()) {
+                String wordForm = wordCard.getBase() + fm.getSuffix();
+                MatcherAssert.assertThat(morphology.getNormalForms(wordForm), hasItem(word));
+                wordCount.set(1L + wordCount.get());
             }
         };
 

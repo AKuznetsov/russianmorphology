@@ -16,6 +16,7 @@
 package org.apache.lucene.morphology;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 
 public class Heuristic implements Serializable {
@@ -26,10 +27,10 @@ public class Heuristic implements Serializable {
 
     public Heuristic(String s) {
         String[] strings = s.split("\\|");
-        actualSuffixLength = Byte.valueOf(strings[0]);
+        actualSuffixLength = Byte.parseByte(strings[0]);
         actualNormalSuffix = strings[1];
-        formMorphInfo = Short.valueOf(strings[2]);
-        normalFormMorphInfo = Short.valueOf(strings[3]);
+        formMorphInfo = Short.parseShort(strings[2]);
+        normalFormMorphInfo = Short.parseShort(strings[3]);
     }
 
     public Heuristic(byte actualSuffixLength, String actualNormalSuffix, short formMorphInfo, short normalFormMorphInfo) {
@@ -70,15 +71,12 @@ public class Heuristic implements Serializable {
         if (actualSuffixLength != heuristic.actualSuffixLength) return false;
         if (formMorphInfo != heuristic.formMorphInfo) return false;
         if (normalFormMorphInfo != heuristic.normalFormMorphInfo) return false;
-        if (actualNormalSuffix != null ? !actualNormalSuffix.equals(heuristic.actualNormalSuffix) : heuristic.actualNormalSuffix != null)
-            return false;
-
-        return true;
+        return Objects.equals(actualNormalSuffix, heuristic.actualNormalSuffix);
     }
 
     @Override
     public int hashCode() {
-        int result = (int) actualSuffixLength;
+        int result = actualSuffixLength;
         result = 31 * result + (actualNormalSuffix != null ? actualNormalSuffix.hashCode() : 0);
         result = 31 * result + (int) formMorphInfo;
         result = 31 * result + (int) normalFormMorphInfo;

@@ -31,9 +31,11 @@ import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.morphology.english.EnglishLuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianAnalyzer;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -65,24 +67,24 @@ public class AnalyzersTest extends BaseTokenStreamTestCase {
         LuceneMorphology englishLuceneMorphology = new EnglishLuceneMorphology();
 
         MorphologyAnalyzer russianAnalyzer = new MorphologyAnalyzer(russianLuceneMorphology);
-        InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream("тест пм тест".getBytes()), "UTF-8");
+        InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream("тест пм тест".getBytes()), StandardCharsets.UTF_8);
         TokenStream stream = russianAnalyzer.tokenStream(null, reader);
         MorphologyFilter englishFilter = new MorphologyFilter(stream, englishLuceneMorphology);
 
         englishFilter.reset();
         while (englishFilter.incrementToken()) {
-            System.out.println(englishFilter.toString());
+            System.out.println(englishFilter);
         }
     }
 
     @Test
     public void shouldProvideCorrectIndentForWordWithMelitaForm() throws IOException {
         Analyzer morphlogyAnalyzer = new RussianAnalyzer();
-        InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream("принеси мне вина на новый год".getBytes()), "UTF-8");
+        InputStreamReader reader = new InputStreamReader(new ByteArrayInputStream("принеси мне вина на новый год".getBytes()), StandardCharsets.UTF_8);
 
         TokenStream tokenStream = morphlogyAnalyzer.tokenStream(null, reader);
         tokenStream.reset();
-        Set<String> foromsOfWine = new HashSet<String>();
+        Set<String> foromsOfWine = new HashSet<>();
         foromsOfWine.add("вина");
         foromsOfWine.add("винo");
         boolean wordSeen = false;
@@ -90,7 +92,7 @@ public class AnalyzersTest extends BaseTokenStreamTestCase {
             CharTermAttribute charTerm = tokenStream.getAttribute(CharTermAttribute.class);
             PositionIncrementAttribute position = tokenStream.getAttribute(PositionIncrementAttribute.class);
             if(foromsOfWine.contains(charTerm.toString()) && wordSeen){
-                assertThat(position.getPositionIncrement(),equalTo(0));
+                MatcherAssert.assertThat(position.getPositionIncrement(),equalTo(0));
             }
             if(foromsOfWine.contains(charTerm.toString())){
                 wordSeen = true;
@@ -100,18 +102,18 @@ public class AnalyzersTest extends BaseTokenStreamTestCase {
 
     private void testAnalayzer(Analyzer morphlogyAnalyzer, String answerPath, String testPath) throws IOException {
         InputStream stream = this.getClass().getResourceAsStream(answerPath);
-        BufferedReader breader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        BufferedReader breader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
         String[] strings = breader.readLine().replaceAll(" +", " ").trim().split(" ");
-        HashSet<String> answer = new HashSet<String>(Arrays.asList(strings));
+        HashSet<String> answer = new HashSet<>(Arrays.asList(strings));
         stream.close();
 
         stream = this.getClass().getResourceAsStream(testPath);
 
-        InputStreamReader reader = new InputStreamReader(stream, "UTF-8");
+        InputStreamReader reader = new InputStreamReader(stream, StandardCharsets.UTF_8);
 
         TokenStream tokenStream = morphlogyAnalyzer.tokenStream(null, reader);
         tokenStream.reset();
-        HashSet<String> result = new HashSet<String>();
+        HashSet<String> result = new HashSet<>();
         while (tokenStream.incrementToken()) {
             CharTermAttribute attribute1 = tokenStream.getAttribute(CharTermAttribute.class);
             result.add(attribute1.toString());
@@ -119,7 +121,7 @@ public class AnalyzersTest extends BaseTokenStreamTestCase {
 
         stream.close();
 
-        assertThat(result, equalTo(answer));
+        MatcherAssert.assertThat(result, equalTo(answer));
     }
 
     @Test

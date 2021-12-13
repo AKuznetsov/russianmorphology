@@ -17,7 +17,7 @@ package org.apache.lucene.morphology.dictionary;
 
 import org.apache.lucene.morphology.LetterDecoderEncoder;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -42,7 +42,7 @@ public class WordStringCleaner extends WordFilter {
             //made correct code
             m.setCode(m.getCode().substring(0, 2));
         }
-        return new LinkedList<WordCard>(Arrays.asList(wordCard));
+        return new LinkedList<>(Collections.singletonList(wordCard));
     }
 
 

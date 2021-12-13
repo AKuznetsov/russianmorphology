@@ -29,8 +29,8 @@ import java.util.Map;
 public class GrammarReader {
     private String fileName;
     private String fileEncoding = "windows-1251";
-    private List<String> grammarInfo = new ArrayList<String>();
-    private Map<String, Integer> inverseIndex = new HashMap<String, Integer>();
+    private List<String> grammarInfo = new ArrayList<>();
+    private Map<String, Integer> inverseIndex = new HashMap<>();
 
     public GrammarReader(String fileName) throws IOException {
         this.fileName = fileName;
@@ -50,7 +50,7 @@ public class GrammarReader {
             line = line.trim();
             if (!line.startsWith("//") && line.length() > 0) {
                 String[] strings = line.split(" ", 2);
-                Integer i = grammarInfo.size();
+                int i = grammarInfo.size();
                 inverseIndex.put(strings[0], i);
                 grammarInfo.add(i, strings[1]);
             }
@@ -63,7 +63,7 @@ public class GrammarReader {
     }
 
     public String[] getGrammarInfoAsArray() {
-        return grammarInfo.toArray(new String[grammarInfo.size()]);
+        return grammarInfo.toArray(new String[0]);
     }
 
     public Map<String, Integer> getGrammarInverseIndex() {

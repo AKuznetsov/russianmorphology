@@ -32,7 +32,7 @@ public class EnglishLetterDecoderEncoder implements LetterDecoderEncoder {
         if (string.length() > 6) throw new SuffixToLongException("Suffix length should not be greater then " + 12);
         int result = 0;
         for (int i = 0; i < string.length(); i++) {
-            int c = 0 + string.charAt(i) - ENGLISH_SMALL_LETTER_OFFSET;
+            int c = string.charAt(i) - ENGLISH_SMALL_LETTER_OFFSET;
             if (c == 45 - ENGLISH_SMALL_LETTER_OFFSET) {
                 c = DASH_CODE;
             }
@@ -48,7 +48,7 @@ public class EnglishLetterDecoderEncoder implements LetterDecoderEncoder {
 
     public int[] encodeToArray(String s) {
 
-        ArrayList<Integer> integers = new ArrayList<Integer>();
+        ArrayList<Integer> integers = new ArrayList<>();
         while (s.length() > 6) {
             integers.add(encode(s.substring(0, 6)));
             s = s.substring(6);
@@ -64,16 +64,16 @@ public class EnglishLetterDecoderEncoder implements LetterDecoderEncoder {
     }
 
     public String decodeArray(int[] array) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         for (int i : array) {
-            result += decode(i);
+            result.append(decode(i));
         }
-        return result;
+        return result.toString();
     }
 
 
     public String decode(Integer suffixN) {
-        String result = "";
+        StringBuilder result = new StringBuilder();
         while (suffixN > 27) {
             int c = suffixN % 28 + ENGLISH_SMALL_LETTER_OFFSET;
             if (c == ENGLISH_SMALL_LETTER_OFFSET) {
@@ -81,21 +81,20 @@ public class EnglishLetterDecoderEncoder implements LetterDecoderEncoder {
                 continue;
             }
             if (c == DASH_CODE + ENGLISH_SMALL_LETTER_OFFSET) c = DASH_CHAR;
-            result = (char) c + result;
+            result.insert(0, (char) c);
             suffixN /= 28;
         }
         long c = suffixN + ENGLISH_SMALL_LETTER_OFFSET;
         if (c == DASH_CODE + ENGLISH_SMALL_LETTER_OFFSET) c = DASH_CHAR;
-        result = (char) c + result;
-        return result;
+        result.insert(0, (char) c);
+        return result.toString();
     }
 
     public boolean checkCharacter(char c) {
-        int code = 0 + c;
+        int code = c;
         if (code == 45) return true;
         code -= ENGLISH_SMALL_LETTER_OFFSET;
-        if (code > 0 && code < 27) return true;
-        return false;
+        return code > 0 && code < 27;
     }
 
 

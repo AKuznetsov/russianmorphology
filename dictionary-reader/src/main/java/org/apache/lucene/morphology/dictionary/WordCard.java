@@ -26,7 +26,7 @@ public class WordCard {
     private String canonicalForm;
     private String base;
     private String canonicalSuffix;
-    private List<FlexiaModel> wordsForms = new ArrayList<FlexiaModel>();
+    private List<FlexiaModel> wordsForms = new ArrayList<>();
 
     public WordCard(String canonicalForm, String base, String canonicalSuffix) {
         this.canonicalForm = canonicalForm;

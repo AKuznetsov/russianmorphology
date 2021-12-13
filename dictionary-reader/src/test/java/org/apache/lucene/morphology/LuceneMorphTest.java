@@ -17,19 +17,20 @@ package org.apache.lucene.morphology;
 
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
 import org.apache.lucene.morphology.english.EnglishLuceneMorphology;
+import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.Assert.assertThat;
 
 
 public class LuceneMorphTest {
@@ -52,14 +53,13 @@ public class LuceneMorphTest {
 
     private void testMorphology(LuceneMorphology luceneMorph, String pathToTestData) throws IOException {
         InputStream stream = this.getClass().getResourceAsStream(pathToTestData);
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, "UTF-8"));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8));
         String s = bufferedReader.readLine();
         while (s != null) {
             String[] qa = s.trim().split(" ");
-            Set<String> result = new HashSet<String>();
-            result.addAll(Arrays.asList(qa).subList(1, qa.length));
-            Set<String> stringList = new HashSet<String>(luceneMorph.getNormalForms(qa[0]));
-            assertThat(stringList, equalTo(result));
+            Set<String> result = new HashSet<>(Arrays.asList(qa).subList(1, qa.length));
+            Set<String> stringList = new HashSet<>(luceneMorph.getNormalForms(qa[0]));
+            MatcherAssert.assertThat(stringList, equalTo(result));
             s = bufferedReader.readLine();
         }
     }

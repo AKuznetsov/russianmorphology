@@ -6,7 +6,6 @@
         <version>1.5</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.apache.lucene.morphology</groupId>
     <artifactId>morph</artifactId>
     <name>morph</name>
     <version>1.5</version>

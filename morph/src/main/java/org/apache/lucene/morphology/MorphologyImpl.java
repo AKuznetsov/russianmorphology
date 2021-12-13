@@ -17,6 +17,7 @@ package org.apache.lucene.morphology;
 
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class MorphologyImpl implements Morphology {
     }
 
     public List<String> getNormalForms(String s) {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
         int[] ints = decoderEncoder.encodeToArray(revertWord(s));
         int ruleId = findRuleId(ints);
         boolean notSeenEmptyString = true;
@@ -64,7 +65,7 @@ public class MorphologyImpl implements Morphology {
     }
 
     public List<String> getMorphInfo(String s) {
-        ArrayList<String> result = new ArrayList<String>();
+        ArrayList<String> result = new ArrayList<>();
         int[] ints = decoderEncoder.encodeToArray(revertWord(s));
         int ruleId = findRuleId(ints);
         for (Heuristic h : rules[rulesId[ruleId]]) {
@@ -100,14 +101,14 @@ public class MorphologyImpl implements Morphology {
     private int compareToInts(int[] i1, int[] i2) {
         int minLength = Math.min(i1.length, i2.length);
         for (int i = 0; i < minLength; i++) {
-            int i3 = i1[i] < i2[i] ? -1 : (i1[i] == i2[i] ? 0 : 1);
+            int i3 = Integer.compare(i1[i], i2[i]);
             if (i3 != 0) return i3;
         }
         return i1.length - i2.length;
     }
 
     public void writeToFile(String fileName) throws IOException {
-        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(fileName), "UTF-8");
+        OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(fileName), StandardCharsets.UTF_8);
         writer.write(separators.length + "\n");
         for (int[] i : separators) {
             writer.write(i.length + "\n");
@@ -138,7 +139,7 @@ public class MorphologyImpl implements Morphology {
     }
 
     private void readFromInputStream(InputStream inputStream) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
         String s = bufferedReader.readLine();
         Integer amount = Integer.valueOf(s);
 
@@ -153,9 +154,9 @@ public class MorphologyImpl implements Morphology {
 
     private void readGrammaInfo(BufferedReader bufferedReader) throws IOException {
         String s;
-        Integer amount;
+        int amount;
         s = bufferedReader.readLine();
-        amount = Integer.valueOf(s);
+        amount = Integer.parseInt(s);
         grammarInfo = new String[amount];
         for (int i = 0; i < amount; i++) {
             grammarInfo[i] = bufferedReader.readLine();
@@ -164,13 +165,13 @@ public class MorphologyImpl implements Morphology {
 
     protected void readRules(BufferedReader bufferedReader) throws IOException {
         String s;
-        Integer amount;
+        int amount;
         s = bufferedReader.readLine();
-        amount = Integer.valueOf(s);
+        amount = Integer.parseInt(s);
         rules = new Heuristic[amount][];
         for (int i = 0; i < amount; i++) {
             String s1 = bufferedReader.readLine();
-            Integer ruleLength = Integer.valueOf(s1);
+            int ruleLength = Integer.parseInt(s1);
             rules[i] = new Heuristic[ruleLength];
             for (int j = 0; j < ruleLength; j++) {
                 rules[i][j] = new Heuristic(bufferedReader.readLine());
@@ -182,7 +183,7 @@ public class MorphologyImpl implements Morphology {
         rulesId = new short[amount];
         for (int i = 0; i < amount; i++) {
             String s1 = bufferedReader.readLine();
-            rulesId[i] = Short.valueOf(s1);
+            rulesId[i] = Short.parseShort(s1);
         }
     }
 
@@ -190,10 +191,10 @@ public class MorphologyImpl implements Morphology {
         separators = new int[amount][];
         for (int i = 0; i < amount; i++) {
             String s1 = bufferedReader.readLine();
-            Integer wordLenght = Integer.valueOf(s1);
+            int wordLenght = Integer.parseInt(s1);
             separators[i] = new int[wordLenght];
             for (int j = 0; j < wordLenght; j++) {
-                separators[i][j] = Integer.valueOf(bufferedReader.readLine());
+                separators[i][j] = Integer.parseInt(bufferedReader.readLine());
             }
         }
     }

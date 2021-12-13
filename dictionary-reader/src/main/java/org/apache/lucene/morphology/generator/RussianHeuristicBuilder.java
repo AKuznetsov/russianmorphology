@@ -28,7 +28,7 @@ public class RussianHeuristicBuilder {
         GrammarReader grammarInfo = new GrammarReader("dictonary/Dicts/Morph/rgramtab.tab");
         RussianLetterDecoderEncoder decoderEncoder = new RussianLetterDecoderEncoder();
 
-        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<String>());
+        DictionaryReader dictionaryReader = new DictionaryReader("dictonary/Dicts/SrcMorph/RusSrc/morphs.mrd", new HashSet<>());
 
         StatisticsCollector statisticsCollector = new StatisticsCollector(grammarInfo, decoderEncoder);
         WordCleaner wordCleaner = new WordCleaner(decoderEncoder, statisticsCollector);
