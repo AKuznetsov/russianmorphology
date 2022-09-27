@@ -16,7 +16,7 @@
 package org.apache.lucene.morphology;
 
 import org.apache.lucene.analysis.Analyzer;
-import org.apache.lucene.analysis.BaseTokenStreamTestCase;
+import org.apache.lucene.tests.analysis.BaseTokenStreamTestCase;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.LowerCaseFilter;
 import org.apache.lucene.analysis.TokenFilter;
@@ -41,7 +41,7 @@ import java.util.*;
 import static org.hamcrest.Matchers.equalTo;
 
 
-public class AnalyzersTest extends BaseTokenStreamTestCase {
+public class TestAnalyzers extends BaseTokenStreamTestCase {
 
     @Test
     public void shouldGiveCorrectWordsForEnglish() throws IOException {

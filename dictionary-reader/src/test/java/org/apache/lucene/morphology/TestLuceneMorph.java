@@ -33,7 +33,7 @@ import java.util.Set;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 
-public class LuceneMorphTest {
+public class TestLuceneMorph {
 
     @Test
     public void englishMorphologyShouldGetCorrectNormalForm() throws IOException {

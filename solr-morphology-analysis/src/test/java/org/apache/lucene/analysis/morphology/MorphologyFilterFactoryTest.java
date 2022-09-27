@@ -1,12 +1,12 @@
 /**
  * Copyright 2009 Alexander Kuznetsov
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,11 +15,11 @@
  */
 package org.apache.lucene.analysis.morphology;
 
-import org.apache.lucene.analysis.util.ClasspathResourceLoader;
-import org.apache.lucene.analysis.util.ResourceLoader;
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.morphology.english.EnglishLuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
+import org.apache.lucene.util.ClasspathResourceLoader;
+import org.apache.lucene.util.ResourceLoader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,12 +34,12 @@ public class MorphologyFilterFactoryTest {
     private Map<String, String> args;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         args = new HashMap<>();
     }
 
     @Test
-    public void if_RussianLanguageKey_then_CreateRussianMorphologyFilter(){
+    public void if_RussianLanguageKey_then_CreateRussianMorphologyFilter() {
 
         args.put(LANGUAGE_KEY, "Russian");
         MorphologyFilterFactory morphologyFilterFactory = new MorphologyFilterFactory(args);
@@ -51,7 +51,7 @@ public class MorphologyFilterFactoryTest {
     }
 
     @Test
-    public void if_EnglishLanguageKey_then_CreateEnglishMorphologyFilter(){
+    public void if_EnglishLanguageKey_then_CreateEnglishMorphologyFilter() {
 
         args.put(LANGUAGE_KEY, "English");
         MorphologyFilterFactory morphologyFilterFactory = new MorphologyFilterFactory(args);
@@ -63,7 +63,7 @@ public class MorphologyFilterFactoryTest {
     }
 
     @Test
-    public void if_NoLanguageKey_then_CreateEnglishMorphologyFilter(){
+    public void if_NoLanguageKey_then_CreateEnglishMorphologyFilter() {
 
         MorphologyFilterFactory morphologyFilterFactory = new MorphologyFilterFactory(args);
         morphologyFilterFactory.inform(loader);

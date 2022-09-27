@@ -15,12 +15,13 @@
  */
 package org.apache.lucene.analysis.morphology;
 
+import org.apache.lucene.analysis.TokenFilterFactory;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.util.ResourceLoader;
-import org.apache.lucene.analysis.util.ResourceLoaderAware;
-import org.apache.lucene.analysis.util.TokenFilterFactory;
+
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.morphology.analyzer.MorphologyFilter;
+import org.apache.lucene.util.ResourceLoader;
+import org.apache.lucene.util.ResourceLoaderAware;
 
 import java.util.Map;
 
@@ -37,7 +38,7 @@ import java.util.Map;
  *   &lt;/analyzer&gt;
  * &lt;/fieldType&gt;</pre>
  */
-public class MorphologyFilterFactory extends TokenFilterFactory implements ResourceLoaderAware{
+public class MorphologyFilterFactory extends TokenFilterFactory implements ResourceLoaderAware {
 
     private static final String LANGUAGE_KEY = "language";
 
