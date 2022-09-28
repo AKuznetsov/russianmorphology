@@ -15,11 +15,11 @@
  */
 package org.apache.lucene.analysis.morphology;
 
-import org.apache.lucene.analysis.util.ClasspathResourceLoader;
-import org.apache.lucene.analysis.util.ResourceLoader;
 import org.apache.lucene.morphology.LuceneMorphology;
 import org.apache.lucene.morphology.english.EnglishLuceneMorphology;
 import org.apache.lucene.morphology.russian.RussianLuceneMorphology;
+import org.apache.lucene.util.ClasspathResourceLoader;
+import org.apache.lucene.util.ResourceLoader;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -34,12 +34,12 @@ public class MorphologyFilterFactoryTest {
     private Map<String, String> args;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         args = new HashMap<>();
     }
 
     @Test
-    public void if_RussianLanguageKey_then_CreateRussianMorphologyFilter(){
+    public void if_RussianLanguageKey_then_CreateRussianMorphologyFilter() {
 
         args.put(LANGUAGE_KEY, "Russian");
         MorphologyFilterFactory morphologyFilterFactory = new MorphologyFilterFactory(args);
@@ -51,7 +51,7 @@ public class MorphologyFilterFactoryTest {
     }
 
     @Test
-    public void if_EnglishLanguageKey_then_CreateEnglishMorphologyFilter(){
+    public void if_EnglishLanguageKey_then_CreateEnglishMorphologyFilter() {
 
         args.put(LANGUAGE_KEY, "English");
         MorphologyFilterFactory morphologyFilterFactory = new MorphologyFilterFactory(args);
@@ -63,7 +63,7 @@ public class MorphologyFilterFactoryTest {
     }
 
     @Test
-    public void if_NoLanguageKey_then_CreateEnglishMorphologyFilter(){
+    public void if_NoLanguageKey_then_CreateEnglishMorphologyFilter() {
 
         MorphologyFilterFactory morphologyFilterFactory = new MorphologyFilterFactory(args);
         morphologyFilterFactory.inform(loader);
