@@ -16,7 +16,7 @@
     </scm>
 
     <properties>
-        <solr.version>9.9.0</solr.version>
+        <solr.version>9.11.0</solr.version>
         <lucene.version>9.9.0</lucene.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
