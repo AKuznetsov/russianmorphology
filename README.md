@@ -1,11 +1,11 @@
 # Russian Morphology for Apache Lucene
 
-Russian and English morphology for Java and [Apache Lucene](http://lucene.apache.org) 9.3 framework based on open source dictionary from site [АОТ](http://aot.ru). It uses dictionary base morphology with some heuristics for unknown words. It supports a homonym for example for a Russian word "вина" it gives two variants "вино" and "вина".
+Russian and English morphology for Java and [Apache Lucene](http://lucene.apache.org) 9.9 framework based on open source dictionary from site [АОТ](http://aot.ru). It uses dictionary base morphology with some heuristics for unknown words. It supports a homonym for example for a Russian word "вина" it gives two variants "вино" and "вина".
 
 
 ### How to use
 
-Build project, by running `mvn clean package`, this will provide you the latest versions of the artifacts - 1.5, add it to your classpath. You could select which version to use - Russian or English.
+Build project, by running `mvn clean package`, this will provide you the latest versions of the artifacts - 1.6, add it to your classpath. You could select which version to use - Russian or English.
 
 Now you can create a Lucene Analyzer:
 
@@ -39,7 +39,7 @@ You can use the LuceneMorphology as morphology filter in a Solr _schema.xml_ usi
 </fieldType>
 ```
 
-Just add _morphology-1.5.jar_ in your Solr lib-directories
+Just add _morphology-1.6.jar_ in your Solr lib-directories
 
 ### Restrictions
   
